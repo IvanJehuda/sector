@@ -10,16 +10,27 @@ export function createDb(
   return createClient({ url, authToken });
 }
 
-let singleton: Promise<Db> | null = null;
+/**
+ * Memoizes an async database factory. A rejected initialisation (e.g. a failed
+ * migration) is not cached, so the next call retries.
+ */
+export function memoizeDb(factory: () => Promise<Db>): () => Promise<Db> {
+  let pending: Promise<Db> | null = null;
+  return () => {
+    if (!pending) {
+      const attempt = factory();
+      pending = attempt;
+      attempt.catch(() => {
+        if (pending === attempt) pending = null;
+      });
+    }
+    return pending;
+  };
+}
 
 /** Process-wide migrated database, configured from env. */
-export function getDb(): Promise<Db> {
-  if (!singleton) {
-    singleton = (async () => {
-      const db = createDb();
-      await migrate(db);
-      return db;
-    })();
-  }
-  return singleton;
-}
+export const getDb: () => Promise<Db> = memoizeDb(async () => {
+  const db = createDb();
+  await migrate(db);
+  return db;
+});
