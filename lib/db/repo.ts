@@ -17,8 +17,12 @@ function rowToEvent(r: Row): StoredEvent {
     status: String(r.status) as EventStatus,
     statusMessage: r.status_message === null ? null : String(r.status_message),
     createdAt: String(r.created_at),
+    statusUpdatedAt: r.status_updated_at === null || r.status_updated_at === undefined ? null : String(r.status_updated_at),
   };
 }
+
+/** An 'analyzing' status younger than this is treated as in flight; older ones may be re-claimed. */
+export const ANALYSIS_STALE_MS = 180_000;
 
 export async function getEvent(db: Db, id: string): Promise<StoredEvent | null> {
   const r = await db.execute({ sql: 'SELECT * FROM events WHERE id = ?', args: [id] });
@@ -29,14 +33,12 @@ export async function insertEvent(
   db: Db,
   input: EventInput,
 ): Promise<{ event: StoredEvent; created: boolean }> {
-  if (input.url) {
-    const existing = await db.execute({ sql: 'SELECT * FROM events WHERE url = ?', args: [input.url] });
-    if (existing.rows[0]) return { event: rowToEvent(existing.rows[0]), created: false };
-  }
   const id = randomUUID();
-  await db.execute({
-    sql: `INSERT INTO events (id, source, url, title, body, published_at, symbols, tags, sub_sectors, status, status_message, created_at)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', NULL, ?)`,
+  const now = new Date().toISOString();
+  const r = await db.execute({
+    sql: `INSERT INTO events (id, source, url, title, body, published_at, symbols, tags, sub_sectors, status, status_message, created_at, status_updated_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', NULL, ?, ?)
+          ON CONFLICT(url) DO NOTHING`,
     args: [
       id,
       input.source,
@@ -47,12 +49,16 @@ export async function insertEvent(
       JSON.stringify(input.symbols),
       JSON.stringify(input.tags),
       JSON.stringify(input.subSectors),
-      new Date().toISOString(),
+      now,
+      now,
     ],
   });
-  const event = await getEvent(db, id);
-  if (!event) throw new Error('insertEvent: row missing after insert');
-  return { event, created: true };
+  const created = r.rowsAffected === 1;
+  const found = created
+    ? await db.execute({ sql: 'SELECT * FROM events WHERE id = ?', args: [id] })
+    : await db.execute({ sql: 'SELECT * FROM events WHERE url = ?', args: [input.url] });
+  if (!found.rows[0]) throw new Error('insertEvent: row missing after insert');
+  return { event: rowToEvent(found.rows[0]), created };
 }
 
 export async function listEvents(db: Db, limit = 50): Promise<StoredEvent[]> {
@@ -66,7 +72,34 @@ export async function setEventStatus(
   status: EventStatus,
   message: string | null = null,
 ): Promise<void> {
-  await db.execute({ sql: 'UPDATE events SET status = ?, status_message = ? WHERE id = ?', args: [status, message, id] });
+  await db.execute({
+    sql: 'UPDATE events SET status = ?, status_message = ?, status_updated_at = ? WHERE id = ?',
+    args: [status, message, new Date().toISOString(), id],
+  });
+}
+
+/**
+ * Atomically marks an event as 'analyzing' unless another analysis is already in flight
+ * (status 'analyzing' updated after `staleBeforeIso`). Returns true when this caller won the claim.
+ */
+export async function claimEventForAnalysis(db: Db, id: string, nowIso: string, staleBeforeIso: string): Promise<boolean> {
+  const r = await db.execute({
+    sql: `UPDATE events SET status = 'analyzing', status_message = 'Memulai analisis…', status_updated_at = ?
+          WHERE id = ? AND NOT (status = 'analyzing' AND status_updated_at IS NOT NULL AND status_updated_at > ?)`,
+    args: [nowIso, id, staleBeforeIso],
+  });
+  return r.rowsAffected === 1;
+}
+
+/** Reports created since `sinceIso` plus analyses started since then that are still running. */
+export async function countRecentAnalyses(db: Db, sinceIso: string): Promise<number> {
+  const r = await db.execute({
+    sql: `SELECT
+            (SELECT COUNT(*) FROM reports WHERE created_at >= ?) +
+            (SELECT COUNT(*) FROM events WHERE status = 'analyzing' AND (status_updated_at IS NULL OR status_updated_at >= ?)) AS n`,
+    args: [sinceIso, sinceIso],
+  });
+  return Number(r.rows[0]?.n ?? 0);
 }
 
 export async function saveReport(db: Db, report: Report): Promise<void> {

@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS events (
   sub_sectors TEXT NOT NULL,
   status TEXT NOT NULL,
   status_message TEXT,
-  created_at TEXT NOT NULL
+  created_at TEXT NOT NULL,
+  status_updated_at TEXT
 );
 CREATE TABLE IF NOT EXISTS reports (
   event_id TEXT PRIMARY KEY,
@@ -41,4 +42,8 @@ CREATE TABLE IF NOT EXISTS kv (
 
 export async function migrate(db: Db): Promise<void> {
   await db.executeMultiple(SCHEMA);
+  const cols = await db.execute('PRAGMA table_info(events)');
+  if (!cols.rows.some((r) => String(r.name) === 'status_updated_at')) {
+    await db.execute('ALTER TABLE events ADD COLUMN status_updated_at TEXT');
+  }
 }

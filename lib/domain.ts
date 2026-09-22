@@ -23,6 +23,8 @@ export interface StoredEvent extends EventInput {
   status: EventStatus;
   statusMessage: string | null;
   createdAt: string;
+  /** When `status` last changed (ISO). Null for rows created before this column existed. */
+  statusUpdatedAt: string | null;
 }
 
 export interface Company {
