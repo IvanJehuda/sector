@@ -1,0 +1,1 @@
+{ "results": [{ "symbol": "BBCA.JK", "company_name": "PT Bank Central Asia Tbk.", "query_values": { "sub_sector": "Banks", "market_cap": 753611199412500 } }], "pagination": { "total_count": 1, "showing": 1, "limit": 200, "offset": 0, "has_next": false, "has_previous": false, "next_offset": null, "previous_offset": null } }
