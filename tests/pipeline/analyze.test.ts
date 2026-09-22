@@ -4,10 +4,11 @@ import { ProfileExtractionError, type EventProfile } from '@/lib/agent/profile';
 import { createDb, type Db } from '@/lib/db/client';
 import { migrate } from '@/lib/db/migrate';
 import { getEvent, insertEvent } from '@/lib/db/repo';
-import type { EventInput, LlmClient, MarketData } from '@/lib/domain';
+import type { EventInput, LlmClient, MarketData, Mover } from '@/lib/domain';
 import { DISCLAIMER } from '@/lib/explain/guard';
 import type { NarrationInput } from '@/lib/explain/narrate';
 import { analyzeEvent } from '@/lib/pipeline/analyze';
+import { SectorsHttpError } from '@/lib/sectors/client';
 import { createFakeMarketData } from '@/lib/sectors/fake';
 import { memoryLedger } from '@/lib/sectors/stores';
 
@@ -76,6 +77,7 @@ describe('analyzeEvent', () => {
     expect(bmri.confidence).toBe('sedang');
     expect(report.subSectorSummary.find((s) => s.subSector === 'Banks')).toBeDefined();
     expect(report.disclaimer).toBe(DISCLAIMER);
+    expect(report.unexplainedMovers).toEqual([]);
     expect((await getEvent(db, event.id))?.status).toBe('done');
   });
 
@@ -109,5 +111,42 @@ describe('analyzeEvent', () => {
     const stored = await getEvent(db, event.id);
     expect(stored?.status).toBe('failed');
     expect(stored?.statusMessage).toContain('Gagal memahami berita');
+  });
+
+  it('degrades gracefully when one stock fails at Sectors, keeping the rest of the report', async () => {
+    const base = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-20' });
+    const degraded: MarketData = {
+      ...base,
+      daily: async (s, a, b) => {
+        if (s === 'TLKM') throw new SectorsHttpError(503, '/v2/daily/TLKM/', 'down');
+        return base.daily(s, a, b);
+      },
+    };
+    const { event } = await insertEvent(db, baseEvent);
+    const report = await analyzeEvent(event.id, { db, market: degraded, llm: fakeLlm(), ledger: memoryLedger() });
+
+    expect(report.mode).toBe('retrospective');
+    expect((await getEvent(db, event.id))?.status).toBe('done');
+    const tlkm = report.findings.find((f) => f.candidate.symbol === 'TLKM')!;
+    expect(tlkm.reaction).toBeNull();
+    expect(tlkm.confidence).toBe('rendah');
+    expect(tlkm.dataNote).toBe('Data tidak tersedia dari Sectors.');
+    const bbri = report.findings.find((f) => f.candidate.symbol === 'BBRI')!;
+    expect(bbri.reaction?.significant).toBe(true);
+  });
+
+  it('flags unexplained movers only when t0 is the last trading day', async () => {
+    const base = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-09' });
+    const movers: Mover[] = [
+      { symbol: 'BBRI', name: 'PT Bank Rakyat Indonesia (Persero) Tbk', priceChange: -0.07, date: '2026-03-09' },
+      { symbol: 'ADRO', name: 'PT Alamtri Resources Indonesia Tbk', priceChange: -0.08, date: '2026-03-09' },
+      { symbol: 'PTBA', name: 'PT Bukit Asam Tbk', priceChange: -0.03, date: '2026-03-09' },
+    ];
+    const withMovers: MarketData = { ...base, topLosers1d: async () => movers };
+    const { event } = await insertEvent(db, baseEvent);
+    const report = await analyzeEvent(event.id, { db, market: withMovers, llm: fakeLlm(), ledger: memoryLedger() });
+
+    expect(report.market?.t0).toBe('2026-03-09');
+    expect(report.unexplainedMovers).toEqual([movers[1]]);
   });
 });
