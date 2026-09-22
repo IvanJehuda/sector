@@ -21,6 +21,9 @@ describe('eventCalendarDate', () => {
   it('keeps plain dates', () => {
     expect(eventCalendarDate('2026-07-09')).toBe('2026-07-09');
   });
+  it.each(['', 'kemarin', '2026-13-45T10:00:00'])('throws a clear error for unparseable input %j', (bad) => {
+    expect(() => eventCalendarDate(bad)).toThrow(`Invalid publishedAt: ${bad}`);
+  });
 });
 
 describe('priceWindow', () => {

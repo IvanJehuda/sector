@@ -16,6 +16,7 @@ export function eventCalendarDate(publishedAt: string): string {
   const wib = hasOffset
     ? new Date(new Date(publishedAt).getTime() + WIB_OFFSET_MS)
     : new Date(`${publishedAt.replace(' ', 'T')}Z`);
+  if (Number.isNaN(wib.getTime())) throw new Error(`Invalid publishedAt: ${publishedAt}`);
   const day = wib.toISOString().slice(0, 10);
   return wib.getUTCHours() >= MARKET_CLOSE_HOUR_WIB ? addDays(day, 1) : day;
 }
