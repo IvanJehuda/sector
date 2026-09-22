@@ -8,4 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger automatic news receiver
-        run: curl -fsS -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.APP_URL }}/api/cron/poll"
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$APP_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "APP_URL or CRON_SECRET secret is not set (app not deployed); skipping news poll."
+            exit 0
+          fi
+          curl -fsS -H "Authorization: Bearer $CRON_SECRET" "$APP_URL/api/cron/poll"
