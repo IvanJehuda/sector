@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Correlation Explainer
 
-## Getting Started
+> *Correlation Explainer mengubah berita dan event apa pun menjadi daftar saham IDX yang terkait, beserta bukti reaksi pasar dari data Sectors, sehingga investor pemula paham "apa hubungannya berita ini dengan saham itu" tanpa menerima saran investasi.*
 
-First, run the development server:
+Sectors Hackathon 2026 · Track: **AI Agents & Assistants**
 
+**Disclaimer:** Informasi ini adalah analisis data historis dan bukan saran investasi. Keterkaitan tidak berarti sebab-akibat. Keputusan investasi sepenuhnya tanggung jawab Anda.
+
+## Fitur
+- **Penerima berita otomatis:** berita IDX dari Sectors ditarik 3× sehari pada hari bursa. Analisis berjalan saat diklik.
+- **Tempel link atau teks:** berita apa pun (termasuk makro dan geopolitik) dipetakan ke saham IDX.
+- **Retrospektif:** abnormal return dibanding IHSG, uji signifikansi (z-score), foreign flow, dan ringkasan per subsektor.
+- **Prospektif (HIPOTESIS):** keterkaitan dan pola historis dari event serupa.
+- **Hemat kredit:** cache-first, fixture, dan batas budget yang tegas (peringatan 80%, blokir 90%).
+
+## Arsitektur
+Next.js 15 + TypeScript · SQLite/libSQL · OpenAI structured outputs · Sectors REST API v2.
+Detail: `docs/superpowers/specs/2026-09-22-correlation-explainer-design.md`.
+
+| Data Sectors yang dipakai | Endpoint |
+|---|---|
+| Daftar emiten, grup usaha, dan anggota indeks | `/v2/companies/` (screener) |
+| Afiliasi grup | `/v2/company/report/{symbol}/?sections=overview` |
+| Harga saham dan IHSG | `/v2/daily/{symbol}/`, `/v2/index-daily/ihsg/` |
+| Foreign flow | `/v2/foreign-flow/{symbol}/` |
+| Top losers | `/v2/companies/top-changes/` |
+| Feed berita | `/v2/news/` |
+
+## Menjalankan
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# pnpm wajib terpasang, mis. `npm i -g pnpm@9` atau `corepack enable`
+pnpm install
+cp .env.example .env.local        # isi SECTORS_API_KEY dan OPENAI_API_KEY
+# Tanpa kredit dan tanpa LLM (data palsu):
+SECTORS_MODE=fake LLM_MODE=fake FAKE_SHOCK_DAY=2026-03-02 pnpm dev
+# Dengan data asli:
+SECTORS_MODE=live LLM_MODE=openai pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+| Perintah | Fungsi |
+|---|---|
+| `pnpm test` / `pnpm e2e` | Unit/integration test (fixture) / E2E (mode palsu) |
+| `pnpm record` | Rekam fixture asli (sekali, ~15–20 kredit) |
+| `pnpm poll` | Tarik berita baru secara manual |
+| `pnpm seed:history --tag <slug> --since YYYY-MM-DD --limit 15` | Bangun pustaka pola historis |
+| `pnpm eval` | Presisi/recall pemetaan pada golden set |
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Aturan kredit tim (1.000 total)
+Anggaran ada di spec §6. Pemakaian bisa dilihat di banner beranda dan `GET /api/credits`. **Jangan memanggil API asli dari test.**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tag berita (hasil `pnpm record`), untuk seed histori: `belum diisi — jalankan pnpm record dengan API key`
 
-## Learn More
+## Golden set
+`data/golden-set.json` berisi 8–10 event nyata dengan subsektor dan saham yang diharapkan (diberi label oleh tim). Hasil terakhir: `belum diisi — jalankan pnpm eval dengan API key`
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deploy (opsional)
+1. `turso db create correlation-explainer`, lalu ambil URL dan token.
+2. Vercel: import repo, lalu set env `DATABASE_URL=libsql://...`, `DATABASE_AUTH_TOKEN`, `SECTORS_MODE=live`, `SECTORS_API_KEY`, `LLM_MODE=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `CRON_SECRET`.
+3. GitHub → Settings → Secrets: `APP_URL` (URL Vercel) dan `CRON_SECRET` untuk workflow `poll-news`.

@@ -1,0 +1,11 @@
+name: poll-news
+on:
+  schedule:
+    - cron: '0 1,5,9 * * 1-5' # 08:00, 12:00, 16:00 WIB on weekdays
+  workflow_dispatch: {}
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger automatic news receiver
+        run: curl -fsS -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" "${{ secrets.APP_URL }}/api/cron/poll"
