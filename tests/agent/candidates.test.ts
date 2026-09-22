@@ -78,7 +78,7 @@ describe('buildCandidates', () => {
       groupMembers: {},
       indexMembers: {},
     });
-    expect(evidence.map((c) => c.symbol)).toEqual(['ANTM', 'BBNI', 'BBRI', 'BMRI', 'ADRO', 'PTBA']);
+    expect(evidence.map((c) => c.symbol)).toEqual(['BBNI', 'ANTM', 'BBRI', 'BMRI', 'ADRO', 'PTBA']);
     expect(other.map((c) => [c.symbol, c.withEvidence])).toEqual([['TLKM', false]]);
   });
 });

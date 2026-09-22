@@ -72,7 +72,7 @@ export function buildCandidates(i: CandidateInputs): { evidence: Candidate[]; ot
       .filter((s) => bySymbol.has(s))
       .sort((a, b) => (bySymbol.get(b)?.marketCap ?? 0) - (bySymbol.get(a)?.marketCap ?? 0));
 
-  for (const s of directSymbols(i.profile, i.sourceSymbols, i.universe)) add(s, 'direct', 'Disebut langsung dalam berita');
+  for (const s of byMarketCap(directSymbols(i.profile, i.sourceSymbols, i.universe))) add(s, 'direct', 'Disebut langsung dalam berita');
   for (const [group, members] of Object.entries(i.groupMembers)) {
     for (const s of byMarketCap(members).slice(0, PER_GROUP)) add(s, 'group', `Satu grup usaha: ${group}`);
   }
