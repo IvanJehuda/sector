@@ -48,6 +48,8 @@ SECTORS_MODE=live LLM_MODE=openai pnpm dev
 ## Aturan kredit tim (1.000 total)
 Anggaran ada di spec §6. Pemakaian bisa dilihat di banner beranda dan `GET /api/credits`. **Jangan memanggil API asli dari test.**
 
+Analisis baru dari pengunjung (`POST /api/analyze`) dibatasi: ditolak (HTTP 429) bila kredit terpakai sudah mencapai `PUBLIC_ANALYSIS_BUDGET_RATIO` × anggaran (default 0,7 — sisa 30% untuk seed histori dan demo) atau bila sudah ada `PUBLIC_ANALYSIS_DAILY_LIMIT` analisis dalam 24 jam terakhir (default 20). Membuka laporan yang sudah ada selalu diizinkan.
+
 Tag berita (hasil `pnpm record`), untuk seed histori: `belum diisi — jalankan pnpm record dengan API key`
 
 ## Golden set
@@ -55,5 +57,5 @@ Tag berita (hasil `pnpm record`), untuk seed histori: `belum diisi — jalankan 
 
 ## Deploy (opsional)
 1. `turso db create correlation-explainer`, lalu ambil URL dan token.
-2. Vercel: import repo, lalu set env `DATABASE_URL=libsql://...`, `DATABASE_AUTH_TOKEN`, `SECTORS_MODE=live`, `SECTORS_API_KEY`, `LLM_MODE=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `CRON_SECRET`.
+2. Vercel: import repo, lalu set env `DATABASE_URL=libsql://...`, `DATABASE_AUTH_TOKEN`, `SECTORS_MODE=live`, `SECTORS_API_KEY`, `LLM_MODE=openai`, `OPENAI_API_KEY`, `OPENAI_MODEL`, `CRON_SECRET`, dan opsional `PUBLIC_ANALYSIS_DAILY_LIMIT` / `PUBLIC_ANALYSIS_BUDGET_RATIO` (lihat `.env.example`).
 3. GitHub → Settings → Secrets: `APP_URL` (URL Vercel) dan `CRON_SECRET` untuk workflow `poll-news`.

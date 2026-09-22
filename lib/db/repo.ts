@@ -21,8 +21,7 @@ function rowToEvent(r: Row): StoredEvent {
   };
 }
 
-/** An 'analyzing' status younger than this is treated as in flight; older ones may be re-claimed. */
-export const ANALYSIS_STALE_MS = 180_000;
+export { ANALYSIS_STALE_MS } from '@/lib/domain';
 
 export async function getEvent(db: Db, id: string): Promise<StoredEvent | null> {
   const r = await db.execute({ sql: 'SELECT * FROM events WHERE id = ?', args: [id] });

@@ -27,6 +27,9 @@ export interface StoredEvent extends EventInput {
   statusUpdatedAt: string | null;
 }
 
+/** An 'analyzing' status younger than this is treated as in flight; older ones may be re-claimed. */
+export const ANALYSIS_STALE_MS = 180_000;
+
 export interface Company {
   symbol: string;
   name: string;
