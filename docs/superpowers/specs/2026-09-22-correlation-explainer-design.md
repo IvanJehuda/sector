@@ -120,7 +120,7 @@ Semua endpoint ada di `https://api.sectors.app`, dengan header `Authorization: <
 | LLM menyebut kode saham fiktif | Dibuang oleh `buildCandidates()` (validasi terhadap daftar emiten di cache, tanpa memanggil API) |
 | Kandidat tanpa kaitan yang didukung data | Tidak mungkin terjadi: setiap `Candidate` punya `linkType` yang berasal dari data Sectors |
 | Link gagal dibaca (paywall, 4xx/5xx, timeout 10 dtk, teks < 300 karakter) | `ArticleFetchError`, lalu UI meminta user menempel teks |
-| Tanggal event tidak diketahui | Urutan fallback: meta `article:published_time`, lalu input user, lalu tanggal hari ini (dengan catatan di laporan) |
+| Tanggal event tidak diketahui | Urutan fallback: input user, lalu meta `article:published_time`, lalu tanggal hari ini |
 | Akhir pekan atau libur | Hari bursa pertama ≥ hari event diambil dari data IHSG, tanpa kalender libur |
 | Sectors 429 | Retry dengan jeda 1 dtk, 2 dtk, 4 dtk (maks. 3×). Gratis |
 | Sectors 5xx | Retry 1×. Kalau masih gagal, temuan saham itu diberi `dataNote` "data tidak tersedia" dan laporan tetap dibuat |
@@ -142,14 +142,15 @@ Semua endpoint ada di `https://api.sectors.app`, dengan header `Authorization: <
 - **Contract test:** skema zod divalidasi terhadap sampel dari dokumentasi (`fixtures/samples/`) dan terhadap semua fixture asli yang sudah direkam.
 - **Integration test:** `analyzeEvent()` dengan `MarketData` palsu (seri harga sintetis) dan `LlmClient` palsu, lalu hasilnya dicek dengan snapshot laporan.
 - **Golden set:** `data/golden-set.json` berisi 8–10 event nyata beserta label subsektor/saham yang diharapkan. `pnpm eval` dijalankan manual dengan LLM asli dan menghasilkan presisi/recall. Tidak dijalankan di CI.
-- **E2E:** tempel teks, tunggu laporan tampil, lalu cek disclaimer. Berjalan dalam mode fixture dengan LLM palsu (`LLM_MODE=fake`).
+- **E2E:** tempel teks, tunggu laporan tampil, lalu cek disclaimer. Juga memicu polling dan mengecek feed. Berjalan dengan data pasar sintetis (`SECTORS_MODE=fake`) dan LLM palsu (`LLM_MODE=fake`), tanpa kredit dan tanpa API key.
 
 ## 9. Konfigurasi (env)
 
 | Variabel | Contoh | Keterangan |
 |---|---|---|
 | `SECTORS_API_KEY` | `sk-...` | Jangan pernah di-commit |
-| `SECTORS_MODE` | `fixture` \| `record` \| `live` | Default `fixture` |
+| `SECTORS_MODE` | `fixture` \| `record` \| `live` \| `fake` | Default `fixture`. `fake` = data pasar sintetis deterministik untuk dev UI dan E2E |
+| `FAKE_SHOCK_DAY` | `2026-03-02` | Hanya untuk `fake`: tanggal ketika BBRI/BMRI sintetis "anjlok" |
 | `SECTORS_CREDIT_BUDGET` | `1000` | |
 | `OPENAI_API_KEY` | `sk-...` | |
 | `OPENAI_MODEL` | `gpt-4o-mini` | Model apa pun yang mendukung structured outputs |
