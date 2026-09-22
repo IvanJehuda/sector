@@ -1,8 +1,10 @@
 import Link from 'next/link';
 import type { StoredEvent } from '@/lib/domain';
+import { isAnalysisInFlight } from '@/lib/ui/analysis-status';
 import { AnalyzeFeedButton } from './AnalyzeFeedButton';
 
 export function Feed({ events }: { events: StoredEvent[] }) {
+  const now = new Date();
   return (
     <section className="space-y-3">
       <h2 className="text-xl font-semibold">Berita terbaru</h2>
@@ -32,6 +34,13 @@ export function Feed({ events }: { events: StoredEvent[] }) {
                 <Link href={`/events/${e.id}`} className="shrink-0 text-sm text-blue-700 underline">
                   Lihat laporan
                 </Link>
+              ) : isAnalysisInFlight(e, now) ? (
+                <span className="shrink-0 text-right text-sm text-gray-600">
+                  Sedang dianalisis…{' '}
+                  <Link href={`/events/${e.id}`} className="text-blue-700 underline">
+                    Lihat status
+                  </Link>
+                </span>
               ) : (
                 <AnalyzeFeedButton eventId={e.id} />
               )}

@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
+import { requestAnalysis } from '@/lib/ui/request-analysis';
 
 const MAX_CREDITS_PER_ANALYSIS = 19;
 
@@ -17,18 +18,18 @@ export function AnalyzeForm() {
     e.preventDefault();
     setBusy(true);
     setError(null);
-    const res = await fetch('/api/analyze', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ url: url || undefined, text: text || undefined, date: date || undefined }),
-    });
-    const body = (await res.json()) as { eventId?: string; error?: string };
-    setBusy(false);
-    if (res.status === 202 && body.eventId) {
-      router.push(`/events/${body.eventId}`);
-      return;
+    try {
+      const result = await requestAnalysis({ url: url || undefined, text: text || undefined, date: date || undefined });
+      if (result.ok) {
+        router.push(`/events/${result.eventId}`);
+        return;
+      }
+      setError(result.error);
+    } catch {
+      setError('Terjadi kesalahan pada server.');
+    } finally {
+      setBusy(false);
     }
-    setError(body.error ?? 'Terjadi kesalahan.');
   }
 
   return (
@@ -47,7 +48,8 @@ export function AnalyzeForm() {
         <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 rounded border px-3 py-2" />
       </label>
       <p className="text-xs text-gray-500">
-        Analisis memakai maksimal ~{MAX_CREDITS_PER_ANALYSIS} kredit Sectors (lebih sedikit jika data sudah di-cache).
+        Analisis memakai sekitar ≤{MAX_CREDITS_PER_ANALYSIS} kredit Sectors (lebih sedikit jika data sudah di-cache; analisis pertama
+        kali bisa sedikit lebih banyak karena daftar emiten diambil sekali).
       </p>
       {error && (
         <p role="alert" className="text-sm text-red-700">
