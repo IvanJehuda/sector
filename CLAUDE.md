@@ -2,7 +2,10 @@
 
 Aplikasi Next.js 15 (TypeScript) untuk Sectors Hackathon 2026: berita/event → saham IDX terkait + bukti reaksi pasar.
 Spec: docs/superpowers/specs/2026-09-22-correlation-explainer-design.md
-Plan: docs/superpowers/plans/2026-09-22-correlation-explainer.md
+Plan: docs/superpowers/plans/2026-09-22-correlation-explainer.md (riwayat; kode adalah sumber kebenaran)
+
+## Mulai di sini
+Baca **HANDOFF.md** dulu. Isinya status terkini, langkah berikutnya, anggaran kredit, dan risiko yang sengaja dibiarkan. Setelah menyelesaikan satu step, perbarui tabel status di HANDOFF.md §1.
 
 ## Perintah
 - `pnpm test` (Vitest, fixture + fake LLM), `pnpm typecheck`, `pnpm lint`, `pnpm e2e`
@@ -17,3 +20,4 @@ Plan: docs/superpowers/plans/2026-09-22-correlation-explainer.md
 6. TDD: tulis test dulu. Sebelum menyatakan selesai, jalankan `pnpm test && pnpm typecheck` dan tunjukkan hasilnya.
 7. Teks UI dalam Bahasa Indonesia. Kode dan identifier dalam bahasa Inggris.
 8. Jangan commit `.env*`, `*.db`, atau API key.
+9. Perintah yang memakai kredit Sectors atau OpenAI (`pnpm record`, `pnpm seed:history`, `pnpm eval`, dan `pnpm dev` dengan `SECTORS_MODE=live`/`LLM_MODE=openai`) hanya boleh dijalankan setelah menyebutkan perkiraan kreditnya dan mendapat persetujuan eksplisit dari manusia.

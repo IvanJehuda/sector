@@ -4,6 +4,8 @@
 
 Sectors Hackathon 2026 · Track: **AI Agents & Assistants**
 
+> **Melanjutkan pengembangan?** Baca [HANDOFF.md](HANDOFF.md) untuk status, langkah berikutnya, dan anggaran kredit.
+
 **Disclaimer:** Informasi ini adalah analisis data historis dan bukan saran investasi. Keterkaitan tidak berarti sebab-akibat. Keputusan investasi sepenuhnya tanggung jawab Anda.
 
 ## Fitur
