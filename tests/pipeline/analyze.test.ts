@@ -8,6 +8,7 @@ import type { EventInput, LlmClient, MarketData, Mover } from '@/lib/domain';
 import { DISCLAIMER } from '@/lib/explain/guard';
 import type { NarrationInput } from '@/lib/explain/narrate';
 import { analyzeEvent } from '@/lib/pipeline/analyze';
+import { CreditBudgetError } from '@/lib/sectors/budget';
 import { SectorsHttpError } from '@/lib/sectors/client';
 import { createFakeMarketData } from '@/lib/sectors/fake';
 import { memoryLedger } from '@/lib/sectors/stores';
@@ -23,9 +24,9 @@ const PROFILE: EventProfile = {
   hypotheses: [{ sub_sector: 'Banks', direction: 'negatif', reason: 'Uji.' }],
 };
 
-function fakeLlm(): LlmClient {
+function fakeLlm(profile: EventProfile = PROFILE): LlmClient {
   return createFakeLlm({
-    event_profile: PROFILE,
+    event_profile: profile,
     narrative: (user: string) => {
       const input = JSON.parse(user) as NarrationInput;
       return {
@@ -133,6 +134,66 @@ describe('analyzeEvent', () => {
     expect(tlkm.dataNote).toBe('Data tidak tersedia dari Sectors.');
     const bbri = report.findings.find((f) => f.candidate.symbol === 'BBRI')!;
     expect(bbri.reaction?.significant).toBe(true);
+  });
+
+  it('degrades per stock when the credit budget blocks price or flow data', async () => {
+    const base = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-20' });
+    const blocked: MarketData = {
+      ...base,
+      daily: async (s, a, b) => {
+        if (s === 'TLKM') throw new CreditBudgetError(900, 1, 1000);
+        return base.daily(s, a, b);
+      },
+      foreignFlow: async (s, a, b) => {
+        if (s === 'BMRI') throw new CreditBudgetError(900, 1, 1000);
+        return base.foreignFlow(s, a, b);
+      },
+    };
+    const { event } = await insertEvent(db, baseEvent);
+    const report = await analyzeEvent(event.id, { db, market: blocked, llm: fakeLlm(), ledger: memoryLedger() });
+
+    expect((await getEvent(db, event.id))?.status).toBe('done');
+    const note = 'Kuota kredit hampir habis, data saham ini tidak diambil.';
+    const tlkm = report.findings.find((f) => f.candidate.symbol === 'TLKM')!;
+    expect(tlkm).toMatchObject({ reaction: null, netForeignInflow: null, confidence: 'rendah', dataNote: note });
+    const bmri = report.findings.find((f) => f.candidate.symbol === 'BMRI')!;
+    expect(bmri.reaction).not.toBeNull();
+    expect(bmri).toMatchObject({ netForeignInflow: null, confidence: 'rendah', dataNote: note });
+    const bbri = report.findings.find((f) => f.candidate.symbol === 'BBRI')!;
+    expect(bbri.reaction?.significant).toBe(true);
+    expect(bbri.dataNote).toBeNull();
+  });
+
+  it('still fails the analysis when the credit budget blocks the IHSG series', async () => {
+    const base = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-20' });
+    const blocked: MarketData = {
+      ...base,
+      ihsg: async () => {
+        throw new CreditBudgetError(900, 1, 1000);
+      },
+    };
+    const { event } = await insertEvent(db, baseEvent);
+    await expect(analyzeEvent(event.id, { db, market: blocked, llm: fakeLlm(), ledger: memoryLedger() })).rejects.toBeInstanceOf(
+      CreditBudgetError,
+    );
+    expect(await getEvent(db, event.id)).toMatchObject({
+      status: 'failed',
+      statusMessage: 'Kuota kredit Sectors hampir habis, jadi hanya data cache yang bisa dipakai.',
+    });
+  });
+
+  it('fetches members for the first index hint only', async () => {
+    const base = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-20' });
+    const indexMembers = vi.fn(base.indexMembers);
+    const { event } = await insertEvent(db, baseEvent);
+    await analyzeEvent(event.id, {
+      db,
+      market: { ...base, indexMembers },
+      llm: fakeLlm({ ...PROFILE, index_hints: ['IDXBUMN20', 'LQ45', 'IDXBUMN20'] }),
+      ledger: memoryLedger(),
+    });
+    expect(indexMembers).toHaveBeenCalledTimes(1);
+    expect(indexMembers).toHaveBeenCalledWith('IDXBUMN20');
   });
 
   it('flags unexplained movers only when t0 is the last trading day', async () => {

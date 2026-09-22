@@ -23,6 +23,9 @@ export interface PipelineDeps {
 }
 
 export const UNEXPLAINED_THRESHOLD = -0.05;
+/** Only the first index hint is expanded, keeping an analysis within the advertised ~19 credits. */
+export const MAX_INDEX_HINTS = 1;
+const CREDIT_BLOCKED_NOTE = 'Kuota kredit hampir habis, data saham ini tidak diambil.';
 const PROSPECTIVE_NOTE = 'Belum ada hari bursa setelah event, jadi ini hipotesis.';
 
 export async function collectGroups(market: MarketData, profile: EventProfile, direct: string[]): Promise<Record<string, string[]>> {
@@ -38,7 +41,7 @@ export async function collectGroups(market: MarketData, profile: EventProfile, d
 
 export async function collectIndexes(market: MarketData, profile: EventProfile): Promise<Record<string, string[]>> {
   const out: Record<string, string[]> = {};
-  for (const code of [...new Set(profile.index_hints)]) out[code] = await market.indexMembers(code);
+  for (const code of [...new Set(profile.index_hints)].slice(0, MAX_INDEX_HINTS)) out[code] = await market.indexMembers(code);
   return out;
 }
 
@@ -56,6 +59,7 @@ async function measureCandidate(
     prices = await market.daily(c.symbol, win.start, win.end);
   } catch (err) {
     if (err instanceof SectorsHttpError) return { ...empty, dataNote: 'Data tidak tersedia dari Sectors.' };
+    if (err instanceof CreditBudgetError) return { ...empty, dataNote: CREDIT_BLOCKED_NOTE };
     throw err;
   }
   const reaction = measureReaction(prices, ihsg, eventDay);
@@ -64,6 +68,9 @@ async function measureCandidate(
   try {
     netForeignInflow = sumFlowBetween(await market.foreignFlow(c.symbol, win.start, win.end), reaction.t0, reaction.tEnd);
   } catch (err) {
+    if (err instanceof CreditBudgetError) {
+      return { candidate: c, reaction, netForeignInflow: null, confidence: 'rendah', explanation: '', dataNote: CREDIT_BLOCKED_NOTE };
+    }
     if (!(err instanceof SectorsHttpError)) throw err;
   }
   return {
