@@ -52,9 +52,9 @@ export function AnalyzeForm() {
           aria-describedby={error ? 'news-error' : undefined}
           className="block w-full resize-y bg-transparent px-5 py-4 font-mono text-sm leading-relaxed text-fg outline-none placeholder:text-white/40"
         />
-        <div className="flex flex-col gap-3 border-t border-line px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-3">
           <div className="flex items-center gap-3">
-            <label htmlFor="news-date" className="font-mono text-[11px] tracking-wide text-white/55">
+            <label htmlFor="news-date" className="font-mono text-[11px] tracking-wide whitespace-nowrap text-white/55">
               Tanggal berita (opsional)
             </label>
             <input
@@ -68,7 +68,7 @@ export function AnalyzeForm() {
           <button
             type="submit"
             disabled={busy}
-            className="h-11 bg-fg px-6 text-sm font-medium text-ink transition hover:-translate-y-px hover:shadow-[0_0_0_1px_#fff,0_8px_40px_rgb(245_165_36/0.45),0_0_60px_rgb(43_217_197/0.25)] disabled:opacity-50"
+            className="h-11 bg-fg px-6 text-sm font-medium whitespace-nowrap text-ink transition hover:-translate-y-px hover:shadow-[0_0_0_1px_#fff,0_8px_40px_rgb(245_165_36/0.45),0_0_60px_rgb(43_217_197/0.25)] disabled:opacity-50"
           >
             {busy ? 'Memproses…' : 'Cek dampak berita →'}
           </button>
