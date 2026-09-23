@@ -31,7 +31,7 @@ describe('foreignFlowText', () => {
     expect(foreignFlowText(8e9)).toBe('Investor asing lebih banyak membeli, Rp8 miliar');
     expect(foreignFlowText(0)).toBeNull();
     expect(foreignFlowText(null)).toBeNull();
-    expect(findBannedPhrases(out)).toEqual([]);
+    expect(findBannedPhrases(out ?? '')).toEqual([]);
   });
 
   it('keeps one decimal for small amounts', () => {
