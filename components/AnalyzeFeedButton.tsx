@@ -20,7 +20,7 @@ export function AnalyzeFeedButton({ eventId }: { eventId: string }) {
       }
       setError(result.error);
     } catch {
-      setError('Terjadi kesalahan pada server.');
+      setError('Terjadi kesalahan pada server. Coba lagi sebentar lagi.');
     } finally {
       setBusy(false);
     }
@@ -28,11 +28,16 @@ export function AnalyzeFeedButton({ eventId }: { eventId: string }) {
 
   return (
     <div className="flex shrink-0 flex-col items-end gap-1">
-      <button type="button" onClick={run} disabled={busy} className="rounded border px-3 py-1 text-sm disabled:opacity-50">
+      <button
+        type="button"
+        onClick={run}
+        disabled={busy}
+        className="h-9 border border-line-strong px-3.5 text-[13px] transition hover:border-teal hover:text-teal disabled:opacity-50"
+      >
         {busy ? 'Memproses…' : 'Analisis'}
       </button>
       {error && (
-        <p role="alert" className="max-w-xs text-right text-xs text-red-700">
+        <p role="alert" className="max-w-xs text-right text-xs text-[#ff8a80]">
           {error}
         </p>
       )}
