@@ -20,7 +20,7 @@ function marketText(ihsg: number) {
 
 function Kpi({ label, value, tech }: { label: string; value: React.ReactNode; tech: string }) {
   return (
-    <div className="flex flex-col gap-1.5 border-line px-4 py-5 transition-colors hover:bg-[linear-gradient(180deg,rgb(245_165_36/0.08),rgb(43_217_197/0.03))] sm:px-8 max-md:border-b md:border-r md:last:border-r-0">
+    <div className="flex flex-col gap-1.5 border-line py-5 transition-colors md:px-6 md:first:pl-0 hover:bg-[linear-gradient(180deg,rgb(245_165_36/0.08),rgb(43_217_197/0.03))] max-md:border-b md:border-r md:last:border-r-0">
       <span className="text-[13px] text-white/60">{label}</span>
       <span className="text-2xl font-light">{value}</span>
       <span className="font-mono text-[11px] text-white/45">{tech}</span>
@@ -102,7 +102,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
 
   return (
     <article className="flex flex-col">
-      <header className="flex flex-col gap-4 px-4 pt-12 pb-8 sm:px-10">
+      <header className="flex flex-col gap-4pt-12 pb-8">
         <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-wider">
           <span className={retro ? 'border border-[#58a6ff]/45 px-2.5 py-1 text-[#58a6ff]' : 'border border-dashed border-hypo/70 px-2.5 py-1 text-hypo'}>
             {modeLabel(report.mode).toUpperCase()}
@@ -163,7 +163,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
       </section>
 
       <section className="grid border-b border-line lg:grid-cols-[minmax(0,1fr)_380px]">
-        <div className="flex flex-col gap-6 border-line px-4 py-10 sm:px-10 lg:border-r">
+        <div className="flex flex-col gap-6 border-line py-10 lg:border-r lg:pr-10">
           <div className="flex flex-col gap-2">
             <h2 className="text-2xl font-light tracking-tight">
               {withPrice.length > 0 ? 'Seberapa jauh tiap saham bergerak dibanding pasar' : 'Saham yang terkait dengan berita ini'}
@@ -199,7 +199,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
           </p>
         </div>
 
-        <aside className="flex flex-col gap-6 px-4 py-10 sm:px-8">
+        <aside className="flex flex-col gap-6 py-10 lg:pl-8">
           <div className="flex flex-col gap-3">
             <SectionTitle>Kenapa saham-saham ini terkait</SectionTitle>
             <ol className="flex flex-col">
@@ -231,7 +231,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
       </section>
 
       <section className="grid border-b border-line md:grid-cols-3">
-        <div className="flex flex-col gap-3 border-line px-4 py-8 sm:px-10 max-md:border-b md:border-r">
+        <div className="flex flex-col gap-3 border-line py-8 max-md:border-b md:border-r md:pr-8">
           <h3 className="text-[17px]">Per bidang usaha</h3>
           {report.subSectorSummary.length > 0 ? (
             report.subSectorSummary.map((s) => (
@@ -244,7 +244,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
             <p className="text-sm text-white/50">Belum ada data harga per bidang usaha.</p>
           )}
         </div>
-        <div className="flex flex-col gap-3 border-line px-4 py-8 sm:px-8 max-md:border-b md:border-r">
+        <div className="flex flex-col gap-3 border-line py-8 max-md:border-b md:border-r md:px-8">
           <h3 className="text-[17px]">Berita serupa sebelumnya</h3>
           {report.analogs.length > 0 ? (
             report.analogs.map((a) => (
@@ -258,7 +258,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
           )}
           <span className="text-xs text-white/45">Masa lalu tidak menjamin gerak berikutnya.</span>
         </div>
-        <div className="flex flex-col gap-3 px-4 py-8 sm:px-8">
+        <div className="flex flex-col gap-3 py-8 md:pl-8">
           <h3 className="text-[17px]">Turun tajam, belum ada penjelasan</h3>
           {report.unexplainedMovers.length > 0 ? (
             <>
@@ -279,7 +279,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
       </section>
 
       {report.otherLinks.length > 0 && (
-        <section className="flex flex-col gap-3 border-b border-line px-4 py-8 sm:px-10">
+        <section className="flex flex-col gap-3 border-b border-line py-8">
           <h3 className="text-[17px]">Juga terkait, tapi tanpa data harga</h3>
           <ul className="flex flex-col gap-1.5 text-sm text-white/75">
             {report.otherLinks.map((c) => (
@@ -291,7 +291,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
         </section>
       )}
 
-      <footer className="flex flex-col gap-1 px-4 py-7 text-[13px] text-white/55 sm:flex-row sm:justify-between sm:px-10">
+      <footer className="flex flex-col gap-1 py-7 text-[13px] text-white/55 sm:flex-row sm:justify-between">
         <span>
           Kuota data Sectors terpakai: {report.creditsUsed} · Dibuat {CREATED_AT.format(new Date(report.createdAt))} WIB
         </span>

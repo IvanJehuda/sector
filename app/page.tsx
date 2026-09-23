@@ -2,7 +2,8 @@ import { CreditBanner, CreditPill } from '@/components/CreditBanner';
 import { Feed } from '@/components/Feed';
 import { Hero } from '@/components/Hero';
 import { HowItWorks } from '@/components/HowItWorks';
-import { Frame, SiteFooter, SiteNav } from '@/components/SiteNav';
+import { NewsTicker } from '@/components/NewsTicker';
+import { Container, Frame, SiteFooter, SiteNav } from '@/components/SiteNav';
 import { getDb } from '@/lib/db/client';
 import { listEvents } from '@/lib/db/repo';
 
@@ -14,19 +15,20 @@ export default async function Home() {
     <Frame>
       <SiteNav>
         <div className="hidden gap-8 text-sm text-white/70 lg:flex">
-          <a href="#berita" className="hover:text-fg">
-            Berita terbaru
-          </a>
           <a href="#cara-kerja" className="hover:text-fg">
             Cara kerja
+          </a>
+          <a href="#berita" className="hover:text-fg">
+            Berita terbaru
           </a>
         </div>
         <CreditPill />
       </SiteNav>
-      <main>
-        <div className="px-4 pt-4 empty:hidden sm:px-10">
+      <NewsTicker events={events} />
+      <main className="flex-1">
+        <Container className="pt-4 empty:hidden">
           <CreditBanner />
-        </div>
+        </Container>
         <Hero />
         <div className="spectral-line" />
         <HowItWorks />

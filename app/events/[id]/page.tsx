@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { use, useEffect, useState, type ReactNode } from 'react';
 import { ReportView } from '@/components/ReportView';
-import { Frame, SiteFooter, SiteNav } from '@/components/SiteNav';
+import { Container, Frame, SiteFooter, SiteNav } from '@/components/SiteNav';
 import type { Report, StoredEvent } from '@/lib/domain';
 import { POLL_TIMEOUT_MS, shouldKeepPolling } from '@/lib/ui/analysis-status';
 
@@ -140,7 +140,9 @@ export default function EventPage({ params }: { params: Promise<{ id: string }> 
           ← Kembali ke beranda
         </Link>
       </SiteNav>
-      <main>{data?.report ? body : <div className="px-4 py-12 sm:px-10">{body}</div>}</main>
+      <main className="flex-1">
+        <Container className={data?.report ? '' : 'py-12'}>{body}</Container>
+      </main>
       <SiteFooter />
     </Frame>
   );
