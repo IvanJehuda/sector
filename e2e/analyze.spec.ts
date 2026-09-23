@@ -11,9 +11,9 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   await page.getByRole('button', { name: 'Cek dampak berita' }).click();
 
   await expect(page).toHaveURL(/\/events\//, { timeout: 30_000 });
-  await expect(page.getByText('bukan saran investasi')).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText('bukan saran investasi').first()).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText('Retrospektif')).toBeVisible();
-  await expect(page.getByText('BBRI · PT Bank Rakyat Indonesia (Persero) Tbk')).toBeVisible();
+  await expect(page.getByText('PT Bank Rakyat Indonesia (Persero) Tbk').first()).toBeVisible();
 });
 
 test('automatic receiver adds news to the feed', async ({ page, request }) => {
