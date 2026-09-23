@@ -52,7 +52,7 @@ Anggaran ada di spec §6. Pemakaian bisa dilihat di banner beranda dan `GET /api
 
 Analisis baru dari pengunjung (`POST /api/analyze`) dibatasi: ditolak (HTTP 429) bila kredit terpakai sudah mencapai `PUBLIC_ANALYSIS_BUDGET_RATIO` × anggaran (default 0,7 — sisa 30% untuk seed histori dan demo) atau bila sudah ada `PUBLIC_ANALYSIS_DAILY_LIMIT` analisis dalam 24 jam terakhir (default 20). Membuka laporan yang sudah ada selalu diizinkan.
 
-Tag berita (hasil `pnpm record`), untuk seed histori: `belum diisi — jalankan pnpm record dengan API key`
+Tag berita (hasil `pnpm record`, 23 Sep 2026): slug untuk seed histori = `politics-regulation` (juga relevan: `government-policy`, `ministry`, `ojk`, `central-bank`, `interest-rate`, `tariff-vat`, `subsidies-incentives`). Daftar lengkap ada di `fixtures/sectors/v2_tags__*.json`.
 
 ## Golden set
 `data/golden-set.json` berisi 8–10 event nyata dengan subsektor dan saham yang diharapkan (diberi label oleh tim). Hasil terakhir: `belum diisi — jalankan pnpm eval dengan API key`

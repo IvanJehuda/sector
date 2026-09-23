@@ -1,0 +1,79 @@
+{
+  "key": "/v2/companies/top-changes/?classifications=top_losers&n_stock=10&periods=1d",
+  "data": {
+    "top_losers": {
+      "1d": [
+        {
+          "name": "PT Jaya Sukses Makmur Sentosa Tbk",
+          "symbol": "RISE.JK",
+          "price_change": -0.135294117647059,
+          "last_close_price": 735,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "Bayan Resources Tbk",
+          "symbol": "BYAN.JK",
+          "price_change": -0.0971428571428571,
+          "last_close_price": 11850,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT Soho Global Health Tbk",
+          "symbol": "SOHO.JK",
+          "price_change": -0.089171974522293,
+          "last_close_price": 1430,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT Transcoal Pacific Tbk",
+          "symbol": "TCPI.JK",
+          "price_change": -0.0771704180064309,
+          "last_close_price": 1435,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT MNC Digital Entertainment Tbk",
+          "symbol": "MSIN.JK",
+          "price_change": -0.0671641791044776,
+          "last_close_price": 250,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT Dharma Satya Nusantara Tbk",
+          "symbol": "DSNG.JK",
+          "price_change": -0.0666666666666667,
+          "last_close_price": 1540,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT Sawit Sumbermas Sarana Tbk",
+          "symbol": "SSMS.JK",
+          "price_change": -0.0630630630630631,
+          "last_close_price": 1040,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT Triputra Agro Persada Tbk",
+          "symbol": "TAPG.JK",
+          "price_change": -0.0599078341013825,
+          "last_close_price": 2040,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "Astra Agro Lestari Tbk",
+          "symbol": "AALI.JK",
+          "price_change": -0.0598802395209581,
+          "last_close_price": 7850,
+          "latest_close_date": "2026-09-22"
+        },
+        {
+          "name": "PT Timah Tbk",
+          "symbol": "TINS.JK",
+          "price_change": -0.0591836734693878,
+          "last_close_price": 4610,
+          "latest_close_date": "2026-09-22"
+        }
+      ]
+    }
+  }
+}

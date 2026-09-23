@@ -1,0 +1,97 @@
+{
+  "key": "/v2/companies/?limit=50&order_by=-market_cap&where=indices%20in%20%5B'IDXBUMN20'%5D",
+  "data": {
+    "results": [
+      {
+        "symbol": "BBRI.JK",
+        "company_name": "PT Bank Rakyat Indonesia (Persero) Tbk"
+      },
+      {
+        "symbol": "BMRI.JK",
+        "company_name": "PT Bank Mandiri (Persero) Tbk"
+      },
+      {
+        "symbol": "TLKM.JK",
+        "company_name": "PT Telkom Indonesia (Persero) Tbk"
+      },
+      {
+        "symbol": "BBNI.JK",
+        "company_name": "PT Bank Negara Indonesia (Persero) Tbk"
+      },
+      {
+        "symbol": "ANTM.JK",
+        "company_name": "Aneka Tambang Tbk."
+      },
+      {
+        "symbol": "BRIS.JK",
+        "company_name": "PT Bank Syariah Indonesia Tbk"
+      },
+      {
+        "symbol": "PGEO.JK",
+        "company_name": "PT Pertamina Geothermal Energy Tbk"
+      },
+      {
+        "symbol": "MTEL.JK",
+        "company_name": "PT Dayamitra Telekomunikasi Tbk"
+      },
+      {
+        "symbol": "PGAS.JK",
+        "company_name": "PT Perusahaan Gas Negara Tbk"
+      },
+      {
+        "symbol": "PTBA.JK",
+        "company_name": "Bukit Asam Tbk"
+      },
+      {
+        "symbol": "JSMR.JK",
+        "company_name": "PT Jasa Marga Tbk"
+      },
+      {
+        "symbol": "BBTN.JK",
+        "company_name": "PT Bank Tabungan Negara (Persero) Tbk"
+      },
+      {
+        "symbol": "SMGR.JK",
+        "company_name": "Semen Indonesia (Persero) Tbk"
+      },
+      {
+        "symbol": "BJBR.JK",
+        "company_name": "Bank Pembangunan Daerah Jawa Barat dan Banten Tbk"
+      },
+      {
+        "symbol": "BJTM.JK",
+        "company_name": "Bank Pembangunan Daerah Jawa Timur Tbk"
+      },
+      {
+        "symbol": "ELSA.JK",
+        "company_name": "Elnusa Tbk"
+      },
+      {
+        "symbol": "AGRO.JK",
+        "company_name": "PT Bank Raya Indonesia Tbk"
+      },
+      {
+        "symbol": "SMBR.JK",
+        "company_name": "PT Semen Baturaja Tbk"
+      },
+      {
+        "symbol": "PTPP.JK",
+        "company_name": "PP (Persero) Tbk"
+      },
+      {
+        "symbol": "ADHI.JK",
+        "company_name": "PT Adhi Karya (Persero) Tbk."
+      }
+    ],
+    "pagination": {
+      "total_count": 20,
+      "showing": 20,
+      "limit": 50,
+      "offset": 0,
+      "has_next": false,
+      "has_previous": false,
+      "next_offset": null,
+      "previous_offset": null
+    }
+  }
+}

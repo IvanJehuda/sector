@@ -10,8 +10,8 @@
 | Kode aplikasi (22 task rencana + 12 perbaikan dari review akhir) | ✅ Selesai, sudah di `main` |
 | Test | ✅ 242 unit/integration test, 3 E2E, typecheck, lint 0 error, dan `next build` lolos |
 | Step 1: setup laptop dan jalan di mode palsu | ✅ Sudah dicek di laptop Ivan (Windows) |
-| Step 2: `.env.local` | ⬜ Belum |
-| Step 3: rekam data asli Sectors (`pnpm record`) | ⬜ Belum. **Belum pernah diuji dengan API asli** |
+| Step 2: `.env.local` | ✅ 23 Sep, di laptop pemegang key |
+| Step 3: rekam data asli Sectors (`pnpm record`) | ✅ 23 Sep, 17 kredit. Universe 962 emiten, sub_sector OK, 242 test lolos dengan fixture asli. Slug tag: `politics-regulation` |
 | Step 4: pustaka pola historis (`pnpm seed:history`) | ⬜ Belum |
 | Step 5: golden set dan `pnpm eval` | ⬜ Belum (`data/golden-set.json` masih `[]`) |
 | Step 6: deploy (Vercel + Turso) dan polling terjadwal | ⬜ Belum (opsional) |

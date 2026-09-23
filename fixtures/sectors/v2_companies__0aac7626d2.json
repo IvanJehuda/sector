@@ -1,0 +1,1617 @@
+{
+  "key": "/v2/companies/?include_query_values=true&limit=200&offset=600&order_by=-market_cap&where=market_cap%20%3E%200%20and%20sub_sector%20!%3D%20''",
+  "data": {
+    "results": [
+      {
+        "symbol": "PEVE.JK",
+        "company_name": "PT Penta Valent Tbk",
+        "query_values": {
+          "market_cap": 543812500000,
+          "sub_sector": "Pharmaceuticals & Health Care Research"
+        }
+      },
+      {
+        "symbol": "CHEK.JK",
+        "company_name": "PT Diastika Biotekindo Tbk",
+        "query_values": {
+          "market_cap": 542959756020,
+          "sub_sector": "Healthcare Equipment & Providers"
+        }
+      },
+      {
+        "symbol": "CCSI.JK",
+        "company_name": "PT Communication Cable Systems Indonesia Tbk.",
+        "query_values": {
+          "market_cap": 541333332386,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "TRIS.JK",
+        "company_name": "Trisula International Tbk",
+        "query_values": {
+          "market_cap": 540328338932,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "SMKL.JK",
+        "company_name": "PT Satyamitra Kemas Lestari Tbk",
+        "query_values": {
+          "market_cap": 540057475820,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "SOFA.JK",
+        "company_name": "PT Solusi Environment Asia Tbk",
+        "query_values": {
+          "market_cap": 539065286674,
+          "sub_sector": "Household Goods"
+        }
+      },
+      {
+        "symbol": "SURI.JK",
+        "company_name": "PT Maja Agung Latexindo Tbk",
+        "query_values": {
+          "market_cap": 538421875000,
+          "sub_sector": "Healthcare Equipment & Providers"
+        }
+      },
+      {
+        "symbol": "SULI.JK",
+        "company_name": "PT SLJ Global Tbk",
+        "query_values": {
+          "market_cap": 537266031060,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "SMLE.JK",
+        "company_name": "PT Sinergi Multi Lestarindo Tbk",
+        "query_values": {
+          "market_cap": 535475201040,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "SSTM.JK",
+        "company_name": "Sunson Textile Manufacturer Tbk",
+        "query_values": {
+          "market_cap": 533934586536,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "IDPR.JK",
+        "company_name": "PT Indonesia Pondasi Raya Tbk",
+        "query_values": {
+          "market_cap": 528792000000,
+          "sub_sector": "Heavy Constructions & Civil Engineering"
+        }
+      },
+      {
+        "symbol": "UNTD.JK",
+        "company_name": "PT Terang Dunia Internusa Tbk",
+        "query_values": {
+          "market_cap": 526666669300,
+          "sub_sector": "Leisure Goods"
+        }
+      },
+      {
+        "symbol": "NIKL.JK",
+        "company_name": "Pelat Timah Nusantara Tbk",
+        "query_values": {
+          "market_cap": 524856800000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "DART.JK",
+        "company_name": "Duta Anggada Realty Tbk",
+        "query_values": {
+          "market_cap": 521470899692,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "PBRX.JK",
+        "company_name": "Pan Brothers Tbk",
+        "query_values": {
+          "market_cap": 515568677904,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "GLVA.JK",
+        "company_name": "PT Galva Technologies Tbk",
+        "query_values": {
+          "market_cap": 510000000000,
+          "sub_sector": "Technology Hardware & Equipment"
+        }
+      },
+      {
+        "symbol": "BTEK.JK",
+        "company_name": "Bumi Teknokultura Unggul Tbk",
+        "query_values": {
+          "market_cap": 509052460136,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "PEGE.JK",
+        "company_name": "PT Panca Global Kapital Tbk",
+        "query_values": {
+          "market_cap": 502459291264,
+          "sub_sector": "Holding & Investment Companies"
+        }
+      },
+      {
+        "symbol": "KOCI.JK",
+        "company_name": "PT Kokoh Exa Nusantara",
+        "query_values": {
+          "market_cap": 500377362240,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "LUCY.JK",
+        "company_name": "PT Lima Dua Lima Tiga Tbk",
+        "query_values": {
+          "market_cap": 499875384690,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "KOKA.JK",
+        "company_name": "PT Koka Indonesia Tbk",
+        "query_values": {
+          "market_cap": 497871942000,
+          "sub_sector": "Heavy Constructions & Civil Engineering"
+        }
+      },
+      {
+        "symbol": "AHAP.JK",
+        "company_name": "Asuransi Harta Aman Pratama Tbk",
+        "query_values": {
+          "market_cap": 490000000000,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "CLPI.JK",
+        "company_name": "Colorpak Indonesia Tbk",
+        "query_values": {
+          "market_cap": 488609907500,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "BOAT.JK",
+        "company_name": "PT Newport Marine Services Tbk",
+        "query_values": {
+          "market_cap": 486733520000,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "MDKI.JK",
+        "company_name": "PT Emdeki Utama Tbk",
+        "query_values": {
+          "market_cap": 485788800384,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "GTRA.JK",
+        "company_name": "PT Grahaprima Suksesmandiri Tbk",
+        "query_values": {
+          "market_cap": 484960000000,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "ZATA.JK",
+        "company_name": "PT Bersama Zatta Jaya Tbk",
+        "query_values": {
+          "market_cap": 484272000000,
+          "sub_sector": "Retailing"
+        }
+      },
+      {
+        "symbol": "HOKI.JK",
+        "company_name": "PT Buyung Poetra Sembada Tbk",
+        "query_values": {
+          "market_cap": 483887634000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "RMKO.JK",
+        "company_name": "PT Royaltama Mulia Kontraktorindo Tbk",
+        "query_values": {
+          "market_cap": 482476502070,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "MAXI.JK",
+        "company_name": "PT Maxindo Karya Anugerah Tbk",
+        "query_values": {
+          "market_cap": 480504999050,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "WEGE.JK",
+        "company_name": "PT Wijaya Karya Bangunan Gedung Tbk",
+        "query_values": {
+          "market_cap": 478600000000,
+          "sub_sector": "Heavy Constructions & Civil Engineering"
+        }
+      },
+      {
+        "symbol": "MREI.JK",
+        "company_name": "Maskapai Reasuransi Indonesia Tbk",
+        "query_values": {
+          "market_cap": 476368346520,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "MHKI.JK",
+        "company_name": "PT Multi Hanna Kreasindo Tbk",
+        "query_values": {
+          "market_cap": 476250000000,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "BAYU.JK",
+        "company_name": "Bayu Buana Tbk",
+        "query_values": {
+          "market_cap": 471549741300,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "HAIS.JK",
+        "company_name": "PT Hasnur Internasional Shipping Tbk",
+        "query_values": {
+          "market_cap": 470098750000,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "NELY.JK",
+        "company_name": "Pelayaran Nelly Dwi Putri Tbk",
+        "query_values": {
+          "market_cap": 470000000000,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "VRNA.JK",
+        "company_name": "PT Mizuho Leasing Indonesia Tbk",
+        "query_values": {
+          "market_cap": 466363027754,
+          "sub_sector": "Financing Service"
+        }
+      },
+      {
+        "symbol": "ASPI.JK",
+        "company_name": "PT Andalan Sakti Primaindo Tbk.",
+        "query_values": {
+          "market_cap": 464991293000,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "VTNY.JK",
+        "company_name": "PT Venteny Fortuna International Tbk",
+        "query_values": {
+          "market_cap": 457359121485,
+          "sub_sector": "Financing Service"
+        }
+      },
+      {
+        "symbol": "KDTN.JK",
+        "company_name": "PT Puri Sentul Permai Tbk",
+        "query_values": {
+          "market_cap": 455008480472,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "HYGN.JK",
+        "company_name": "PT Ecocare Indo Pasifik Tbk",
+        "query_values": {
+          "market_cap": 454500000000,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "ARMY.JK",
+        "company_name": "PT Armidian Karyatama Tbk",
+        "query_values": {
+          "market_cap": 450312500000,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "MAGP.JK",
+        "company_name": "Multi Agro Gemilang Plantation Tbk",
+        "query_values": {
+          "market_cap": 450000000200,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "ENAK.JK",
+        "company_name": "PT Champ Resto Indonesia Tbk",
+        "query_values": {
+          "market_cap": 446333360800,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "GDYR.JK",
+        "company_name": "Goodyear Indonesia Tbk",
+        "query_values": {
+          "market_cap": 444850000000,
+          "sub_sector": "Automobiles & Components"
+        }
+      },
+      {
+        "symbol": "GPRA.JK",
+        "company_name": "Perdana Gapura Prima Tbk",
+        "query_values": {
+          "market_cap": 436218844272,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "KBRI.JK",
+        "company_name": "Kertas Basuki Rachmat Indonesia Tbk",
+        "query_values": {
+          "market_cap": 434399786700,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "ESTA.JK",
+        "company_name": "PT Esta Multi Usaha Tbk",
+        "query_values": {
+          "market_cap": 434138398041,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "IGAR.JK",
+        "company_name": "Champion Pacific Indonesia Tbk",
+        "query_values": {
+          "market_cap": 432345759600,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "TGUK.JK",
+        "company_name": "PT Platinum Wahab Nusantara Tbk",
+        "query_values": {
+          "market_cap": 432145669615,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "MUTU.JK",
+        "company_name": "PT Mutuagung Lestari Tbk",
+        "query_values": {
+          "market_cap": 431528610625,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "HALO.JK",
+        "company_name": "PT Haloni Jane Tbk",
+        "query_values": {
+          "market_cap": 425511038190,
+          "sub_sector": "Healthcare Equipment & Providers"
+        }
+      },
+      {
+        "symbol": "CRAB.JK",
+        "company_name": "PT Toba Surimi Industries Tbk",
+        "query_values": {
+          "market_cap": 425100000000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "KMDS.JK",
+        "company_name": "PT Kurniamitra Duta Sentosa Tbk",
+        "query_values": {
+          "market_cap": 424000000000,
+          "sub_sector": "Food & Staples Retailing"
+        }
+      },
+      {
+        "symbol": "DYAN.JK",
+        "company_name": "PT Dyandra Media International Tbk",
+        "query_values": {
+          "market_cap": 423023463621,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "HBAT.JK",
+        "company_name": "PT Minahasa Membangun Hebat Tbk",
+        "query_values": {
+          "market_cap": 420459283200,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "POSA.JK",
+        "company_name": "PT Bliss Properti Indonesia Tbk",
+        "query_values": {
+          "market_cap": 419443510300,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "BBSS.JK",
+        "company_name": "PT Bumi Benowo Sukses Sejahtera Tbk",
+        "query_values": {
+          "market_cap": 417601393740,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "PRIM.JK",
+        "company_name": "PT Royal Prima Tbk",
+        "query_values": {
+          "market_cap": 413999058410,
+          "sub_sector": "Healthcare Equipment & Providers"
+        }
+      },
+      {
+        "symbol": "MTFN.JK",
+        "company_name": "Capitalinc Investment Tbk",
+        "query_values": {
+          "market_cap": 413947077076,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "KBLM.JK",
+        "company_name": "Kabelindo Murni Tbk",
+        "query_values": {
+          "market_cap": 409920000000,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "SCNP.JK",
+        "company_name": "PT Selaras Citra Nusantara Perkasa Tbk",
+        "query_values": {
+          "market_cap": 407500000000,
+          "sub_sector": "Household Goods"
+        }
+      },
+      {
+        "symbol": "UFOE.JK",
+        "company_name": "PT Damai Sejahtera Abadi Tbk",
+        "query_values": {
+          "market_cap": 399960113634,
+          "sub_sector": "Retailing"
+        }
+      },
+      {
+        "symbol": "KOBX.JK",
+        "company_name": "Kobexindo Tractors Tbk",
+        "query_values": {
+          "market_cap": 399960000000,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "UNIQ.JK",
+        "company_name": "PT Ulima Nitra Tbk",
+        "query_values": {
+          "market_cap": 395511858000,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "INAF.JK",
+        "company_name": "Indofarma Tbk",
+        "query_values": {
+          "market_cap": 390507705000,
+          "sub_sector": "Pharmaceuticals & Health Care Research"
+        }
+      },
+      {
+        "symbol": "CRSN.JK",
+        "company_name": "PT Carsurin Tbk",
+        "query_values": {
+          "market_cap": 390420000000,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "NUSA.JK",
+        "company_name": "PT Sinergi Megah Internusa Tbk",
+        "query_values": {
+          "market_cap": 385000007400,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "HOMI.JK",
+        "company_name": "PT Grand House Mulia Tbk",
+        "query_values": {
+          "market_cap": 384300000000,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "PNSE.JK",
+        "company_name": "Pudjiadi & Sons Tbk",
+        "query_values": {
+          "market_cap": 382950478080,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "TYRE.JK",
+        "company_name": "PT King Tire Indonesia Tbk",
+        "query_values": {
+          "market_cap": 382863989970,
+          "sub_sector": "Automobiles & Components"
+        }
+      },
+      {
+        "symbol": "JATI.JK",
+        "company_name": "PT Informasi Teknologi Indonesia Tbk",
+        "query_values": {
+          "market_cap": 381714852402,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "APLI.JK",
+        "company_name": "Asiaplast Industries Tbk",
+        "query_values": {
+          "market_cap": 381547992000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "FUJI.JK",
+        "company_name": "PT Fuji Finance Indonesia Tbk",
+        "query_values": {
+          "market_cap": 377000000000,
+          "sub_sector": "Financing Service"
+        }
+      },
+      {
+        "symbol": "BMSR.JK",
+        "company_name": "Bintang Mitra Semestaraya Tbk",
+        "query_values": {
+          "market_cap": 375580807776,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "ASRM.JK",
+        "company_name": "Asuransi Ramayana Tbk",
+        "query_values": {
+          "market_cap": 373173674512,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "DADA.JK",
+        "company_name": "PT Diamond Citra Propertindo Tbk.",
+        "query_values": {
+          "market_cap": 371576540000,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "DEWI.JK",
+        "company_name": "PT Dewi Shri Farmindo Tbk",
+        "query_values": {
+          "market_cap": 370000000000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "RIGS.JK",
+        "company_name": "Rig Tenders Tbk",
+        "query_values": {
+          "market_cap": 368523650000,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "EAST.JK",
+        "company_name": "PT Eastparc Hotel Tbk",
+        "query_values": {
+          "market_cap": 367250074904,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "TRUS.JK",
+        "company_name": "Trust Finance Indonesia Tbk",
+        "query_values": {
+          "market_cap": 366400000000,
+          "sub_sector": "Financing Service"
+        }
+      },
+      {
+        "symbol": "ASPR.JK",
+        "company_name": "PT Asia Pramulia Tbk",
+        "query_values": {
+          "market_cap": 363408000000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "NASA.JK",
+        "company_name": "PT Andalan Perkasa Abadi Tbk",
+        "query_values": {
+          "market_cap": 363162667626,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "TOSK.JK",
+        "company_name": "PT Topindo Solusi Komunika Tbk",
+        "query_values": {
+          "market_cap": 363148015900,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "CSIS.JK",
+        "company_name": "PT Cahayasakti Investindo Sukses Tbk",
+        "query_values": {
+          "market_cap": 362301222888,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "PPGL.JK",
+        "company_name": "PT Prima Globalindo Logistik Tbk",
+        "query_values": {
+          "market_cap": 360911313360,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "VAST.JK",
+        "company_name": "PT Vastland Indonesia Tbk",
+        "query_values": {
+          "market_cap": 357521234733,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "NZIA.JK",
+        "company_name": "PT Nusantara Almazia, Tbk",
+        "query_values": {
+          "market_cap": 356001594210,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "SEMA.JK",
+        "company_name": "PT Semacom Integrated Tbk",
+        "query_values": {
+          "market_cap": 355676334288,
+          "sub_sector": "Alternative Energy"
+        }
+      },
+      {
+        "symbol": "GOLD.JK",
+        "company_name": "PT Visi Telekomunikasi Infrastruktur Tbk",
+        "query_values": {
+          "market_cap": 355082728000,
+          "sub_sector": "Telecommunication"
+        }
+      },
+      {
+        "symbol": "DGNS.JK",
+        "company_name": "PT Diagnos Laboratorium Utama Tbk",
+        "query_values": {
+          "market_cap": 354750000000,
+          "sub_sector": "Healthcare Equipment & Providers"
+        }
+      },
+      {
+        "symbol": "BPTR.JK",
+        "company_name": "PT Batavia Prosperindo Trans Tbk.",
+        "query_values": {
+          "market_cap": 349866000000,
+          "sub_sector": "Transportation"
+        }
+      },
+      {
+        "symbol": "WINE.JK",
+        "company_name": "PT Hatten Bali Tbk",
+        "query_values": {
+          "market_cap": 349590000000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "UVCR.JK",
+        "company_name": "PT Trimegah Karya Pratama Tbk",
+        "query_values": {
+          "market_cap": 344024912136,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "GTBO.JK",
+        "company_name": "Garda Tujuh Buana Tbk",
+        "query_values": {
+          "market_cap": 342500000000,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "PRDL.JK",
+        "company_name": "PT Prodia Diagnostic Line Tbk",
+        "query_values": {
+          "market_cap": 341608400000,
+          "sub_sector": "Healthcare Equipment & Providers"
+        }
+      },
+      {
+        "symbol": "PTPS.JK",
+        "company_name": "PT Pulau Subur Tbk",
+        "query_values": {
+          "market_cap": 335964802680,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "SATU.JK",
+        "company_name": "PT Kota Satu Properti Tbk",
+        "query_values": {
+          "market_cap": 332750000000,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "REAL.JK",
+        "company_name": "PT Repower Asia Indonesia Tbk",
+        "query_values": {
+          "market_cap": 331680507550,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "CNKO.JK",
+        "company_name": "Exploitasi Energi Indonesia Tbk",
+        "query_values": {
+          "market_cap": 331385364622,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "PJHB.JK",
+        "company_name": "PT Pelayaran Jaya Hidup Baru Tbk",
+        "query_values": {
+          "market_cap": 330420398760,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "MPXL.JK",
+        "company_name": "PT MPX Logistics International Tbk",
+        "query_values": {
+          "market_cap": 328002392268,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "IOTF.JK",
+        "company_name": "PT Sumber Sinergi Makmur Tbk",
+        "query_values": {
+          "market_cap": 327998480154,
+          "sub_sector": "Technology Hardware & Equipment"
+        }
+      },
+      {
+        "symbol": "ETWA.JK",
+        "company_name": "Eterindo Wahanatama Tbk",
+        "query_values": {
+          "market_cap": 326806998000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "TFAS.JK",
+        "company_name": "PT Telefast Indonesia Tbk",
+        "query_values": {
+          "market_cap": 324999967500,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "BIPP.JK",
+        "company_name": "Bhuwanatala Indah Permai Tbk",
+        "query_values": {
+          "market_cap": 321834840064,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "WAPO.JK",
+        "company_name": "Wahana Pronatural Tbk",
+        "query_values": {
+          "market_cap": 320158162638,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "ESTI.JK",
+        "company_name": "Ever Shine Textile Industry Tbk",
+        "query_values": {
+          "market_cap": 318402977760,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "YOII.JK",
+        "company_name": "PT Asuransi Digital Bersama Tbk",
+        "query_values": {
+          "market_cap": 318085637661,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "MYTX.JK",
+        "company_name": "PT Asia Pacific Investama Tbk",
+        "query_values": {
+          "market_cap": 317638559909,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "KIAS.JK",
+        "company_name": "Keramika Indonesia Assosiasi Tbk",
+        "query_values": {
+          "market_cap": 313511100000,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "SAPX.JK",
+        "company_name": "PT Satria Antaran Prima Tbk",
+        "query_values": {
+          "market_cap": 313333320800,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "PART.JK",
+        "company_name": "PT Cipta Perdana Lancar Tbk",
+        "query_values": {
+          "market_cap": 310714751886,
+          "sub_sector": "Automobiles & Components"
+        }
+      },
+      {
+        "symbol": "ATLA.JK",
+        "company_name": "PT Atlantis Subsea Indonesia Tbk",
+        "query_values": {
+          "market_cap": 309978884650,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "AKPI.JK",
+        "company_name": "Argha Karya Prima Ind. Tbk",
+        "query_values": {
+          "market_cap": 309185240000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "MICE.JK",
+        "company_name": "Multi Indocitra Tbk",
+        "query_values": {
+          "market_cap": 306000000000,
+          "sub_sector": "Household Goods"
+        }
+      },
+      {
+        "symbol": "TARA.JK",
+        "company_name": "PT Agung Semesta Sejahtera Tbk",
+        "query_values": {
+          "market_cap": 302089372500,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "LAPD.JK",
+        "company_name": "Leyand International Tbk",
+        "query_values": {
+          "market_cap": 301442610564,
+          "sub_sector": "Utilities"
+        }
+      },
+      {
+        "symbol": "BAIK.JK",
+        "company_name": "PT Bersama Mencapai Puncak Tbk.",
+        "query_values": {
+          "market_cap": 297659359008,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "DOSS.JK",
+        "company_name": "PT Global Sukses Digital Tbk",
+        "query_values": {
+          "market_cap": 296700000000,
+          "sub_sector": "Leisure Goods"
+        }
+      },
+      {
+        "symbol": "NAIK.JK",
+        "company_name": "PT Adiwarna Anugerah Abadi Tbk",
+        "query_values": {
+          "market_cap": 296318562183,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "AMIN.JK",
+        "company_name": "PT Ateliers Mecaniques D Indonesie Tbk.",
+        "query_values": {
+          "market_cap": 295920000000,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "TRON.JK",
+        "company_name": "PT Teknologi Karya Digital Nusa Tbk",
+        "query_values": {
+          "market_cap": 295132844800,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "WICO.JK",
+        "company_name": "Wicaksana Overseas International Tbk",
+        "query_values": {
+          "market_cap": 294426372804,
+          "sub_sector": "Food & Staples Retailing"
+        }
+      },
+      {
+        "symbol": "KBAG.JK",
+        "company_name": "PT Karya Bersama Anugerah Tbk",
+        "query_values": {
+          "market_cap": 293150106723,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "IKPM.JK",
+        "company_name": "PT Ikapharmindo Putramas Tbk",
+        "query_values": {
+          "market_cap": 293131275000,
+          "sub_sector": "Pharmaceuticals & Health Care Research"
+        }
+      },
+      {
+        "symbol": "MPIX.JK",
+        "company_name": "PT Mitra Pedagang Indonesia Tbk",
+        "query_values": {
+          "market_cap": 290638821288,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "BEER.JK",
+        "company_name": "PT Jobubu Jarum Minahasa Tbk",
+        "query_values": {
+          "market_cap": 288000000000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "KLAS.JK",
+        "company_name": "PT Pelayaran Kurnia Lautan Semesta Tbk",
+        "query_values": {
+          "market_cap": 287908862025,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "MEJA.JK",
+        "company_name": "PT Harta Djaya Karya Tbk",
+        "query_values": {
+          "market_cap": 284280835322,
+          "sub_sector": "Household Goods"
+        }
+      },
+      {
+        "symbol": "ALMI.JK",
+        "company_name": "Alumindo Light Metal Industry Tbk",
+        "query_values": {
+          "market_cap": 282384000000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "BATR.JK",
+        "company_name": "PT Benteng Api Technic Tbk",
+        "query_values": {
+          "market_cap": 281328473829,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "SOLA.JK",
+        "company_name": "PT Xolare RCR Energy Tbk",
+        "query_values": {
+          "market_cap": 276139500000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "KREN.JK",
+        "company_name": "PT Quantum Clovera Investama Tbk",
+        "query_values": {
+          "market_cap": 273127051500,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "PDES.JK",
+        "company_name": "Destinasi Tirta Nusantara Tbk",
+        "query_values": {
+          "market_cap": 271700000000,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "LPLI.JK",
+        "company_name": "Star Pacific Tbk",
+        "query_values": {
+          "market_cap": 271540410296,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "OKAS.JK",
+        "company_name": "Ancora Indonesia Resources Tbk",
+        "query_values": {
+          "market_cap": 268199755645,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "AMMS.JK",
+        "company_name": "PT Agung Menjangan Mas Tbk",
+        "query_values": {
+          "market_cap": 266824109232,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "HAJJ.JK",
+        "company_name": "PT Arsy Buana Travelindo Tbk",
+        "query_values": {
+          "market_cap": 266600977776,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "IKAI.JK",
+        "company_name": "Intikeramik Alamasri Industri Tbk",
+        "query_values": {
+          "market_cap": 266115987740,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "PTSP.JK",
+        "company_name": "Pioneerindo Gourmet International Tbk",
+        "query_values": {
+          "market_cap": 264969600000,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "AKSI.JK",
+        "company_name": "PT Mineral Sumberdaya Mandiri Tbk",
+        "query_values": {
+          "market_cap": 264960000000,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "HRME.JK",
+        "company_name": "PT Menteng Heritage Realty Tbk",
+        "query_values": {
+          "market_cap": 262185000000,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "CGAS.JK",
+        "company_name": "PT Citra Nusantara Gemilang Tbk.",
+        "query_values": {
+          "market_cap": 262181857772,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "MSIE.JK",
+        "company_name": "PT Multisarana Intan Eduka Tbk",
+        "query_values": {
+          "market_cap": 258421372458,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "POLA.JK",
+        "company_name": "PT Pool Advista Finance Tbk",
+        "query_values": {
+          "market_cap": 258032821200,
+          "sub_sector": "Financing Service"
+        }
+      },
+      {
+        "symbol": "BTON.JK",
+        "company_name": "Betonjaya Manunggal Tbk",
+        "query_values": {
+          "market_cap": 257760000000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "BINO.JK",
+        "company_name": "PT Perma Plasindo Tbk",
+        "query_values": {
+          "market_cap": 257110720543,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "ASHA.JK",
+        "company_name": "PT Cilacap Samudera Fishing Industry Tbk",
+        "query_values": {
+          "market_cap": 255000000000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "EMDE.JK",
+        "company_name": "Megapolitan Developments Tbk",
+        "query_values": {
+          "market_cap": 254600000000,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "AKKU.JK",
+        "company_name": "PT Anugerah Kagum Karya Utama Tbk",
+        "query_values": {
+          "market_cap": 245079618168,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "SDPC.JK",
+        "company_name": "Millennium Pharmacon International Tbk",
+        "query_values": {
+          "market_cap": 244608000000,
+          "sub_sector": "Food & Staples Retailing"
+        }
+      },
+      {
+        "symbol": "INOV.JK",
+        "company_name": "PT Inocycle Technology Group Tbk",
+        "query_values": {
+          "market_cap": 244109956500,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "WGSH.JK",
+        "company_name": "PT Wira Global Solusi Tbk",
+        "query_values": {
+          "market_cap": 243945000000,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "COWL.JK",
+        "company_name": "Cowell Development Tbk",
+        "query_values": {
+          "market_cap": 243560701050,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "PEHA.JK",
+        "company_name": "PT Phapros Tbk",
+        "query_values": {
+          "market_cap": 241920000000,
+          "sub_sector": "Pharmaceuticals & Health Care Research"
+        }
+      },
+      {
+        "symbol": "GRPM.JK",
+        "company_name": "PT Graha Prima Mentari Tbk",
+        "query_values": {
+          "market_cap": 240464969757,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "BOBA.JK",
+        "company_name": "PT Formosa Ingredient Factory Tbk",
+        "query_values": {
+          "market_cap": 238084500000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "HILL.JK",
+        "company_name": "PT Hillcon Tbk",
+        "query_values": {
+          "market_cap": 235864000000,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "NASI.JK",
+        "company_name": "PT Wahana Inti Makmur Tbk",
+        "query_values": {
+          "market_cap": 235760800000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "SAGE.JK",
+        "company_name": "PT Saptausaha Gemilangindah Tbk",
+        "query_values": {
+          "market_cap": 232972290540,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "MCAS.JK",
+        "company_name": "PT M Cash Integrasi Tbk",
+        "query_values": {
+          "market_cap": 230870257800,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "TAMA.JK",
+        "company_name": "PT Lancartama Sejati Tbk",
+        "query_values": {
+          "market_cap": 229200132936,
+          "sub_sector": "Heavy Constructions & Civil Engineering"
+        }
+      },
+      {
+        "symbol": "VINS.JK",
+        "company_name": "PT Victoria Insurance Tbk",
+        "query_values": {
+          "market_cap": 228354321573,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "JMAS.JK",
+        "company_name": "PT Asuransi Jiwa Syariah Jasa Mitra Abadi Tbk",
+        "query_values": {
+          "market_cap": 228000000000,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "DUCK.JK",
+        "company_name": "PT Jaya Bersama Indo Tbk",
+        "query_values": {
+          "market_cap": 225866080000,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "ASJT.JK",
+        "company_name": "Asuransi Jasa Tania Tbk",
+        "query_values": {
+          "market_cap": 225400000000,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "BEBS.JK",
+        "company_name": "PT Berkah Beton Sadaya Tbk",
+        "query_values": {
+          "market_cap": 225000000000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "TIRA.JK",
+        "company_name": "Tira Austenite Tbk",
+        "query_values": {
+          "market_cap": 224616000000,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "ERTX.JK",
+        "company_name": "Eratex Djaja Tbk",
+        "query_values": {
+          "market_cap": 223857923808,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "APII.JK",
+        "company_name": "PT Arita Prima Indonesia Tbk.",
+        "query_values": {
+          "market_cap": 223758080000,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "RELF.JK",
+        "company_name": "PT Graha Mitra Asia Tbk",
+        "query_values": {
+          "market_cap": 223385455605,
+          "sub_sector": "Properties & Real Estate"
+        }
+      },
+      {
+        "symbol": "ECII.JK",
+        "company_name": "PT Electronic City Indonesia Tbk",
+        "query_values": {
+          "market_cap": 218830612000,
+          "sub_sector": "Retailing"
+        }
+      },
+      {
+        "symbol": "HELI.JK",
+        "company_name": "PT Jaya Trishindo Tbk",
+        "query_values": {
+          "market_cap": 213212771072,
+          "sub_sector": "Transportation"
+        }
+      },
+      {
+        "symbol": "ACRO.JK",
+        "company_name": "PT Samcro Hyosung Adilestari Tbk.",
+        "query_values": {
+          "market_cap": 211630077757,
+          "sub_sector": "Apparel & Luxury Goods"
+        }
+      },
+      {
+        "symbol": "NTBK.JK",
+        "company_name": "PT Nusatama Berkah Tbk",
+        "query_values": {
+          "market_cap": 210605060406,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "DFAM.JK",
+        "company_name": "PT Dafam Property Indonesia Tbk",
+        "query_values": {
+          "market_cap": 208983813500,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "KBLV.JK",
+        "company_name": "First Media Tbk",
+        "query_values": {
+          "market_cap": 207317980933,
+          "sub_sector": "Telecommunication"
+        }
+      },
+      {
+        "symbol": "LPPS.JK",
+        "company_name": "PT Lenox Pasifik Investama Tbk",
+        "query_values": {
+          "market_cap": 207060000000,
+          "sub_sector": "Holding & Investment Companies"
+        }
+      },
+      {
+        "symbol": "INTD.JK",
+        "company_name": "Inter-Delta Tbk",
+        "query_values": {
+          "market_cap": 204772488000,
+          "sub_sector": "Basic Materials"
+        }
+      },
+      {
+        "symbol": "INTA.JK",
+        "company_name": "Intraco Penta Tbk",
+        "query_values": {
+          "market_cap": 203980036342,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "SLIS.JK",
+        "company_name": "PT Gaya Abadi Sempurna Tbk",
+        "query_values": {
+          "market_cap": 201996175672,
+          "sub_sector": "Retailing"
+        }
+      },
+      {
+        "symbol": "PSDN.JK",
+        "company_name": "Prasidha Aneka Niaga Tbk",
+        "query_values": {
+          "market_cap": 201600000000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "DSFI.JK",
+        "company_name": "Dharma Samudera Fishing Ind. Tbk",
+        "query_values": {
+          "market_cap": 200570634000,
+          "sub_sector": "Food & Beverage"
+        }
+      },
+      {
+        "symbol": "MDRN.JK",
+        "company_name": "Modern Internasional Tbk",
+        "query_values": {
+          "market_cap": 198436362748,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "ASDM.JK",
+        "company_name": "Asuransi Dayin Mitra Tbk",
+        "query_values": {
+          "market_cap": 197760000000,
+          "sub_sector": "Insurance"
+        }
+      },
+      {
+        "symbol": "CSMI.JK",
+        "company_name": "PT Cipta Selera Murni Tbk.",
+        "query_values": {
+          "market_cap": 195854760000,
+          "sub_sector": "Consumer Services"
+        }
+      },
+      {
+        "symbol": "SDMU.JK",
+        "company_name": "Sidomulyo Selaras Tbk",
+        "query_values": {
+          "market_cap": 195810125700,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "DIVA.JK",
+        "company_name": "PT Distribusi Voucher Nusantara Tbk",
+        "query_values": {
+          "market_cap": 195714281800,
+          "sub_sector": "Software & IT Services"
+        }
+      },
+      {
+        "symbol": "PURA.JK",
+        "company_name": "PT Putra Rajawali Kencana Tbk",
+        "query_values": {
+          "market_cap": 195359857962,
+          "sub_sector": "Logistics & Deliveries"
+        }
+      },
+      {
+        "symbol": "KAQI.JK",
+        "company_name": "PT Jantra Grupo Indonesia Tbk",
+        "query_values": {
+          "market_cap": 195125200000,
+          "sub_sector": "Automobiles & Components"
+        }
+      },
+      {
+        "symbol": "COAL.JK",
+        "company_name": "PT Black Diamond Resources Tbk",
+        "query_values": {
+          "market_cap": 193750000000,
+          "sub_sector": "Oil, Gas & Coal"
+        }
+      },
+      {
+        "symbol": "PTMP.JK",
+        "company_name": "PT Mitra Pack Tbk",
+        "query_values": {
+          "market_cap": 193321200000,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "LION.JK",
+        "company_name": "Lion Metal Works Tbk",
+        "query_values": {
+          "market_cap": 192459200000,
+          "sub_sector": "Industrial Services"
+        }
+      },
+      {
+        "symbol": "BAUT.JK",
+        "company_name": "PT Mitra Angkasa Sejahtera Tbk",
+        "query_values": {
+          "market_cap": 192007318760,
+          "sub_sector": "Retailing"
+        }
+      },
+      {
+        "symbol": "ITIC.JK",
+        "company_name": "PT Indonesian Tobacco Tbk",
+        "query_values": {
+          "market_cap": 191906880000,
+          "sub_sector": "Tobacco"
+        }
+      },
+      {
+        "symbol": "CINT.JK",
+        "company_name": "PT Chitose Internasional Tbk",
+        "query_values": {
+          "market_cap": 190000000000,
+          "sub_sector": "Household Goods"
+        }
+      },
+      {
+        "symbol": "GPSO.JK",
+        "company_name": "PT Geoprima Solusi Tbk",
+        "query_values": {
+          "market_cap": 189221096574,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "CAKK.JK",
+        "company_name": "PT Cahayaputra Asa Keramik Tbk.",
+        "query_values": {
+          "market_cap": 188918134383,
+          "sub_sector": "Industrial Goods"
+        }
+      },
+      {
+        "symbol": "NAYZ.JK",
+        "company_name": "PT Hassana Boga Sejahtera Tbk",
+        "query_values": {
+          "market_cap": 188700848928,
+          "sub_sector": "Food & Beverage"
+        }
+      }
+    ],
+    "pagination": {
+      "total_count": 962,
+      "showing": 200,
+      "limit": 200,
+      "offset": 600,
+      "has_next": true,
+      "has_previous": true,
+      "next_offset": 800,
+      "previous_offset": 400
+    }
+  }
+}
