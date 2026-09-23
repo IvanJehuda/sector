@@ -3,62 +3,83 @@
 import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { requestAnalysis } from '@/lib/ui/request-analysis';
-
-const MAX_CREDITS_PER_ANALYSIS = 19;
+import { SHORT_DISCLAIMER, splitNewsInput } from '@/lib/ui/present';
 
 export function AnalyzeForm() {
   const router = useRouter();
-  const [url, setUrl] = useState('');
-  const [text, setText] = useState('');
+  const [news, setNews] = useState('');
   const [date, setDate] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
+    const input = splitNewsInput(news);
+    if (!input.url && !input.text) {
+      setError('Tempel tautan atau isi berita dulu.');
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
-      const result = await requestAnalysis({ url: url || undefined, text: text || undefined, date: date || undefined });
+      const result = await requestAnalysis({ ...input, date: date || undefined });
       if (result.ok) {
         router.push(`/events/${result.eventId}`);
         return;
       }
       setError(result.error);
     } catch {
-      setError('Terjadi kesalahan pada server.');
+      setError('Terjadi kesalahan pada server. Coba lagi sebentar lagi.');
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <form onSubmit={submit} className="space-y-3 rounded-lg border p-4">
-      <h2 className="text-xl font-semibold">Cek berita atau event</h2>
-      <label className="block text-sm font-medium">
-        Link berita
-        <input type="url" value={url} onChange={(e) => setUrl(e.target.value)} placeholder="https://..." className="mt-1 w-full rounded border px-3 py-2" />
-      </label>
-      <label className="block text-sm font-medium">
-        Atau tempel teks berita
-        <textarea value={text} onChange={(e) => setText(e.target.value)} rows={5} className="mt-1 w-full rounded border px-3 py-2" />
-      </label>
-      <label className="block text-sm font-medium">
-        Tanggal event (opsional)
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} className="mt-1 rounded border px-3 py-2" />
-      </label>
-      <p className="text-xs text-gray-500">
-        Analisis memakai sekitar ≤{MAX_CREDITS_PER_ANALYSIS} kredit Sectors (lebih sedikit jika data sudah di-cache; analisis pertama
-        kali bisa sedikit lebih banyak karena daftar emiten diambil sekali).
-      </p>
+    <form onSubmit={submit} className="relative flex flex-col gap-3">
+      <div className="border border-line-strong bg-surface">
+        <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 font-mono text-[11px] tracking-wide text-white/55">
+          <label htmlFor="news-input">TAUTAN ATAU ISI BERITA</label>
+          <span className="hidden sm:inline">ISI BERITA MINIMAL 80 HURUF</span>
+        </div>
+        <textarea
+          id="news-input"
+          value={news}
+          onChange={(e) => setNews(e.target.value)}
+          rows={3}
+          placeholder="Tempel tautan berita (https://…) atau isi beritanya di sini"
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? 'news-error' : undefined}
+          className="block w-full resize-y bg-transparent px-5 py-4 font-mono text-sm leading-relaxed text-fg outline-none placeholder:text-white/40"
+        />
+        <div className="flex flex-col gap-3 border-t border-line px-4 py-3 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <label htmlFor="news-date" className="font-mono text-[11px] tracking-wide text-white/55">
+              Tanggal berita (opsional)
+            </label>
+            <input
+              id="news-date"
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              className="h-10 border border-line-strong bg-ink px-2.5 font-mono text-[13px] text-fg [color-scheme:dark]"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={busy}
+            className="h-11 bg-fg px-6 text-sm font-medium text-ink transition hover:-translate-y-px hover:shadow-[0_0_0_1px_#fff,0_8px_40px_rgb(245_165_36/0.45),0_0_60px_rgb(43_217_197/0.25)] disabled:opacity-50"
+          >
+            {busy ? 'Memproses…' : 'Cek dampak berita →'}
+          </button>
+        </div>
+      </div>
       {error && (
-        <p role="alert" className="text-sm text-red-700">
+        <p id="news-error" role="alert" className="text-sm leading-relaxed text-[#ff8a80]">
           {error}
         </p>
       )}
-      <button type="submit" disabled={busy} className="rounded bg-gray-900 px-4 py-2 text-white disabled:opacity-50">
-        {busy ? 'Memproses…' : 'Analisis berita'}
-      </button>
+      <p className="text-xs text-white/60">{SHORT_DISCLAIMER} Satu analisis baru memakai paling banyak sekitar 19 kuota data.</p>
     </form>
   );
 }

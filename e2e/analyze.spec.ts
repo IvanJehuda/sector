@@ -3,12 +3,12 @@ import { expect, test } from '@playwright/test';
 test('pasted text produces a retrospective report with evidence and disclaimer', async ({ page }) => {
   await page.goto('/');
   await page
-    .getByLabel('Atau tempel teks berita')
+    .getByLabel('Tautan atau isi berita')
     .fill(
       'Presiden menyampaikan pidato tentang rencana pengelolaan BUMN melalui badan investasi baru. Pelaku pasar menanggapi rencana tersebut dengan hati-hati, terutama pada saham bank milik negara.',
     );
-  await page.getByLabel('Tanggal event (opsional)').fill('2026-03-02');
-  await page.getByRole('button', { name: 'Analisis berita' }).click();
+  await page.getByLabel('Tanggal berita (opsional)').fill('2026-03-02');
+  await page.getByRole('button', { name: 'Cek dampak berita' }).click();
 
   await expect(page).toHaveURL(/\/events\//, { timeout: 30_000 });
   await expect(page.getByText('bukan saran investasi')).toBeVisible({ timeout: 30_000 });
