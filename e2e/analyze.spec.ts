@@ -20,7 +20,7 @@ test('automatic receiver adds news to the feed', async ({ page, request }) => {
   const res = await request.get('/api/cron/poll', { headers: { Authorization: 'Bearer e2e-secret' } });
   expect(res.ok()).toBe(true);
   await page.goto('/');
-  await expect(page.getByText('(Contoh) Pemerintah kaji restrukturisasi bank BUMN')).toBeVisible();
+  await expect(page.locator('#berita').getByText('(Contoh) Pemerintah kaji restrukturisasi bank BUMN')).toBeVisible();
 });
 
 test('cron endpoint rejects requests without the secret', async ({ request }) => {
