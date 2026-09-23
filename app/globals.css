@@ -69,7 +69,25 @@ body {
   animation: shimmer 1.6s linear infinite;
 }
 
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker { animation: ticker 60s linear infinite; }
+
+@keyframes draw {
+  from { stroke-dashoffset: 900; }
+  to { stroke-dashoffset: 0; }
+}
+.draw { stroke-dasharray: 900; animation: draw 1.2s ease-out both; }
+
+@keyframes drop {
+  from { opacity: 0; translate: 0 -24px; }
+  to { opacity: 1; translate: 0 0; }
+}
+.drop { animation: drop 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
 @media (prefers-reduced-motion: reduce) {
   .pin-card, .glowcard .fx { transition: none; }
-  .skeleton, .animate-spin, .animate-pulse { animation: none; }
+  .skeleton, .animate-spin, .animate-pulse, .ticker, .draw, .drop { animation: none; }
 }
