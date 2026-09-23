@@ -13,25 +13,33 @@ export function Logo() {
   );
 }
 
+/** Centred content column; sections stay full-bleed around it. */
+export function Container({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <div className={`mx-auto w-full max-w-[1600px] px-4 sm:px-8 xl:px-12 ${className}`}>{children}</div>;
+}
+
 export function SiteNav({ children }: { children?: ReactNode }) {
   return (
-    <nav className="flex h-16 items-center justify-between gap-4 border-b border-line px-4 sm:h-18 sm:px-10">
-      <Logo />
-      {children}
+    <nav className="sticky top-0 z-30 border-b border-line bg-ink/80 backdrop-blur">
+      <Container className="flex h-16 items-center justify-between gap-4">
+        <Logo />
+        {children}
+      </Container>
     </nav>
   );
 }
 
 export function SiteFooter() {
   return (
-    <footer className="mx-4 flex flex-col gap-2 border-t border-line py-6 font-mono text-[11px] tracking-wide text-white/50 uppercase sm:mx-10 sm:flex-row sm:justify-between">
-      <span>Data harga: Sectors API · Bursa Efek Indonesia</span>
-      <span>Analisis data untuk edukasi, bukan saran investasi</span>
+    <footer className="border-t border-line">
+      <Container className="flex flex-col gap-2 py-6 font-mono text-[11px] tracking-wide text-white/50 uppercase sm:flex-row sm:justify-between">
+        <span>Data harga: Sectors API · Bursa Efek Indonesia</span>
+        <span>Analisis data untuk edukasi, bukan saran investasi</span>
+      </Container>
     </footer>
   );
 }
 
-/** The framed 1200px column with hairline side borders. */
 export function Frame({ children }: { children: ReactNode }) {
-  return <div className="relative mx-auto min-h-screen max-w-[1200px] border-line xl:border-x">{children}</div>;
+  return <div className="flex min-h-screen flex-col">{children}</div>;
 }
