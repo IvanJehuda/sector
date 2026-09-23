@@ -1,6 +1,8 @@
-import { AnalyzeForm } from '@/components/AnalyzeForm';
-import { CreditBanner } from '@/components/CreditBanner';
+import { CreditBanner, CreditPill } from '@/components/CreditBanner';
 import { Feed } from '@/components/Feed';
+import { Hero } from '@/components/Hero';
+import { HowItWorks } from '@/components/HowItWorks';
+import { Frame, SiteFooter, SiteNav } from '@/components/SiteNav';
 import { getDb } from '@/lib/db/client';
 import { listEvents } from '@/lib/db/repo';
 
@@ -9,14 +11,28 @@ export const dynamic = 'force-dynamic';
 export default async function Home() {
   const events = await listEvents(await getDb(), 30);
   return (
-    <main className="mx-auto max-w-4xl space-y-8 p-6">
-      <header className="space-y-1">
-        <h1 className="text-3xl font-bold">Correlation Explainer</h1>
-        <p className="text-gray-600">Dari berita ke saham IDX yang terkait, lengkap dengan bukti data Sectors.</p>
-      </header>
-      <CreditBanner />
-      <AnalyzeForm />
-      <Feed events={events} />
-    </main>
+    <Frame>
+      <SiteNav>
+        <div className="hidden gap-8 text-sm text-white/70 lg:flex">
+          <a href="#berita" className="hover:text-fg">
+            Berita terbaru
+          </a>
+          <a href="#cara-kerja" className="hover:text-fg">
+            Cara kerja
+          </a>
+        </div>
+        <CreditPill />
+      </SiteNav>
+      <main>
+        <div className="px-4 pt-4 empty:hidden sm:px-10">
+          <CreditBanner />
+        </div>
+        <Hero />
+        <div className="spectral-line" />
+        <HowItWorks />
+        <Feed events={events} />
+      </main>
+      <SiteFooter />
+    </Frame>
   );
 }
