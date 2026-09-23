@@ -12,6 +12,7 @@
 | Step 1: setup laptop dan jalan di mode palsu | ✅ Sudah dicek di laptop Ivan (Windows) |
 | Step 2: `.env.local` | ✅ 23 Sep, di laptop pemegang key |
 | Step 3: rekam data asli Sectors (`pnpm record`) | ✅ 23 Sep, 17 kredit. Universe 962 emiten, sub_sector OK, 242 test lolos dengan fixture asli. Slug tag: `politics-regulation` |
+| Redesain UI (tema gelap, papan korelasi, copy awam) | ✅ 23 Sep. Desain + riset copy di `docs/superpowers/specs/2026-09-23-ui-redesign.md` dan `docs/research/2026-09-23-copywriting.md`. Label "Keyakinan" jadi "Bukti kuat/sedang/lemah"; form jadi satu kotak tautan-atau-teks |
 | Step 4: pustaka pola historis (`pnpm seed:history`) | ⬜ Belum |
 | Step 5: golden set dan `pnpm eval` | ⬜ Belum (`data/golden-set.json` masih `[]`) |
 | Step 6: deploy (Vercel + Turso) dan polling terjadwal | ⬜ Belum (opsional) |
