@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 
 export function Logo() {
   return (
-    <Link href="/" className="flex items-center gap-3 text-lg tracking-tight">
+    <Link href="/" className="flex items-center gap-2.5 text-base tracking-tight whitespace-nowrap sm:gap-3 sm:text-lg">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
         <rect x="3" y="3" width="18" height="18" />
         <path d="M3 15h6v6M9 9h6v6" />

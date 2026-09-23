@@ -18,7 +18,7 @@ export async function CreditPill() {
       <span className={`inline-block size-1.5 ${dot}`} aria-hidden="true" />
       <span className="hidden text-white/60 sm:inline">KUOTA DATA TERSISA</span>
       <span>
-        {left.toLocaleString('id-ID')} <span className="text-white/50">dari {budget.toLocaleString('id-ID')}</span>
+        {left.toLocaleString('id-ID')} <span className="hidden text-white/50 sm:inline">dari {budget.toLocaleString('id-ID')}</span>
       </span>
     </span>
   );
