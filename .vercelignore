@@ -1,0 +1,7 @@
+.env*
+!.env.example
+*.db
+node_modules
+.next
+test-results
+tsconfig.tsbuildinfo

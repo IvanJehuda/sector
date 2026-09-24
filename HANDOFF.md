@@ -15,7 +15,7 @@
 | Redesain UI (tema gelap, papan korelasi, copy awam) | ✅ 23 Sep. Desain + riset copy di `docs/superpowers/specs/2026-09-23-ui-redesign.md` dan `docs/research/2026-09-23-copywriting.md`. Label "Keyakinan" jadi "Bukti kuat/sedang/lemah"; form jadi satu kotak tautan-atau-teks |
 | Step 4: pustaka pola historis (`pnpm seed:history`) | ⬜ Belum |
 | Step 5: golden set dan `pnpm eval` | ⬜ Belum (`data/golden-set.json` masih `[]`) |
-| Step 6: deploy (Vercel + Turso) dan polling terjadwal | ⬜ Belum (opsional) |
+| Step 6: deploy (Vercel + Turso) dan polling terjadwal | 🟡 24 Sep: live di https://correlation-explainer.vercel.app (akun Vercel husinhakim, Turso `correlation-explainer`, `SECTORS_MODE=fixture`). GitHub Secrets poll belum |
 | Step 7: video, post, dan submit | ⬜ Belum |
 
 **Yang paling berisiko:** kode belum pernah bertemu data asli Sectors. Semua test memakai sampel dari dokumentasi atau data palsu. Karena itu **step 3 harus dikerjakan paling dulu**. Kalau ada yang tidak cocok, akan kelihatan di sana (lihat §4).
