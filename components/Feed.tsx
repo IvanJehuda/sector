@@ -27,7 +27,7 @@ export function Feed({ events }: { events: StoredEvent[] }) {
       <Container className="flex flex-col gap-6">
         <div className="flex flex-col gap-2.5">
           <span className="font-mono text-xs tracking-widest text-white/80">{'// BERITA TERBARU //'}</span>
-          <h2 id="berita-judul" className="text-3xl font-light tracking-tight sm:text-4xl">
+          <h2 id="berita-judul" className="text-3xl font-light sm:text-4xl">
             Berita dari Sectors, diperbarui 3 kali sehari
           </h2>
         </div>

@@ -57,7 +57,7 @@ export function Hero() {
       <Container className="relative grid items-center gap-12 py-12 xl:grid-cols-[minmax(0,540px)_minmax(0,1fr)] xl:gap-16 xl:py-14">
         <div className="flex flex-col gap-7">
           <span className="font-mono text-xs tracking-widest text-white/80">{'// DATA HARGA DARI SECTORS · BURSA EFEK INDONESIA //'}</span>
-          <h1 className="text-[40px] leading-[1.04] font-light tracking-tight sm:text-6xl xl:text-[52px] 2xl:text-[64px]">
+          <h1 className="text-[40px] leading-[1.04] font-light sm:text-6xl xl:text-[52px] 2xl:text-[64px]">
             <span className="text-white/55">Ada berita ekonomi?</span>
             <br />
             Lihat saham mana yang <span className="spectral">ikut bergerak</span>

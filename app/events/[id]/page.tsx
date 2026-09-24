@@ -32,7 +32,7 @@ function Progress({ event }: { event: StoredEvent | null }) {
     <div className="grid gap-10 lg:grid-cols-2">
       <div className="flex flex-col gap-6">
         <span className="animate-pulse font-mono text-[11px] tracking-widest text-amber">● SEDANG DIANALISIS</span>
-        <h1 className="text-3xl leading-tight font-light tracking-tight">{event?.title ?? 'Memuat berita…'}</h1>
+        <h1 className="text-3xl leading-tight font-light">{event?.title ?? 'Memuat berita…'}</h1>
         <p className="text-[15px] text-white/60">Biasanya selesai dalam 1 menit. Halaman ini diperbarui sendiri, tidak perlu dimuat ulang.</p>
         <p aria-live="polite" className="flex items-center gap-3 border-y border-line py-4 text-base">
           <span className="inline-block size-3.5 animate-spin rounded-full border-2 border-amber/30 border-t-amber" aria-hidden="true" />

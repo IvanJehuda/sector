@@ -108,7 +108,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
             {modeLabel(report.mode).toUpperCase()}
           </span>
         </div>
-        <h1 className="max-w-[940px] text-3xl leading-tight font-light tracking-tight sm:text-[42px]">{report.headline}</h1>
+        <h1 className="max-w-[940px] text-3xl leading-tight font-light sm:text-[42px]">{report.headline}</h1>
         <p className="text-sm text-white/60">
           Berita:{' '}
           {event.url ? (
@@ -165,7 +165,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
       <section className="grid border-b border-line lg:grid-cols-[minmax(0,1fr)_380px]">
         <div className="flex flex-col gap-6 border-line py-10 lg:border-r lg:pr-10">
           <div className="flex flex-col gap-2">
-            <h2 className="text-2xl font-light tracking-tight">
+            <h2 className="text-2xl font-light">
               {withPrice.length > 0 ? 'Seberapa jauh tiap saham bergerak dibanding pasar' : 'Saham yang terkait dengan berita ini'}
             </h2>
             {span && (
