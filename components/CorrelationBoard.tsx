@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 type Card = {
   symbol: string;
   link: string;
-  label: string;
   value: string;
   tone: 'down' | 'up' | 'flat';
   unusual: boolean;
@@ -20,22 +19,22 @@ type Card = {
 // Illustrative example for the landing page, not live data.
 const CARDS: Card[] = [
   {
-    symbol: 'BBRI', link: 'Disebut di berita', label: 'BBRI · DISEBUT DI BERITA', value: '−4,1%', tone: 'down', unusual: true,
+    symbol: 'BBRI', link: 'Disebut di berita', value: '−4,1%', tone: 'down', unusual: true,
     caption: 'BBRI disebut di berita. Dalam 6 hari bursa, harganya turun 4,1% lebih dalam dari pasar. Untuk BBRI, gerak sebesar ini tidak biasa.',
     x: 470, y: 30, tilt: 2,
   },
   {
-    symbol: 'BMRI', link: 'Satu indeks BUMN', label: 'BMRI · SATU INDEKS BUMN', value: '−3,1%', tone: 'down', unusual: true,
+    symbol: 'BMRI', link: 'Satu indeks BUMN', value: '−3,1%', tone: 'down', unusual: true,
     caption: 'BMRI tidak disebut, tapi satu indeks BUMN dengan BBRI. Harganya turun 3,1% lebih dalam dari pasar, juga tidak biasa.',
     x: 680, y: 125, tilt: -2.5,
   },
   {
-    symbol: 'BBNI', link: 'Bidang usaha sama', label: 'BBNI · BIDANG USAHA SAMA', value: '−1,2%', tone: 'flat', unusual: false,
+    symbol: 'BBNI', link: 'Bidang usaha sama', value: '−1,2%', tone: 'flat', unusual: false,
     caption: 'BBNI hanya satu bidang usaha dengan bank yang disebut. Selisihnya dengan pasar masih wajar.',
     x: 480, y: 290, tilt: -1,
   },
   {
-    symbol: 'BRIS', link: 'Satu grup usaha', label: 'BRIS · SATU GRUP USAHA', value: '+1,5%', tone: 'up', unusual: false, weak: true,
+    symbol: 'BRIS', link: 'Satu grup usaha', value: '+1,5%', tone: 'up', unusual: false, weak: true,
     caption: 'BRIS satu grup usaha dengan BRI, tapi harganya naik 1,5% di atas pasar. Kaitannya lemah.',
     x: 690, y: 370, tilt: 3,
   },
@@ -45,7 +44,6 @@ const W = 880;
 const H = 540;
 const CARD_W = 190;
 const PIN = { x: 330, y: 270 };
-const INTRO = 'Satu berita bisa berkaitan dengan banyak saham. Arahkan kursor ke kartu untuk melihat alasannya.';
 const TONE = { down: 'text-down', up: 'text-up', flat: 'text-fg' };
 const AUTOPLAY_MS = 3200;
 
@@ -106,15 +104,9 @@ export function CorrelationBoard() {
   }, [hover]);
 
   const hot = hover ?? auto;
-  const card = hot === null ? null : CARDS[hot];
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col gap-2" aria-live="polite">
-        <span className="font-mono text-[11px] tracking-widest text-amber">{card?.label ?? 'CONTOH'}</span>
-        <p className="min-h-[3.2em] max-w-[560px] leading-relaxed text-white/75">{card?.caption ?? INTRO}</p>
-      </div>
-
       {/* sm and up: pinned board with strings, scaled to fit */}
       <div ref={ref} className="hidden w-full sm:block" style={{ height: H * scale }}>
         <div className="relative origin-top-left" style={{ width: W, height: H, transform: `scale(${scale})` }}>
