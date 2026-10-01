@@ -144,7 +144,7 @@ export function CorrelationBoard() {
             <div
               key={c.symbol}
               tabIndex={0}
-              role="img"
+              role="group"
               onMouseEnter={() => setHover(i)}
               onMouseLeave={() => setHover(null)}
               onFocus={() => setHover(i)}
