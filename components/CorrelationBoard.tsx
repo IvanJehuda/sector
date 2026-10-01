@@ -141,15 +141,16 @@ export function CorrelationBoard() {
             <span className="absolute top-[111px] -right-[9px] size-[18px] rounded-full bg-amber shadow-[0_0_18px_rgb(245_165_36/0.8)]" aria-hidden="true" />
           </div>
           {CARDS.map((c, i) => (
-            <button
+            <div
               key={c.symbol}
-              type="button"
+              tabIndex={0}
+              role="img"
               onMouseEnter={() => setHover(i)}
               onMouseLeave={() => setHover(null)}
               onFocus={() => setHover(i)}
               onBlur={() => setHover(null)}
               aria-label={`${c.symbol}: ${c.caption}`}
-              className={`pin-card drop absolute flex cursor-pointer flex-col gap-1 border bg-card p-[18px] text-left shadow-[0_12px_26px_rgb(0_0_0/0.4)] ${
+              className={`pin-card drop absolute flex flex-col gap-1 border bg-card p-[18px] text-left shadow-[0_12px_26px_rgb(0_0_0/0.4)] ${
                 c.weak ? 'border-dashed border-teal/45' : 'border-white/15'
               } ${hot === i ? '!border-amber/60 shadow-[0_24px_44px_rgb(0_0_0/0.55),0_0_0_1px_rgb(245_165_36/0.5)]' : ''}`}
               style={{
@@ -162,7 +163,7 @@ export function CorrelationBoard() {
             >
               <span className="absolute -top-[9px] left-[86px] size-[18px] rounded-full bg-fg shadow-[0_2px_0_rgb(0_0_0/0.5)]" aria-hidden="true" />
               <CardBody c={c} />
-            </button>
+            </div>
           ))}
         </div>
       </div>

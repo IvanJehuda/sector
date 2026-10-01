@@ -40,7 +40,7 @@ export function AnalyzeForm() {
       <div className="border border-line-strong bg-surface">
         <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 font-mono text-[11px] tracking-wide text-white/55">
           <label htmlFor="news-input">TAUTAN ATAU ISI BERITA</label>
-          <span className="hidden sm:inline">ISI BERITA MINIMAL 80 HURUF</span>
+          <span className="text-[10px] sm:text-[11px]">ISI BERITA MINIMAL 80 HURUF</span>
         </div>
         <textarea
           id="news-input"
