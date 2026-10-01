@@ -12,7 +12,7 @@ Baca **HANDOFF.md** dulu. Isinya status terkini, langkah berikutnya, anggaran kr
 - `pnpm dev` dengan `SECTORS_MODE=fake LLM_MODE=fake` untuk UI tanpa kredit
 
 ## Aturan wajib
-1. JANGAN memanggil API Sectors asli dari test atau saat eksperimen. Pakai fixture (`fixtures/sectors/`) atau `SECTORS_MODE=fake`. Kredit tim hanya 1.000 untuk seluruh acara.
+1. JANGAN memanggil API Sectors asli dari test atau saat eksperimen. Pakai fixture (`fixtures/sectors/`) atau `SECTORS_MODE=fake`. Kredit melekat pada akun Sectors (600 per akun, tidak direset), bukan kolam tim. Sisa akun yang sedang dipakai tercatat di HANDOFF.md §4.
 2. Semua akses Sectors lewat `lib/sectors/client.ts` (cache + pencatat kredit + batas budget). Jangan pernah memakai `fetch` langsung ke api.sectors.app.
 3. `lib/domain.ts` adalah kontrak antar modul. Jangan mengubahnya tanpa persetujuan tim.
 4. Tidak boleh ada saran investasi. Teks yang ditampilkan ke user wajib lolos `findBannedPhrases()` (lib/explain/guard.ts) dan menyertakan `DISCLAIMER`.
