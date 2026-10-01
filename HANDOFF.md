@@ -14,7 +14,7 @@
 | Step 3: rekam data asli Sectors (`pnpm record`) | ✅ 23 Sep, 17 kredit. Universe 962 emiten, sub_sector OK, 242 test lolos dengan fixture asli. Slug tag: `politics-regulation` |
 | Redesain UI (tema gelap, papan korelasi, copy awam) | ✅ 23 Sep. Desain + riset copy di `docs/superpowers/specs/2026-09-23-ui-redesign.md` dan `docs/research/2026-09-23-copywriting.md`. Label "Keyakinan" jadi "Bukti kuat/sedang/lemah"; form jadi satu kotak tautan-atau-teks |
 | Step 4: pustaka pola historis (`pnpm seed:history`) | ✅ 1 Okt, 80 kredit (36 tahap ukur + 44 tahap penuh). 12 laporan retrospektif di `local.db` laptop Ivan, tag `politics-regulation`; 8 berjenis "kebijakan". Pembanding terkuat: Oil, Gas & Coal, Banks, Industrial Goods |
-| Step 5: golden set dan `pnpm eval` | 🟡 1 Okt: golden set terisi (10 berita, 12 subsektor, label dari tag redaksi Sectors, lihat commit `bd0a8b6`). `pnpm eval` belum |
+| Step 5: golden set dan `pnpm eval` | ✅ 1 Okt, 21 kredit. Golden set 10 berita / 12 subsektor (label dari tag redaksi Sectors). Saham: presisi 0,35, recall 1,00. Subsektor: presisi 0,60, recall 0,64. Detail dan keterbatasan di README bagian "Golden set" |
 | Step 6: deploy (Vercel + Turso) dan polling terjadwal | 🟡 24 Sep: live di https://correlation-explainer.vercel.app (akun Vercel husinhakim, Turso `correlation-explainer`, `SECTORS_MODE=fixture`). GitHub Secrets poll belum |
 | Step 7: video, post, dan submit | ⬜ Belum |
 
@@ -79,7 +79,7 @@ Lalu:
 
 ## 4. Langkah berikutnya (urut, dengan anggaran kredit)
 
-**Kredit melekat pada akun Sectors, bukan pada tim: tiap akun mendapat 600 dan tidak direset.** Per 1 Okt, key di `.env.local` laptop Ivan adalah milik rekan, dengan sisa sekitar 502 (600 − 17 `pnpm record` − 1 cek key − 80 Step 4). Tim juga punya API key sendiri yang belum dipakai. Pencatat kredit tersimpan di `local.db` **per laptop**, jadi tidak tersinkron antar anggota. Aturan tim:
+**Kredit melekat pada akun Sectors, bukan pada tim: tiap akun mendapat 600 dan tidak direset.** Per 1 Okt, key di `.env.local` laptop Ivan adalah milik rekan, dengan sisa sekitar 481 (600 − 17 `pnpm record` − 1 cek key − 80 Step 4 − 21 Step 5). Tim juga punya API key sendiri yang belum dipakai. Pencatat kredit tersimpan di `local.db` **per laptop**, jadi tidak tersinkron antar anggota. Aturan tim:
 - Hanya **satu orang** yang memegang `SECTORS_API_KEY` untuk langkah yang memakai kredit.
 - Cek sisa kredit asli di dashboard Sectors.
 - Set `SECTORS_CREDIT_BUDGET` di `.env.local` ke **sisa kredit sebenarnya**.

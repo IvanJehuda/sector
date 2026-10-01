@@ -55,7 +55,21 @@ Analisis baru dari pengunjung (`POST /api/analyze`) dibatasi: ditolak (HTTP 429)
 Tag berita (hasil `pnpm record`, 23 Sep 2026): slug untuk seed histori = `politics-regulation` (juga relevan: `government-policy`, `ministry`, `ojk`, `central-bank`, `interest-rate`, `tariff-vat`, `subsidies-incentives`). Daftar lengkap ada di `fixtures/sectors/v2_tags__*.json`.
 
 ## Golden set
-`data/golden-set.json` berisi 8–10 event nyata dengan subsektor dan saham yang diharapkan (diberi label oleh tim). Hasil terakhir: `belum diisi — jalankan pnpm eval dengan API key`
+`data/golden-set.json` berisi 10 berita nyata dari feed Sectors (23 Sep 2026), mencakup 12 subsektor. Kunci jawabannya tidak dikarang: saham yang diharapkan adalah ticker yang ditandai redaksi Sectors pada tiap artikel, dan subsektornya diambil dari data universe. Sistem tidak pernah melihat tag itu saat dinilai (`scripts/eval-golden.ts` memakai `sourceSymbols: []`).
+
+Hasil `pnpm eval` per 1 Okt 2026 (`gpt-4o-mini`, 10 kasus):
+
+| | Presisi | Recall |
+|---|---|---|
+| Saham | 0,35 | 1,00 |
+| Subsektor | 0,60 | 0,64 |
+
+Cara membaca angka ini:
+- **Recall saham 1,00**: setiap saham yang diharapkan ditemukan, termasuk tiga kasus multi-saham (nikel 6 saham, bank pembangunan daerah 3 saham, konglomerasi Salim–Prajogo 9 saham lewat kaitan grup).
+- **Presisi saham rendah memang disengaja.** Sistem juga mengembalikan saham segrup dan sejenis; kunci jawaban ini hanya memuat saham yang ditandai Sectors, jadi kaitan yang sah tetap terhitung meleset.
+- **7 dari 10 kasus menyebut ticker di judulnya**, jadi set ini terutama mengukur penemuan perusahaan yang disebut, belum inferensi sektor.
+- **Belum ada berita kebijakan atau makro** di golden set, karena artikel semacam itu di feed Sectors tidak membawa tag saham untuk dijadikan kunci.
+- Tiga kasus mendapat skor subsektor 0 (BYAN, TRUK, CDIA) walau sahamnya tetap ditemukan: label subsektor yang dipilih sistem untuk peristiwanya berbeda dari kunci.
 
 ## Deploy (opsional)
 1. `turso db create correlation-explainer`, lalu ambil URL dan token.
