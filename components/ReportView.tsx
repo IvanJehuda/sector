@@ -102,7 +102,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
 
   return (
     <article className="flex flex-col">
-      <header className="flex flex-col gap-4pt-12 pb-8">
+      <header className="flex flex-col gap-4 pt-12 pb-8">
         <div className="flex flex-wrap items-center gap-3 font-mono text-[11px] tracking-wider">
           <span className={retro ? 'border border-[#58a6ff]/45 px-2.5 py-1 text-[#58a6ff]' : 'border border-dashed border-hypo/70 px-2.5 py-1 text-hypo'}>
             {modeLabel(report.mode).toUpperCase()}
