@@ -40,7 +40,7 @@ export function AnalyzeForm() {
       <div className="border border-line-strong bg-surface">
         <div className="flex items-center justify-between gap-4 border-b border-line px-4 py-2.5 font-mono text-[11px] tracking-wide text-white/55">
           <label htmlFor="news-input">TAUTAN ATAU ISI BERITA</label>
-          <span className="text-[10px] sm:text-[11px]">ISI BERITA MINIMAL 80 HURUF</span>
+          <span id="news-hint" className="text-[10px] sm:text-[11px]">ISI BERITA MINIMAL 80 HURUF</span>
         </div>
         <textarea
           id="news-input"
@@ -49,7 +49,7 @@ export function AnalyzeForm() {
           rows={3}
           placeholder="Tempel tautan berita (https://…) atau isi beritanya di sini"
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? 'news-error' : undefined}
+          aria-describedby={error ? 'news-error news-hint' : 'news-hint'}
           className="block w-full resize-y bg-transparent px-5 py-4 font-mono text-sm leading-relaxed text-fg outline-none placeholder:text-white/40"
         />
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-3">

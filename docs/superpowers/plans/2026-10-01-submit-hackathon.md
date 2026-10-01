@@ -30,7 +30,7 @@ Diambil verbatim dari `CLAUDE.md`. Setiap task tunduk pada semua baris ini.
 Lima kegagalan yang paling mungkin menggigit tapi tidak diuji oleh test mana pun saat ini. Masing-masing sudah dititipkan test atau langkah verifikasinya ke task pemiliknya.
 
 1. **Nama subsektor di golden set tidak persis sama dengan fixture universe** (beda huruf besar, spasi, atau ampersand). `precisionRecall()` membandingkan dengan `toLowerCase()` saja, jadi "Bank" vs "Banks" menghasilkan recall 0 **tanpa error apa pun** — angka akurasi di video jadi salah dan tidak ada yang tahu kenapa. → Test di Task 3.
-2. **Teks golden set lebih pendek dari 80 karakter.** `manualEvent()` menolak lewat `MIN_MANUAL_TEXT`, dan `pnpm eval` mati di tengah jalan setelah OpenAI sudah dibayar untuk kasus-kasus sebelumnya. → Test di Task 3.
+2. **Teks golden set berupa kerangka atau jauh lebih pendek dari 80 karakter.** Ini **tidak** ditolak di mana pun pada jalur eval: `scripts/eval-golden.ts` memanggil `manualEvent()`, yang tidak melakukan validasi (`MIN_MANUAL_TEXT` hanya diterapkan di `buildManualEvent()`). Kasus itu dinilai seolah berita sungguhan dan diam-diam menurunkan recall, karena isi berita itulah yang disuntikkan ke prompt model. → Test di Task 3.
 3. **`--since` pada `seed:history` terlalu baru.** `SETTLE_DAYS = 8` membuang setiap artikel yang lebih baru dari `todayWib() - 8` hari secara **diam-diam** (`continue`, tanpa log). Kalau semua artikel terbuang, `done` tetap 0 padahal kredit sudah terpakai untuk `fetchNewsPage`. → Langkah pengukuran bertahap di Task 4.
 4. **`SECTORS_CREDIT_BUDGET` salah.** Nilai 1000 membuat `canSpend()` mengizinkan belanja sampai 900 di satu laptop, padahal sisa sebenarnya ~982 untuk dua laptop yang ledger-nya tidak tersinkron. Overspend tidak akan tertahan. → Task 1.
 5. **Video direkam dari situs yang kedaluwarsa.** Integrasi Git Vercel tidak terpasang, jadi push ke `main` tidak men-deploy apa pun. Tanpa redeploy manual, video merekam produksi yang masih memuat bug CSS `gap-4pt-12`. → Task 2.
@@ -195,7 +195,7 @@ describe('golden set', () => {
     expect(unknown).toEqual([]);
   });
 
-  it('gives every case a body long enough for manualEvent to accept', () => {
+  it('gives every case a body long enough for the extractor to work with', () => {
     const tooShort = cases.filter((c) => c.text.trim().length < MIN_MANUAL_TEXT).map((c) => c.title);
     expect(tooShort).toEqual([]);
   });
@@ -358,7 +358,7 @@ git commit -m "docs: record history seeding results and credit spend"
 
 - [ ] **Step 1: Minta izin kredit dengan perkiraan yang benar**
 
-Perkiraan: **≤40 kredit Sectors**. Alasannya penting dan berbeda dari dugaan awal — `scripts/eval-golden.ts` **tidak** memanggil `analyzeEvent`, jadi tidak mengambil data harga sama sekali. Yang dipanggil hanya `market.universe()` (982 baris emiten dibagi 200 per halaman = 5 kredit, lalu di-cache) plus `collectGroups`/`collectIndexes` sebanyak grup dan indeks yang disebut tiap berita (1 kredit per pemanggilan, sebagian besar sudah ada di cache dari Task 4). Biaya OpenAI: satu panggilan `extractEventProfile` per kasus, 8–10 panggilan `gpt-4o-mini` — beberapa sen.
+Perkiraan: **≤40 kredit Sectors**. Alasannya penting dan berbeda dari dugaan awal — `scripts/eval-golden.ts` **tidak** memanggil `analyzeEvent`, jadi tidak mengambil data harga sama sekali. Yang dipanggil hanya `market.universe()` (962 emiten unik dibagi 200 per halaman = 5 kredit, lalu di-cache) plus `collectGroups`/`collectIndexes` sebanyak grup dan indeks yang disebut tiap berita (1 kredit per pemanggilan, sebagian besar sudah ada di cache dari Task 4). Biaya OpenAI: satu panggilan `extractEventProfile` per kasus, 8–10 panggilan `gpt-4o-mini` — beberapa sen.
 
 Tunggu persetujuan eksplisit.
 
