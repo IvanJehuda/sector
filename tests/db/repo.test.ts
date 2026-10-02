@@ -208,13 +208,13 @@ describe('listDoneEvents', () => {
     );
   };
 
-  it('orders reports by when the analysis finished, not by the news date', async () => {
+  it('orders reports by the news date, newest first, whenever they were analysed', async () => {
     const olderNews = (await add(1, '01')).event;
     const newerNews = (await add(2, '20')).event;
     await finish(newerNews.id, '2026-10-01T08:00:00.000Z', ['BBRI']);
     await finish(olderNews.id, '2026-10-02T08:00:00.000Z', ['TLKM']);
 
-    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([olderNews.id, newerNews.id]);
+    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([newerNews.id, olderNews.id]);
   });
 
   it('carries the stocks the analysis found, not the article tags', async () => {

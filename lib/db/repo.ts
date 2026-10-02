@@ -69,13 +69,13 @@ export async function listEvents(db: Db, limit = 50): Promise<StoredEvent[]> {
 export type DoneEvent = StoredEvent & { reportSymbols: string[] };
 
 /**
- * Most recently analysed events, newest analysis first. Kept separate from the feed so new news cannot
- * push them out; ordered by report time so an older article analysed today still surfaces.
+ * Finished events with the newest news first. Kept separate from the feed so new news cannot push them out.
+ * Ordered by news date, so an older article analysed today ranks by its own date, not by when it was analysed.
  */
 export async function listDoneEvents(db: Db, limit = 6): Promise<DoneEvent[]> {
   const r = await db.execute({
     sql: `SELECT e.*, r.body AS report_body FROM events e JOIN reports r ON r.event_id = e.id
-          WHERE e.status = 'done' ORDER BY r.created_at DESC LIMIT ?`,
+          WHERE e.status = 'done' ORDER BY e.published_at DESC LIMIT ?`,
     args: [limit],
   });
   return r.rows.map((row) => ({
