@@ -17,7 +17,7 @@ import {
   setEventStatus,
 } from '@/lib/db/repo';
 import type { EventInput } from '@/lib/domain';
-import { makeReport } from '../helpers/factories';
+import { makeCandidate, makeReport } from '../helpers/factories';
 
 const input: EventInput = {
   source: 'manual',
@@ -199,26 +199,53 @@ describe('listDoneEvents', () => {
   const add = (n: number, day: string) =>
     insertEvent(db, { ...input, url: `https://example.com/done-${n}`, publishedAt: `2026-09-${day}T10:00:00` });
 
-  it('returns only finished events, newest first, up to the limit', async () => {
-    const a = (await add(1, '01')).event;
-    const b = (await add(2, '03')).event;
-    const c = (await add(3, '02')).event;
-    await add(4, '05'); // stays 'new'
-    const failed = (await add(5, '06')).event;
-    const analyzing = (await add(6, '07')).event;
-    for (const e of [a, b, c]) await setEventStatus(db, e.id, 'done');
-    await setEventStatus(db, failed.id, 'failed', 'Gagal');
-    await setEventStatus(db, analyzing.id, 'analyzing');
+  const finish = async (eventId: string, createdAt: string, symbols: string[]) => {
+    await setEventStatus(db, eventId, 'done');
+    const template = makeReport().findings[0];
+    await saveReport(
+      db,
+      makeReport({ eventId, createdAt, findings: symbols.map((symbol) => ({ ...template, candidate: makeCandidate({ symbol }) })) }),
+    );
+  };
 
-    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([b.id, c.id, a.id]);
-    expect((await listDoneEvents(db, 2)).map((e) => e.id)).toEqual([b.id, c.id]);
+  it('orders reports by when the analysis finished, not by the news date', async () => {
+    const olderNews = (await add(1, '01')).event;
+    const newerNews = (await add(2, '20')).event;
+    await finish(newerNews.id, '2026-10-01T08:00:00.000Z', ['BBRI']);
+    await finish(olderNews.id, '2026-10-02T08:00:00.000Z', ['TLKM']);
+
+    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([olderNews.id, newerNews.id]);
   });
 
-  it('defaults to six', async () => {
+  it('carries the stocks the analysis found, not the article tags', async () => {
+    const { event } = await add(3, '05'); // input.symbols tags the article with BBRI
+    await finish(event.id, '2026-10-02T08:00:00.000Z', ['ELTY', 'PPRO', 'TAMU']);
+
+    const [done] = await listDoneEvents(db);
+    expect(done.reportSymbols).toEqual(['ELTY', 'PPRO', 'TAMU']);
+    expect(done.symbols).toEqual(['BBRI']);
+  });
+
+  it('leaves out unfinished events and finished events without a report', async () => {
+    const reported = (await add(4, '01')).event;
+    await finish(reported.id, '2026-10-02T08:00:00.000Z', ['BBRI']);
+    const noReport = (await add(5, '02')).event;
+    await setEventStatus(db, noReport.id, 'done');
+    await add(6, '03'); // stays 'new'
+    const failed = (await add(7, '04')).event;
+    await setEventStatus(db, failed.id, 'failed', 'Gagal');
+    const analyzing = (await add(8, '05')).event;
+    await setEventStatus(db, analyzing.id, 'analyzing');
+
+    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([reported.id]);
+  });
+
+  it('defaults to six and honours a smaller limit', async () => {
     for (let i = 10; i < 18; i++) {
       const { event } = await add(i, String(i));
-      await setEventStatus(db, event.id, 'done');
+      await finish(event.id, `2026-10-02T08:${i}:00.000Z`, ['BBRI']);
     }
     expect(await listDoneEvents(db)).toHaveLength(6);
+    expect(await listDoneEvents(db, 2)).toHaveLength(2);
   });
 });
