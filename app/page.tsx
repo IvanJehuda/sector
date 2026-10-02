@@ -3,14 +3,17 @@ import { Feed } from '@/components/Feed';
 import { Hero } from '@/components/Hero';
 import { HowItWorks } from '@/components/HowItWorks';
 import { NewsTicker } from '@/components/NewsTicker';
+import { RecentReports } from '@/components/RecentReports';
 import { Container, Frame, SiteFooter, SiteNav } from '@/components/SiteNav';
 import { getDb } from '@/lib/db/client';
-import { listEvents } from '@/lib/db/repo';
+import { listDoneEvents, listEvents } from '@/lib/db/repo';
+import { excludeShown } from '@/lib/ui/home';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const events = await listEvents(await getDb(), 30);
+  const db = await getDb();
+  const [events, reports] = await Promise.all([listEvents(db, 30), listDoneEvents(db, 6)]);
   return (
     <Frame>
       <SiteNav>
@@ -32,7 +35,8 @@ export default async function Home() {
         <Hero />
         <div className="spectral-line" />
         <HowItWorks />
-        <Feed events={events} />
+        <RecentReports events={reports} />
+        <Feed events={excludeShown(events, reports)} />
       </main>
       <SiteFooter />
     </Frame>

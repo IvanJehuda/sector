@@ -2,6 +2,7 @@ import { expect, test } from '@playwright/test';
 
 test('pasted text produces a retrospective report with evidence and disclaimer', async ({ page }) => {
   await page.goto('/');
+  await expect(page.locator('#laporan')).toHaveCount(0);
   await page
     .getByLabel('Tautan atau isi berita')
     .fill(
@@ -14,6 +15,12 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   await expect(page.getByText('bukan saran investasi').first()).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText('Retrospektif')).toBeVisible();
   await expect(page.getByText('PT Bank Rakyat Indonesia (Persero) Tbk').first()).toBeVisible();
+
+  // The finished report now stays on the homepage, once, in its own section.
+  const title = 'Presiden menyampaikan pidato tentang rencana pengelolaan BUMN melalui badan investasi baru.';
+  await page.goto('/');
+  await expect(page.locator('#laporan').getByText(title)).toBeVisible();
+  await expect(page.locator('#berita').getByText(title)).toHaveCount(0);
 });
 
 test('automatic receiver adds news to the feed', async ({ page, request }) => {
