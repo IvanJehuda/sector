@@ -10,6 +10,7 @@ import {
   insertEvent,
   kvGet,
   kvSet,
+  listDoneEvents,
   listEvents,
   listRetrospectiveReports,
   saveReport,
@@ -191,5 +192,33 @@ describe('kv', () => {
     await kvSet(db, 'k', 'v1');
     await kvSet(db, 'k', 'v2');
     expect(await kvGet(db, 'k')).toBe('v2');
+  });
+});
+
+describe('listDoneEvents', () => {
+  const add = (n: number, day: string) =>
+    insertEvent(db, { ...input, url: `https://example.com/done-${n}`, publishedAt: `2026-09-${day}T10:00:00` });
+
+  it('returns only finished events, newest first, up to the limit', async () => {
+    const a = (await add(1, '01')).event;
+    const b = (await add(2, '03')).event;
+    const c = (await add(3, '02')).event;
+    await add(4, '05'); // stays 'new'
+    const failed = (await add(5, '06')).event;
+    const analyzing = (await add(6, '07')).event;
+    for (const e of [a, b, c]) await setEventStatus(db, e.id, 'done');
+    await setEventStatus(db, failed.id, 'failed', 'Gagal');
+    await setEventStatus(db, analyzing.id, 'analyzing');
+
+    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([b.id, c.id, a.id]);
+    expect((await listDoneEvents(db, 2)).map((e) => e.id)).toEqual([b.id, c.id]);
+  });
+
+  it('defaults to six', async () => {
+    for (let i = 10; i < 18; i++) {
+      const { event } = await add(i, String(i));
+      await setEventStatus(db, event.id, 'done');
+    }
+    expect(await listDoneEvents(db)).toHaveLength(6);
   });
 });

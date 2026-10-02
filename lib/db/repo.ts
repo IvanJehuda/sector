@@ -65,6 +65,15 @@ export async function listEvents(db: Db, limit = 50): Promise<StoredEvent[]> {
   return r.rows.map(rowToEvent);
 }
 
+/** Most recent finished analyses, newest first. Kept separate from the feed so new news cannot push them out. */
+export async function listDoneEvents(db: Db, limit = 6): Promise<StoredEvent[]> {
+  const r = await db.execute({
+    sql: "SELECT * FROM events WHERE status = 'done' ORDER BY published_at DESC LIMIT ?",
+    args: [limit],
+  });
+  return r.rows.map(rowToEvent);
+}
+
 export async function setEventStatus(
   db: Db,
   id: string,
