@@ -17,3 +17,15 @@ jobs:
             exit 0
           fi
           curl -fsS -H "Authorization: Bearer $CRON_SECRET" "$APP_URL/api/cron/poll"
+      - name: Analyse one policy article
+        # Separate request so the analysis gets its own time budget, and still runs if the poll failed.
+        if: ${{ !cancelled() }}
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          if [ -z "$APP_URL" ] || [ -z "$CRON_SECRET" ]; then
+            echo "APP_URL or CRON_SECRET secret is not set (app not deployed); skipping automatic analysis."
+            exit 0
+          fi
+          curl -fsS -H "Authorization: Bearer $CRON_SECRET" "$APP_URL/api/cron/analyze"

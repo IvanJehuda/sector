@@ -32,4 +32,12 @@ test('automatic receiver adds news to the feed', async ({ page, request }) => {
 
 test('cron endpoint rejects requests without the secret', async ({ request }) => {
   expect((await request.get('/api/cron/poll')).status()).toBe(401);
+  expect((await request.get('/api/cron/analyze')).status()).toBe(401);
+});
+
+test('automatic analysis leaves news without a closing price alone', async ({ request }) => {
+  // The fake feed is dated today, so nothing has a closed session to measure yet.
+  const res = await request.get('/api/cron/analyze', { headers: { Authorization: 'Bearer e2e-secret' } });
+  expect(res.ok()).toBe(true);
+  expect(await res.json()).toEqual({ skipped: 'no-candidate' });
 });
