@@ -79,7 +79,7 @@ export function AnalyzeForm() {
           {error}
         </p>
       )}
-      <p className="text-xs text-white/60">{SHORT_DISCLAIMER} Satu analisis baru memakai paling banyak sekitar 19 kuota data.</p>
+      <p className="text-xs text-white/60">{SHORT_DISCLAIMER}</p>
     </form>
   );
 }

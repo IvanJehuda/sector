@@ -48,7 +48,7 @@ SECTORS_MODE=live LLM_MODE=openai pnpm dev
 | `pnpm eval` | Presisi/recall pemetaan pada golden set |
 
 ## Aturan kredit tim (1.000 total)
-Anggaran ada di spec §6. Pemakaian bisa dilihat di banner beranda dan `GET /api/credits`. **Jangan memanggil API asli dari test.**
+Anggaran ada di spec §6. Angka kredit sengaja tidak tampil di situs. Pemakaian bisa dilihat lewat `GET /api/credits` dengan header `Authorization: Bearer $CRON_SECRET`. **Jangan memanggil API asli dari test.**
 
 Analisis baru dari pengunjung (`POST /api/analyze`) dibatasi: ditolak (HTTP 429) bila kredit terpakai sudah mencapai `PUBLIC_ANALYSIS_BUDGET_RATIO` × anggaran (default 0,7 — sisa 30% untuk seed histori dan demo) atau bila sudah ada `PUBLIC_ANALYSIS_DAILY_LIMIT` analisis dalam 24 jam terakhir (default 20). Membuka laporan yang sudah ada selalu diizinkan.
 

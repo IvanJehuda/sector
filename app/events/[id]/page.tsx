@@ -38,9 +38,6 @@ function Progress({ event }: { event: StoredEvent | null }) {
           <span className="inline-block size-3.5 animate-spin rounded-full border-2 border-amber/30 border-t-amber" aria-hidden="true" />
           {event?.statusMessage ?? 'Menunggu analisis dimulai…'}
         </p>
-        <p className="text-[13px] text-white/50">
-          Laporan ini memakai paling banyak sekitar 19 kuota data. Setelah jadi, siapa pun bisa membukanya tanpa memakai kuota lagi.
-        </p>
       </div>
       <div className="grid-paper grid grid-cols-2 content-start gap-4 p-6" aria-hidden="true">
         {(event?.symbols.length ? event.symbols : ['', '', '', '']).slice(0, 4).map((s, i) => (

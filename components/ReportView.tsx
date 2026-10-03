@@ -132,7 +132,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
       </header>
 
       <div className="spectral-line" />
-      <section aria-label="Ringkasan" className={`grid border-b border-line ${withPrice.length > 0 ? 'md:grid-cols-4' : 'md:grid-cols-3'}`}>
+      <section aria-label="Ringkasan" className={`grid border-b border-line ${withPrice.length > 0 ? 'md:grid-cols-3' : 'md:grid-cols-2'}`}>
         {report.market ? (
           <>
             <Kpi label="Hari berita" value={formatDateId(report.market.t0)} tech="hari bursa pertama · T0" />
@@ -159,7 +159,6 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
           tech="|z| ≥ 2"
         />
         )}
-        <Kpi label="Kuota data terpakai" value={report.creditsUsed} tech="kredit API Sectors" />
       </section>
 
       <section className="grid border-b border-line lg:grid-cols-[minmax(0,1fr)_380px]">
@@ -292,10 +291,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
       )}
 
       <footer className="flex flex-col gap-1 py-7 text-[13px] text-white/55 sm:flex-row sm:justify-between">
-        <span>
-          Kuota data Sectors terpakai: {report.creditsUsed} · Dibuat {CREATED_AT.format(new Date(report.createdAt))} WIB
-        </span>
-        <span>Membuka laporan ini lagi tidak memakai kuota.</span>
+        <span>Dibuat {CREATED_AT.format(new Date(report.createdAt))} WIB</span>
       </footer>
     </article>
   );

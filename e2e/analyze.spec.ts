@@ -15,12 +15,14 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   await expect(page.getByText('bukan saran investasi').first()).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText('Retrospektif')).toBeVisible();
   await expect(page.getByText('PT Bank Rakyat Indonesia (Persero) Tbk').first()).toBeVisible();
+  await expect(page.locator('body')).not.toContainText(/kuota/i);
 
   // The finished report now stays on the homepage, once, in its own section.
   const title = 'Presiden menyampaikan pidato tentang rencana pengelolaan BUMN melalui badan investasi baru.';
   await page.goto('/');
   await expect(page.locator('#laporan').getByText(title)).toBeVisible();
   await expect(page.locator('#berita').getByText(title)).toHaveCount(0);
+  await expect(page.locator('body')).not.toContainText(/kuota/i);
 });
 
 test('automatic receiver adds news to the feed', async ({ page, request }) => {
@@ -33,6 +35,13 @@ test('automatic receiver adds news to the feed', async ({ page, request }) => {
 test('cron endpoint rejects requests without the secret', async ({ request }) => {
   expect((await request.get('/api/cron/poll')).status()).toBe(401);
   expect((await request.get('/api/cron/analyze')).status()).toBe(401);
+  expect((await request.get('/api/credits')).status()).toBe(401);
+});
+
+test('credit usage stays readable for the team with the secret', async ({ request }) => {
+  const res = await request.get('/api/credits', { headers: { Authorization: 'Bearer e2e-secret' } });
+  expect(res.ok()).toBe(true);
+  expect(Object.keys(await res.json()).sort()).toEqual(['budget', 'state', 'used']);
 });
 
 test('automatic analysis leaves news without a closing price alone', async ({ request }) => {
