@@ -27,7 +27,7 @@ export function publicAnalysisBlockReason(p: {
   publicRatio: number;
 }): string | null {
   if (p.used >= p.budget * p.publicRatio) {
-    return 'Kuota kredit untuk analisis publik sudah habis. Laporan yang sudah ada tetap bisa dibuka.';
+    return 'Analisis baru sedang tidak tersedia. Laporan yang sudah ada tetap bisa dibuka.';
   }
   if (p.analysesLast24h >= p.dailyLimit) {
     return 'Batas analisis harian sudah tercapai. Coba lagi besok atau buka laporan yang sudah ada.';

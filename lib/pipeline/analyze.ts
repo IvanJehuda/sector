@@ -25,7 +25,7 @@ export interface PipelineDeps {
 export const UNEXPLAINED_THRESHOLD = -0.05;
 /** Only the first index hint is expanded, keeping an analysis within the advertised ~19 credits. */
 export const MAX_INDEX_HINTS = 1;
-const CREDIT_BLOCKED_NOTE = 'Kuota kredit hampir habis, data saham ini tidak diambil.';
+const CREDIT_BLOCKED_NOTE = 'Data saham ini belum bisa diambil.';
 const PROSPECTIVE_NOTE = 'Belum ada hari bursa setelah event, jadi ini hipotesis.';
 
 export async function collectGroups(market: MarketData, profile: EventProfile, direct: string[]): Promise<Record<string, string[]>> {
@@ -85,7 +85,7 @@ async function measureCandidate(
 
 function userMessage(err: unknown): string {
   if (err instanceof ProfileExtractionError) return 'Gagal memahami berita. Coba tempel teksnya atau ringkas beritanya.';
-  if (err instanceof CreditBudgetError) return 'Kuota kredit Sectors hampir habis, jadi hanya data cache yang bisa dipakai.';
+  if (err instanceof CreditBudgetError) return 'Data pasar sedang terbatas, jadi hanya data yang sudah tersimpan yang dipakai.';
   if (err instanceof FixtureMissingError) return 'Data contoh (fixture) untuk event ini belum direkam.';
   return 'Terjadi kesalahan saat menganalisis event.';
 }

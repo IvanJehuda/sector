@@ -153,7 +153,7 @@ describe('analyzeEvent', () => {
     const report = await analyzeEvent(event.id, { db, market: blocked, llm: fakeLlm(), ledger: memoryLedger() });
 
     expect((await getEvent(db, event.id))?.status).toBe('done');
-    const note = 'Kuota kredit hampir habis, data saham ini tidak diambil.';
+    const note = 'Data saham ini belum bisa diambil.';
     const tlkm = report.findings.find((f) => f.candidate.symbol === 'TLKM')!;
     expect(tlkm).toMatchObject({ reaction: null, netForeignInflow: null, confidence: 'rendah', dataNote: note });
     const bmri = report.findings.find((f) => f.candidate.symbol === 'BMRI')!;
@@ -178,7 +178,7 @@ describe('analyzeEvent', () => {
     );
     expect(await getEvent(db, event.id)).toMatchObject({
       status: 'failed',
-      statusMessage: 'Kuota kredit Sectors hampir habis, jadi hanya data cache yang bisa dipakai.',
+      statusMessage: 'Data pasar sedang terbatas, jadi hanya data yang sudah tersimpan yang dipakai.',
     });
   });
 

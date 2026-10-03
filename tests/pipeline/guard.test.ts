@@ -10,7 +10,7 @@ describe('publicAnalysisBlockReason', () => {
   });
 
   it('blocks when the public share of the credit budget is used up (boundary inclusive)', () => {
-    const msg = 'Kuota kredit untuk analisis publik sudah habis. Laporan yang sudah ada tetap bisa dibuka.';
+    const msg = 'Analisis baru sedang tidak tersedia. Laporan yang sudah ada tetap bisa dibuka.';
     expect(publicAnalysisBlockReason({ ...ok, used: 700 })).toBe(msg);
     expect(publicAnalysisBlockReason({ ...ok, used: 950 })).toBe(msg);
   });
@@ -22,7 +22,16 @@ describe('publicAnalysisBlockReason', () => {
   });
 
   it('reports the credit reason first when both limits are hit', () => {
-    expect(publicAnalysisBlockReason({ ...ok, used: 1000, analysesLast24h: 99 })).toMatch(/^Kuota kredit/);
+    expect(publicAnalysisBlockReason({ ...ok, used: 1000, analysesLast24h: 99 })).toMatch(/^Analisis baru sedang tidak tersedia/);
+  });
+
+  it('never mentions credits or quota to visitors', () => {
+    for (const reason of [
+      publicAnalysisBlockReason({ ...ok, used: 1000 }),
+      publicAnalysisBlockReason({ ...ok, analysesLast24h: 99 }),
+    ]) {
+      expect(reason).not.toMatch(/kredit|kuota|credit/i);
+    }
   });
 });
 
