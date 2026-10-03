@@ -1,5 +1,5 @@
 import type { StoredEvent } from '@/lib/domain';
-import { eventCalendarDate } from '@/lib/market/dates';
+import { addDays, eventCalendarDate } from '@/lib/market/dates';
 
 /** Sectors news tags that mark policy or regulation news, the app's core use case (README, "Tag berita"). */
 export const POLICY_TAG_SLUGS = [
@@ -32,6 +32,12 @@ function eventDay(publishedAt: string): string | null {
   }
 }
 
+/** The first weekday on or after `day`: the earliest session that can close on a weekend article. */
+function firstWeekdayOnOrAfter(day: string): string {
+  const weekday = new Date(`${day}T00:00:00Z`).getUTCDay();
+  return weekday === 6 ? addDays(day, 2) : weekday === 0 ? addDays(day, 1) : day;
+}
+
 /**
  * The newest unanalysed policy article whose event day is before `today` (WIB), or null.
  * Today's articles wait a day: until a trading day has closed, the report would have no price reaction,
@@ -41,7 +47,7 @@ export function pickAutoAnalysis(events: StoredEvent[], today: string): StoredEv
   const candidates = events
     .filter((e) => e.status === 'new' && e.tags.some((t) => POLICY.has(tagSlug(t))))
     .map((e) => ({ e, day: eventDay(e.publishedAt) }))
-    .filter((c): c is { e: StoredEvent; day: string } => c.day !== null && c.day < today);
+    .filter((c): c is { e: StoredEvent; day: string } => c.day !== null && firstWeekdayOnOrAfter(c.day) < today);
   candidates.sort((a, b) => b.day.localeCompare(a.day));
   return candidates[0]?.e ?? null;
 }

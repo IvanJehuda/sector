@@ -53,6 +53,14 @@ describe('pickAutoAnalysis', () => {
     expect(pickAutoAnalysis([lastEvening], TODAY)).toBeNull();
   });
 
+  it('waits for the Monday close before picking weekend articles', () => {
+    // TODAY is Monday 2026-10-05: no session has closed since Friday yet.
+    const saturday = event('saturday', '2026-10-03T09:00:00', ['OJK']);
+    const fridayEvening = event('friday-evening', '2026-10-02T17:00:00', ['OJK']);
+    expect(pickAutoAnalysis([saturday, fridayEvening], TODAY)).toBeNull();
+    expect(pickAutoAnalysis([saturday], '2026-10-06')?.id).toBe('saturday');
+  });
+
   it('only picks articles nobody has analysed or tried yet', () => {
     const done = event('done', '2026-10-02T09:00:00', ['OJK'], 'done');
     const analyzing = event('analyzing', '2026-10-02T09:00:00', ['OJK'], 'analyzing');
