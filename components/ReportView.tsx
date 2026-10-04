@@ -235,13 +235,14 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
         </aside>
       </section>
 
-      <section className={`grid border-b border-line ${retro ? 'md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]' : ''}`}>
-        {retro && (
-          <div className="border-line py-8 max-md:border-b md:border-r md:pr-8">
-            <ImpactTable report={report} />
-          </div>
-        )}
-        <div className={`flex flex-col gap-3 py-8 ${retro ? 'md:pl-8' : ''}`}>
+      {retro && (
+        <section className="border-b border-line py-10">
+          <ImpactTable report={report} />
+        </section>
+      )}
+
+      <section className="border-b border-line">
+        <div className="flex flex-col gap-3 py-8">
           <h3 className="text-[17px]">Turun tajam, belum ada penjelasan</h3>
           {report.unexplainedMovers.length > 0 ? (
             <>

@@ -4,7 +4,7 @@ import { tone } from '@/lib/ui/present';
 
 // Whole class names only: Tailwind never generates a class assembled from fragments.
 const GRID = {
-  'hyp-act': 'md:grid-cols-[150px_minmax(0,1fr)_200px_200px]',
+  'hyp-act': 'md:grid-cols-[130px_minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]',
   'hyp-pro': 'md:grid-cols-[150px_minmax(0,1fr)_220px]',
   'act-only': 'md:grid-cols-[150px_minmax(0,1fr)_minmax(0,1fr)]',
   'history-only': 'md:grid-cols-[150px_minmax(0,1fr)]',

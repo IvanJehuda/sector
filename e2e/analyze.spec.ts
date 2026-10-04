@@ -27,6 +27,15 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   const header = impact.locator('[data-impact-header]');
   const columns = await header.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length);
   expect(columns).toBe(4);
+  // The AI's reason must stay readable on a laptop and a small tablet, not collapse beside fixed-width columns.
+  for (const width of [1280, 800]) {
+    await page.setViewportSize({ width, height: 900 });
+    const reasonTrack = await header.evaluate((el) => parseFloat(getComputedStyle(el).gridTemplateColumns.split(' ')[1]));
+    expect(reasonTrack, `reason column at ${width}px`).toBeGreaterThanOrEqual(200);
+    const overflow = await impact.locator('[data-impact-header] ~ div').first().evaluate((el) => el.scrollWidth - el.clientWidth);
+    expect(overflow, `row overflow at ${width}px`).toBeLessThanOrEqual(0);
+  }
+  await page.setViewportSize({ width: 1280, height: 720 });
 
   // The finished report now stays on the homepage, once, in its own section.
   const title = 'Presiden menyampaikan pidato tentang rencana pengelolaan BUMN melalui badan investasi baru.';
