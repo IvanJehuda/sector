@@ -6,6 +6,7 @@ import {
   foreignFlowText,
   formatDateId,
   splitNewsInput,
+  tone,
   unusualLabel,
 } from '@/lib/ui/present';
 
@@ -65,5 +66,13 @@ describe('SHORT_DISCLAIMER', () => {
   it('says it is not investment advice and passes the guard', () => {
     expect(SHORT_DISCLAIMER).toContain('bukan saran investasi');
     expect(findBannedPhrases(SHORT_DISCLAIMER)).toEqual([]);
+  });
+});
+
+describe('tone', () => {
+  it('colours a move by its sign', () => {
+    expect(tone(-0.01)).toBe('text-down');
+    expect(tone(0.01)).toBe('text-up');
+    expect(tone(0)).toBe('');
   });
 });

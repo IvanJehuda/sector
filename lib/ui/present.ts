@@ -12,6 +12,11 @@ export function describeVsMarket(car: number): string {
   return car < 0 ? `Turun ${pct(car)}% lebih dalam` : `Naik ${pct(car)}% lebih tinggi`;
 }
 
+/** Text colour for a move relative to the market: red below, green above, plain when flat. */
+export function tone(x: number): string {
+  return x < 0 ? 'text-down' : x > 0 ? 'text-up' : '';
+}
+
 export function unusualLabel(significant: boolean): string {
   return significant ? 'Tidak biasa' : 'Masih wajar';
 }
