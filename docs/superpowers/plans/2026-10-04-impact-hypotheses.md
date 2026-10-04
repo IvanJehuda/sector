@@ -198,7 +198,7 @@ Di `lib/pipeline/analyze.ts`, tambahkan import:
 import { toReportHypotheses } from '@/lib/explain/hypotheses';
 ```
 
-Di perakitan laporan, tepat setelah baris `      analogs,`, tambahkan:
+Di dalam perakitan laporan `const report: Report = { … }` (sekitar baris 182), tepat setelah baris `      analogs,` milik objek itu, tambahkan baris berikut. Hati-hati: `      analogs,` juga muncul sekitar baris 165 di objek lain yang **bukan** `Report`; jangan sisipkan di sana.
 
 ```ts
       hypotheses: toReportHypotheses(profile.hypotheses),
@@ -643,7 +643,7 @@ Expected: 301 test lolos (286 + 4 + 2 + 9), typecheck tanpa output, lint 0 error
 
 - [ ] **Step 7: Cek tampilan di localhost tanpa kredit**
 
-Run: `SECTORS_MODE=fake LLM_MODE=fake pnpm dev`. Buka sebuah laporan lama di `/events/<id>`, misalnya dari bagian "Laporan terbaru". Expected: tabel "Dampak per bidang usaha" tampil **tanpa** kolom "Dugaan AI", karena laporan lama belum punya dugaan. Hentikan server setelah selesai.
+Run: `SECTORS_MODE=fake LLM_MODE=fake pnpm dev`. Di beranda, klik salah satu kartu di bagian "Laporan terbaru" (semuanya laporan lama dari `local.db`). Expected: tabel "Dampak per bidang usaha" tampil **tanpa** kolom "Dugaan AI", karena laporan lama belum punya dugaan. Hentikan server setelah selesai.
 
 - [ ] **Step 8: Commit**
 
