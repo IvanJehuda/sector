@@ -13,7 +13,8 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
 
   await expect(page).toHaveURL(/\/events\//, { timeout: 30_000 });
   await expect(page.getByText('bukan saran investasi').first()).toBeVisible({ timeout: 30_000 });
-  await expect(page.getByText('Retrospektif')).toBeVisible();
+  // The footer already carries the disclaimer, so wait on the report itself.
+  await expect(page.getByText('Retrospektif')).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText('PT Bank Rakyat Indonesia (Persero) Tbk').first()).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/kuota/i);
 
