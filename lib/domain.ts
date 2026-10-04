@@ -97,6 +97,15 @@ export interface SubSectorSummary {
   count: number;
 }
 
+/** Direction the AI expects news to push a sub-sector: a hypothesis about the mechanism, not a price forecast. */
+export type ImpactDirection = 'negatif' | 'positif' | 'tidak jelas';
+
+export interface SubSectorHypothesis {
+  subSector: string;
+  direction: ImpactDirection;
+  reason: string;
+}
+
 export interface Report {
   eventId: string;
   mode: Mode;
@@ -109,6 +118,8 @@ export interface Report {
   otherLinks: Candidate[];
   unexplainedMovers: Mover[];
   analogs: AnalogSummary[];
+  /** AI hypotheses on how the news affects each sub-sector. Absent on reports saved before 2026-10-04. */
+  hypotheses?: SubSectorHypothesis[];
   creditsUsed: number;
   disclaimer: string;
   createdAt: string;
