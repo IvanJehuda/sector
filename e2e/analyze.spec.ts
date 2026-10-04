@@ -17,6 +17,17 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   await expect(page.getByText('PT Bank Rakyat Indonesia (Persero) Tbk').first()).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/kuota/i);
 
+  // The AI's guess sits beside what the market actually did, per sub-sector.
+  const impact = page.locator('#dampak');
+  await expect(impact.getByText('Banks', { exact: true })).toBeVisible();
+  await expect(impact.getByText('TEKANAN', { exact: true })).toBeVisible();
+  await expect(impact.getByText('(Contoh) Ketidakpastian kebijakan.')).toBeVisible();
+  await expect(impact.getByText('Kenyataan', { exact: true })).toBeVisible();
+  // Columns must really form: Tailwind drops class names that are assembled from fragments.
+  const header = impact.locator('[data-impact-header]');
+  const columns = await header.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+  expect(columns).toBe(4);
+
   // The finished report now stays on the homepage, once, in its own section.
   const title = 'Presiden menyampaikan pidato tentang rencana pengelolaan BUMN melalui badan investasi baru.';
   await page.goto('/');
@@ -49,4 +60,28 @@ test('automatic analysis leaves news without a closing price alone', async ({ re
   const res = await request.get('/api/cron/analyze', { headers: { Authorization: 'Bearer e2e-secret' } });
   expect(res.ok()).toBe(true);
   expect(await res.json()).toEqual({ skipped: 'no-candidate' });
+});
+
+test('a hypothesis report leads with the impact table and shows no measured reaction', async ({ page }) => {
+  await page.goto('/');
+  await page
+    .getByLabel('Tautan atau isi berita')
+    .fill(
+      'Pemerintah berencana mengubah aturan dividen bank milik negara mulai tahun depan. Pelaku pasar menunggu rincian kebijakan tersebut sebelum menilai dampaknya.',
+    );
+  // A future date keeps this deterministic: the fake IHSG series covers every weekday up to today,
+  // so an undated article tested on a weekday before 16:00 WIB would turn out retrospective.
+  await page.getByLabel('Tanggal berita (opsional)').fill('2099-01-05');
+  await page.getByRole('button', { name: 'Cek dampak berita' }).click();
+
+  await expect(page).toHaveURL(/\/events\//, { timeout: 30_000 });
+  const impact = page.locator('#dampak');
+  await expect(impact).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText(/HIPOTESIS/).first()).toBeVisible();
+  await expect(impact.getByText('TEKANAN', { exact: true })).toBeVisible();
+  await expect(impact.getByText('Kenyataan', { exact: true })).toHaveCount(0);
+
+  const tableTop = (await impact.boundingBox())!.y;
+  const stocksTop = (await page.getByRole('heading', { name: 'Saham yang terkait dengan berita ini' }).boundingBox())!.y;
+  expect(tableTop).toBeLessThan(stocksTop);
 });

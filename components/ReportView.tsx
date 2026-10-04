@@ -1,7 +1,8 @@
 import type { Report, StockFinding, StoredEvent } from '@/lib/domain';
 import { formatPct } from '@/lib/format';
 import { CONFIDENCE_LABEL, LINK_TYPE_LABEL, modeLabel } from '@/lib/ui/labels';
-import { SHORT_DISCLAIMER, describeVsMarket, foreignFlowText, formatDateId, unusualLabel } from '@/lib/ui/present';
+import { SHORT_DISCLAIMER, describeVsMarket, foreignFlowText, formatDateId, tone, unusualLabel } from '@/lib/ui/present';
+import { ImpactTable } from './ImpactTable';
 
 const EVIDENCE_TAG = {
   tinggi: 'border-up/45 text-up',
@@ -11,7 +12,6 @@ const EVIDENCE_TAG = {
 
 const CREATED_AT = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Asia/Jakarta' });
 
-const tone = (x: number) => (x < 0 ? 'text-down' : x > 0 ? 'text-up' : '');
 
 function marketText(ihsg: number) {
   const s = formatPct(Math.abs(ihsg)).replace('+', '');
@@ -161,6 +161,12 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
         )}
       </section>
 
+      {!retro && (
+        <section className="border-b border-line py-10">
+          <ImpactTable report={report} />
+        </section>
+      )}
+
       <section className="grid border-b border-line lg:grid-cols-[minmax(0,1fr)_380px]">
         <div className="flex flex-col gap-6 border-line py-10 lg:border-r lg:pr-10">
           <div className="flex flex-col gap-2">
@@ -229,35 +235,13 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
         </aside>
       </section>
 
-      <section className="grid border-b border-line md:grid-cols-3">
-        <div className="flex flex-col gap-3 border-line py-8 max-md:border-b md:border-r md:pr-8">
-          <h3 className="text-[17px]">Per bidang usaha</h3>
-          {report.subSectorSummary.length > 0 ? (
-            report.subSectorSummary.map((s) => (
-              <p key={s.subSector} className="text-sm leading-relaxed text-white/75">
-                {s.subSector} ({s.count} saham): rata-rata{' '}
-                <span className={tone(s.avgCar)}>{describeVsMarket(s.avgCar).toLowerCase()}</span> dari pasar.
-              </p>
-            ))
-          ) : (
-            <p className="text-sm text-white/50">Belum ada data harga per bidang usaha.</p>
-          )}
-        </div>
-        <div className="flex flex-col gap-3 border-line py-8 max-md:border-b md:border-r md:px-8">
-          <h3 className="text-[17px]">Berita serupa sebelumnya</h3>
-          {report.analogs.length > 0 ? (
-            report.analogs.map((a) => (
-              <p key={a.subSector} className="text-sm leading-relaxed text-white/75">
-                {a.subSector}: dari {a.eventCount} berita serupa, rata-rata{' '}
-                <span className={tone(a.avgCar)}>{describeVsMarket(a.avgCar).toLowerCase()}</span> dari pasar.
-              </p>
-            ))
-          ) : (
-            <p className="text-sm text-white/50">Belum ada berita serupa di pustaka kami.</p>
-          )}
-          <span className="text-xs text-white/45">Masa lalu tidak menjamin gerak berikutnya.</span>
-        </div>
-        <div className="flex flex-col gap-3 py-8 md:pl-8">
+      <section className={`grid border-b border-line ${retro ? 'md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]' : ''}`}>
+        {retro && (
+          <div className="border-line py-8 max-md:border-b md:border-r md:pr-8">
+            <ImpactTable report={report} />
+          </div>
+        )}
+        <div className={`flex flex-col gap-3 py-8 ${retro ? 'md:pl-8' : ''}`}>
           <h3 className="text-[17px]">Turun tajam, belum ada penjelasan</h3>
           {report.unexplainedMovers.length > 0 ? (
             <>
