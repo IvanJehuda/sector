@@ -5,6 +5,7 @@ import { getEvent, getReport, listRetrospectiveReports, saveReport, setEventStat
 import type { Candidate, LlmClient, MarketData, Mode, Mover, PricePoint, Report, StockFinding } from '@/lib/domain';
 import { scoreProspective, scoreRetrospective } from '@/lib/explain/confidence';
 import { DISCLAIMER } from '@/lib/explain/guard';
+import { toReportHypotheses } from '@/lib/explain/hypotheses';
 import { narrate, type NarrationInput } from '@/lib/explain/narrate';
 import { findAnalogs } from '@/lib/history/analogs';
 import { eventCalendarDate, firstTradingDayOnOrAfter, priceWindow } from '@/lib/market/dates';
@@ -180,6 +181,7 @@ export async function analyzeEvent(eventId: string, deps: PipelineDeps): Promise
       otherLinks: other,
       unexplainedMovers,
       analogs,
+      hypotheses: toReportHypotheses(profile.hypotheses),
       creditsUsed: (await ledger.total()) - creditsBefore,
       disclaimer: DISCLAIMER,
       createdAt: now().toISOString(),

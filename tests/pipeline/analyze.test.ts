@@ -3,7 +3,7 @@ import { createFakeLlm } from '@/lib/agent/llm';
 import { ProfileExtractionError, type EventProfile } from '@/lib/agent/profile';
 import { createDb, type Db } from '@/lib/db/client';
 import { migrate } from '@/lib/db/migrate';
-import { getEvent, insertEvent } from '@/lib/db/repo';
+import { getEvent, getReport, insertEvent } from '@/lib/db/repo';
 import type { EventInput, LlmClient, MarketData, Mover } from '@/lib/domain';
 import { DISCLAIMER } from '@/lib/explain/guard';
 import type { NarrationInput } from '@/lib/explain/narrate';
@@ -80,6 +80,22 @@ describe('analyzeEvent', () => {
     expect(report.disclaimer).toBe(DISCLAIMER);
     expect(report.unexplainedMovers).toEqual([]);
     expect((await getEvent(db, event.id))?.status).toBe('done');
+  });
+
+  it('stores the AI impact hypotheses with the report', async () => {
+    const { event } = await insertEvent(db, baseEvent);
+    const report = await analyzeEvent(event.id, { db, market, llm: fakeLlm(), ledger: memoryLedger() });
+
+    expect(report.hypotheses).toEqual([{ subSector: 'Banks', direction: 'negatif', reason: 'Uji.' }]);
+    expect((await getReport(db, event.id))?.hypotheses).toEqual(report.hypotheses);
+  });
+
+  it('leaves out hypotheses whose reason reads as advice', async () => {
+    const llm = fakeLlm({ ...PROFILE, hypotheses: [{ sub_sector: 'Banks', direction: 'negatif', reason: 'Jual saham bank sekarang.' }] });
+    const { event } = await insertEvent(db, baseEvent);
+    const report = await analyzeEvent(event.id, { db, market, llm, ledger: memoryLedger() });
+
+    expect(report.hypotheses).toEqual([]);
   });
 
   it('returns the stored report without touching market data again', async () => {
