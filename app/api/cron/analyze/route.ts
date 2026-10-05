@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic';
  */
 export const maxDuration = 60;
 
-/** Called by the scheduled workflow after each poll: analyses at most one policy article. */
+/** Called by the scheduled workflow after each poll: re-measures one hypothesis report, or analyses one policy article. */
 export async function GET(req: Request): Promise<Response> {
   if (!isCronAuthorized(req.headers.get('authorization'), process.env.CRON_SECRET)) {
     return Response.json({ error: 'unauthorized' }, { status: 401 });
@@ -30,10 +30,10 @@ export async function GET(req: Request): Promise<Response> {
     now: new Date(),
   });
   if ('eventId' in auto) {
-    const id = auto.eventId;
+    const { eventId: id, refresh } = auto;
     after(async () => {
       try {
-        await analyzeEvent(id, deps);
+        await analyzeEvent(id, deps, { refresh });
       } catch (err) {
         console.error('auto analyzeEvent failed', id, err);
       }

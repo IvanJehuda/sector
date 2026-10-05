@@ -1,10 +1,11 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { createDb, type Db } from '@/lib/db/client';
 import { migrate } from '@/lib/db/migrate';
-import { getEvent, insertEvent } from '@/lib/db/repo';
+import { getEvent, insertEvent, kvGet, saveReport, setEventStatus } from '@/lib/db/repo';
 import type { EventInput } from '@/lib/domain';
-import { claimAutoAnalysis } from '@/lib/pipeline/auto';
+import { claimAutoAnalysis, remeasureKey } from '@/lib/pipeline/auto';
 import { memoryLedger } from '@/lib/sectors/stores';
+import { makeReport } from '../helpers/factories';
 
 const TODAY = '2026-10-05';
 const NOW = new Date('2026-10-05T01:00:00.000Z'); // 08:00 WIB, the first scheduled poll
@@ -58,5 +59,39 @@ describe('claimAutoAnalysis', () => {
     await insertEvent(db, policyNews);
     await claim();
     expect(await claim()).toEqual({ skipped: 'no-candidate' });
+  });
+
+  /** A finished hypothesis report on Thursday's news: Thursday's session has closed by Monday. */
+  async function hypothesisReport() {
+    const { event } = await insertEvent(db, { ...policyNews, url: 'https://example.com/hipotesis', publishedAt: '2026-10-01T09:00:00' });
+    await saveReport(db, makeReport({ eventId: event.id, mode: 'prospective', market: null }));
+    await setEventStatus(db, event.id, 'done');
+    return event;
+  }
+
+  it('re-measures a hypothesis report before analysing new articles', async () => {
+    const hyp = await hypothesisReport();
+    await insertEvent(db, policyNews);
+
+    expect(await claim()).toEqual({ eventId: hyp.id, refresh: true });
+    expect((await getEvent(db, hyp.id))?.status).toBe('analyzing');
+    expect(await kvGet(db, remeasureKey(hyp.id))).toBe(TODAY);
+  });
+
+  it('retries each hypothesis report at most once a day, then moves on to new articles', async () => {
+    const hyp = await hypothesisReport();
+    const { event: fresh } = await insertEvent(db, policyNews);
+    await claim();
+    await setEventStatus(db, hyp.id, 'done'); // the re-run ended, still a hypothesis (e.g. an exchange holiday)
+
+    expect(await claim()).toEqual({ eventId: fresh.id });
+  });
+
+  it('keeps the retry for later when the guard blocks the run', async () => {
+    const hyp = await hypothesisReport();
+
+    expect(await claim({ config: { ...OPEN, dailyLimit: 0 } })).toEqual({ skipped: 'blocked' });
+    expect(await kvGet(db, remeasureKey(hyp.id))).toBeNull();
+    expect((await getEvent(db, hyp.id))?.status).toBe('done');
   });
 });
