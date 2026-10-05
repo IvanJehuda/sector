@@ -5,6 +5,7 @@ import {
   describeVsMarket,
   foreignFlowText,
   formatDateId,
+  showReactionColumns,
   splitNewsInput,
   tone,
   unusualLabel,
@@ -74,5 +75,18 @@ describe('tone', () => {
     expect(tone(-0.01)).toBe('text-down');
     expect(tone(0.01)).toBe('text-up');
     expect(tone(0)).toBe('');
+  });
+});
+
+describe('showReactionColumns', () => {
+  const reaction = { t0: '2026-03-09', tEnd: '2026-03-16', days: 6, car: -0.05, marketReturn: 0.001, sigma: 0.01, zScore: -3, significant: true };
+
+  it('shows price columns when at least one stock has a measured reaction', () => {
+    expect(showReactionColumns([{ reaction: null }, { reaction }])).toBe(true);
+  });
+
+  it('hides them when no stock has one, as on every hypothesis report', () => {
+    expect(showReactionColumns([{ reaction: null }, { reaction: null }])).toBe(false);
+    expect(showReactionColumns([])).toBe(false);
   });
 });

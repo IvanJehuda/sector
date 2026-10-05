@@ -23,6 +23,11 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   await expect(main).not.toContainText('Saham yang terkait belum tentu dipengaruhi berita ini.');
   await expect(main).not.toContainText('Disusun AI dari isi berita');
 
+  // Measured reports keep the price columns, and the header really forms five columns.
+  const stocksHeader = page.locator('[data-findings-header]');
+  await expect(stocksHeader.getByText('Dibanding pasar', { exact: true })).toBeVisible();
+  expect(await stocksHeader.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(5);
+
   // The AI's guess sits beside what the market actually did, per sub-sector.
   const impact = page.locator('#dampak');
   await expect(impact.getByText('Banks', { exact: true })).toBeVisible();
@@ -106,6 +111,12 @@ test('a hypothesis report leads with the impact table and shows no measured reac
   await expect(page.getByText(/HIPOTESIS/).first()).toBeVisible();
   await expect(impact.getByText('TEKANAN', { exact: true })).toBeVisible();
   await expect(impact.getByText('Kenyataan', { exact: true })).toHaveCount(0);
+
+  // No stock has a price reaction yet, so the price columns are gone and the header forms three columns.
+  const stocksHeader = page.locator('[data-findings-header]');
+  await expect(stocksHeader.getByText('Dibanding pasar', { exact: true })).toHaveCount(0);
+  await expect(stocksHeader.getByText('Gerak', { exact: true })).toHaveCount(0);
+  expect(await stocksHeader.evaluate((el) => getComputedStyle(el).gridTemplateColumns.split(' ').length)).toBe(3);
 
   const tableTop = (await impact.boundingBox())!.y;
   const stocksTop = (await page.getByRole('heading', { name: 'Saham yang terkait dengan berita ini' }).boundingBox())!.y;

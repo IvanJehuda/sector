@@ -1,3 +1,5 @@
+import type { StockFinding } from '@/lib/domain';
+
 /** Plain-language wording for numbers shown to people who do not follow the stock market. */
 
 export const SHORT_DISCLAIMER = 'Ini analisis data harga masa lalu, bukan saran investasi.';
@@ -15,6 +17,11 @@ export function describeVsMarket(car: number): string {
 /** Text colour for a move relative to the market: red below, green above, plain when flat. */
 export function tone(x: number): string {
   return x < 0 ? 'text-down' : x > 0 ? 'text-up' : '';
+}
+
+/** The price columns only help when at least one stock has a measured reaction; hypothesis reports have none. */
+export function showReactionColumns(findings: Pick<StockFinding, 'reaction'>[]): boolean {
+  return findings.some((f) => f.reaction !== null);
 }
 
 export function unusualLabel(significant: boolean): string {

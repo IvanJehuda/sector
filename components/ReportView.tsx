@@ -1,7 +1,7 @@
 import type { Report, StockFinding, StoredEvent } from '@/lib/domain';
 import { formatPct } from '@/lib/format';
 import { CONFIDENCE_LABEL, LINK_TYPE_LABEL, modeLabel } from '@/lib/ui/labels';
-import { describeVsMarket, foreignFlowText, formatDateId, tone, unusualLabel } from '@/lib/ui/present';
+import { describeVsMarket, foreignFlowText, formatDateId, showReactionColumns, tone, unusualLabel } from '@/lib/ui/present';
 import { ImpactTable } from './ImpactTable';
 
 const EVIDENCE_TAG = {
@@ -11,6 +11,12 @@ const EVIDENCE_TAG = {
 } as const;
 
 const CREATED_AT = new Intl.DateTimeFormat('id-ID', { dateStyle: 'long', timeStyle: 'short', timeZone: 'Asia/Jakarta' });
+
+// Whole class names only: Tailwind never generates a class assembled from fragments.
+const STOCK_COLS = {
+  withPrice: 'md:grid-cols-[150px_minmax(0,1fr)_160px_100px_100px]',
+  withoutPrice: 'md:grid-cols-[150px_minmax(0,1fr)_100px]',
+} as const;
 
 
 function marketText(ihsg: number) {
@@ -60,21 +66,25 @@ function CarBars({ findings }: { findings: StockFinding[] }) {
   );
 }
 
-function FindingRow({ f, open }: { f: StockFinding; open: boolean }) {
+function FindingRow({ f, open, priceCols }: { f: StockFinding; open: boolean; priceCols: boolean }) {
   const r = f.reaction;
   const flow = foreignFlowText(f.netForeignInflow);
   return (
     <details open={open} className="group border-b border-line last:border-b-0 open:bg-white/[0.03]">
-      <summary className="grid cursor-pointer list-none grid-cols-2 gap-x-3 gap-y-1.5 px-4 py-4 text-sm hover:bg-white/[0.045] md:grid-cols-[150px_minmax(0,1fr)_160px_100px_100px] md:items-center md:px-5 [&::-webkit-details-marker]:hidden">
+      <summary
+        className={`grid cursor-pointer list-none grid-cols-2 gap-x-3 gap-y-1.5 px-4 py-4 text-sm hover:bg-white/[0.045] ${priceCols ? STOCK_COLS.withPrice : STOCK_COLS.withoutPrice} md:items-center md:px-5 [&::-webkit-details-marker]:hidden`}
+      >
         <span className="flex flex-col">
           <span className="font-mono">{f.candidate.symbol}</span>
           <span className="text-xs text-white/50">{f.candidate.name}</span>
         </span>
         <span className="text-white/80 max-md:text-right">{LINK_TYPE_LABEL[f.candidate.linkType]}</span>
-        <span className={r ? (r.significant ? tone(r.car) : 'text-white/80') : 'text-white/50'}>
-          {r ? describeVsMarket(r.car) : 'Belum ada data harga'}
-        </span>
-        <span className={`max-md:text-right ${r?.significant ? 'text-amber' : 'text-white/60'}`}>{r ? unusualLabel(r.significant) : '—'}</span>
+        {priceCols && (
+          <>
+            <span className={r ? (r.significant ? tone(r.car) : 'text-white/80') : 'text-white/50'}>{r ? describeVsMarket(r.car) : '—'}</span>
+            <span className={`max-md:text-right ${r?.significant ? 'text-amber' : 'text-white/60'}`}>{r ? unusualLabel(r.significant) : '—'}</span>
+          </>
+        )}
         <span className="max-md:col-span-2">
           <span className={`inline-block border px-2 py-0.5 font-mono text-[11px] ${EVIDENCE_TAG[f.confidence]}`}>
             {CONFIDENCE_LABEL[f.confidence].replace('Bukti ', '').toUpperCase()}
@@ -99,6 +109,7 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
   const withPrice = report.findings.filter((f) => f.reaction);
   const unusual = withPrice.filter((f) => f.reaction!.significant).length;
   const span = withPrice[0]?.reaction;
+  const priceCols = showReactionColumns(report.findings);
 
   return (
     <article className="flex flex-col">
@@ -180,15 +191,23 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
           {withPrice.length > 0 && <CarBars findings={report.findings} />}
           {report.findings.length > 0 ? (
             <div className="border border-line">
-              <div className="hidden grid-cols-[150px_minmax(0,1fr)_160px_100px_100px] gap-3 border-b border-line px-5 py-3 text-xs text-white/55 md:grid" aria-hidden="true">
+              <div
+                data-findings-header
+                className={`hidden gap-3 border-b border-line px-5 py-3 text-xs text-white/55 md:grid ${priceCols ? STOCK_COLS.withPrice : STOCK_COLS.withoutPrice}`}
+                aria-hidden="true"
+              >
                 <span>Saham</span>
                 <span>Kenapa terkait</span>
-                <span>Dibanding pasar</span>
-                <span>Gerak</span>
+                {priceCols && (
+                  <>
+                    <span>Dibanding pasar</span>
+                    <span>Gerak</span>
+                  </>
+                )}
                 <span>Bukti</span>
               </div>
               {report.findings.map((f, i) => (
-                <FindingRow key={f.candidate.symbol} f={f} open={i === 0} />
+                <FindingRow key={f.candidate.symbol} f={f} open={i === 0} priceCols={priceCols} />
               ))}
             </div>
           ) : (
