@@ -137,6 +137,15 @@ export async function listRetrospectiveReports(db: Db): Promise<Report[]> {
   return r.rows.map((row) => JSON.parse(String(row.body)) as Report);
 }
 
+/** Hypothesis reports of finished events: the ones a later trading session can turn into measured reports. */
+export async function listProspectiveReports(db: Db): Promise<{ eventId: string; publishedAt: string }[]> {
+  const r = await db.execute(
+    `SELECT e.id, e.published_at FROM reports r JOIN events e ON e.id = r.event_id
+     WHERE r.mode = 'prospective' AND e.status = 'done'`,
+  );
+  return r.rows.map((row) => ({ eventId: String(row.id), publishedAt: String(row.published_at) }));
+}
+
 export async function kvGet(db: Db, key: string): Promise<string | null> {
   const r = await db.execute({ sql: 'SELECT value FROM kv WHERE key = ?', args: [key] });
   return r.rows[0] ? String(r.rows[0].value) : null;

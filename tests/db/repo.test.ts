@@ -12,6 +12,7 @@ import {
   kvSet,
   listDoneEvents,
   listEvents,
+  listProspectiveReports,
   listRetrospectiveReports,
   saveReport,
   setEventStatus,
@@ -247,5 +248,20 @@ describe('listDoneEvents', () => {
     }
     expect(await listDoneEvents(db)).toHaveLength(6);
     expect(await listDoneEvents(db, 2)).toHaveLength(2);
+  });
+});
+
+describe('listProspectiveReports', () => {
+  it('lists hypothesis reports of finished events with their publish time', async () => {
+    const hyp = (await insertEvent(db, input)).event;
+    const measured = (await insertEvent(db, { ...input, url: 'https://example.com/berita-b' })).event;
+    const running = (await insertEvent(db, { ...input, url: 'https://example.com/berita-c' })).event;
+    for (const e of [hyp, measured]) await setEventStatus(db, e.id, 'done');
+    await setEventStatus(db, running.id, 'analyzing');
+    await saveReport(db, makeReport({ eventId: hyp.id, mode: 'prospective', market: null }));
+    await saveReport(db, makeReport({ eventId: measured.id, mode: 'retrospective' }));
+    await saveReport(db, makeReport({ eventId: running.id, mode: 'prospective', market: null }));
+
+    expect(await listProspectiveReports(db)).toEqual([{ eventId: hyp.id, publishedAt: input.publishedAt }]);
   });
 });
