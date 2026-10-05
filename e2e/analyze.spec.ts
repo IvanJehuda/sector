@@ -58,6 +58,17 @@ test('automatic receiver adds news to the feed', async ({ page, request }) => {
   await expect(page.locator('#berita').getByText('(Contoh) Pemerintah kaji restrukturisasi bank BUMN')).toBeVisible();
 });
 
+test('the site is called JejakPasar and its tab icon is the header logo', async ({ page, request }) => {
+  await page.goto('/');
+  await expect(page).toHaveTitle('JejakPasar');
+  await expect(page.getByRole('navigation').getByRole('link', { name: 'JejakPasar' })).toBeVisible();
+  const href = await page.locator('link[rel="icon"][type="image/svg+xml"]').getAttribute('href');
+  expect(href).toBeTruthy();
+  const icon = await request.get(href!);
+  expect(icon.ok()).toBe(true);
+  expect(await icon.text()).toContain('M3 15h6v6M9 9h6v6');
+});
+
 test('cron endpoint rejects requests without the secret', async ({ request }) => {
   expect((await request.get('/api/cron/poll')).status()).toBe(401);
   expect((await request.get('/api/cron/analyze')).status()).toBe(401);

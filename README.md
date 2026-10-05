@@ -1,6 +1,6 @@
-# Correlation Explainer
+# JejakPasar
 
-> *Correlation Explainer mengubah berita dan event apa pun menjadi daftar saham IDX yang terkait, beserta bukti reaksi pasar dari data Sectors, sehingga investor pemula paham "apa hubungannya berita ini dengan saham itu" tanpa menerima saran investasi.*
+> *JejakPasar mengubah berita dan event apa pun menjadi daftar saham IDX yang terkait, beserta bukti reaksi pasar dari data Sectors, sehingga investor pemula paham "apa hubungannya berita ini dengan saham itu" tanpa menerima saran investasi.*
 
 Sectors Hackathon 2026 · Track: **AI Agents & Assistants**
 

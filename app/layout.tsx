@@ -9,7 +9,7 @@ const mono = Geist_Mono({ subsets: ['latin'], variable: '--font-geist-mono' });
 const display = localFont({ src: './fonts/StackSansNotch-latin.woff2', weight: '200 700', variable: '--font-stack-notch' });
 
 export const metadata: Metadata = {
-  title: 'Correlation Explainer',
+  title: 'JejakPasar',
   description: 'Tempel berita ekonomi, lihat saham Bursa Efek Indonesia yang ikut bergerak beserta buktinya. Bukan saran investasi.',
 };
 

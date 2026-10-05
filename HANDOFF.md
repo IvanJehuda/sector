@@ -1,4 +1,4 @@
-# HANDOFF: Correlation Explainer (Sectors Hackathon 2026)
+# HANDOFF: JejakPasar (Sectors Hackathon 2026)
 
 > **Untuk manusia dan coding agent.** Baca file ini dulu, lalu `CLAUDE.md` (aturan wajib), lalu spec.
 > Terakhir diperbarui: **2026-09-22** oleh Ivan. Tenggat submit: **30 Sep 2026, 23:59 WIB**. Setelah submit, repo dibekukan: tidak boleh ada commit lagi.

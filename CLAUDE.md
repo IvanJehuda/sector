@@ -1,4 +1,4 @@
-# Correlation Explainer: Aturan untuk Coding Agent
+# JejakPasar: Aturan untuk Coding Agent
 
 Aplikasi Next.js 15 (TypeScript) untuk Sectors Hackathon 2026: berita/event → saham IDX terkait + bukti reaksi pasar.
 Spec: docs/superpowers/specs/2026-09-22-correlation-explainer-design.md

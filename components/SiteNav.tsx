@@ -8,7 +8,7 @@ export function Logo() {
         <rect x="3" y="3" width="18" height="18" />
         <path d="M3 15h6v6M9 9h6v6" />
       </svg>
-      Correlation Explainer
+      JejakPasar
     </Link>
   );
 }
