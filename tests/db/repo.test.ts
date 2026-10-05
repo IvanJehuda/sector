@@ -241,6 +241,14 @@ describe('listDoneEvents', () => {
     expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([reported.id]);
   });
 
+  it('keeps a report listed while it is being re-analysed, even if that run was killed', async () => {
+    const { event } = await add(9, '06');
+    await finish(event.id, '2026-10-02T08:00:00.000Z', ['BBRI']);
+    await setEventStatus(db, event.id, 'analyzing');
+
+    expect((await listDoneEvents(db)).map((e) => e.id)).toEqual([event.id]);
+  });
+
   it('defaults to six and honours a smaller limit', async () => {
     for (let i = 10; i < 18; i++) {
       const { event } = await add(i, String(i));
@@ -262,6 +270,16 @@ describe('listProspectiveReports', () => {
     await saveReport(db, makeReport({ eventId: measured.id, mode: 'retrospective' }));
     await saveReport(db, makeReport({ eventId: running.id, mode: 'prospective', market: null }));
 
-    expect(await listProspectiveReports(db)).toEqual([{ eventId: hyp.id, publishedAt: input.publishedAt }]);
+    const staleBefore = new Date(Date.now() - ANALYSIS_STALE_MS).toISOString();
+    expect(await listProspectiveReports(db, staleBefore)).toEqual([{ eventId: hyp.id, publishedAt: input.publishedAt }]);
+  });
+
+  it('includes a re-analysis that was killed and left stale, so it can be retried', async () => {
+    const stuck = (await insertEvent(db, input)).event;
+    await saveReport(db, makeReport({ eventId: stuck.id, mode: 'prospective', market: null }));
+    await setEventStatus(db, stuck.id, 'analyzing');
+    await db.execute({ sql: 'UPDATE events SET status_updated_at = ? WHERE id = ?', args: ['2026-10-01T00:00:00.000Z', stuck.id] });
+
+    expect(await listProspectiveReports(db, '2026-10-05T00:00:00.000Z')).toEqual([{ eventId: stuck.id, publishedAt: input.publishedAt }]);
   });
 });

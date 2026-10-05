@@ -28,7 +28,8 @@ export async function claimAutoAnalysis(deps: {
   today: string;
   now: Date;
 }): Promise<AutoAnalysisResult> {
-  const pending = await listProspectiveReports(deps.db);
+  const staleBefore = new Date(deps.now.getTime() - ANALYSIS_STALE_MS).toISOString();
+  const pending = await listProspectiveReports(deps.db, staleBefore);
   const candidates = [];
   for (const p of pending) candidates.push({ ...p, lastAttempt: await kvGet(deps.db, remeasureKey(p.eventId)) });
   const remeasure = pickRemeasure(candidates, deps.today);
@@ -47,7 +48,6 @@ export async function claimAutoAnalysis(deps: {
   // Recorded before the claim: one attempt per report per day, even if the re-run fails or stays a hypothesis.
   if (remeasure) await kvSet(deps.db, remeasureKey(remeasure), deps.today);
   const nowIso = deps.now.toISOString();
-  const staleBefore = new Date(deps.now.getTime() - ANALYSIS_STALE_MS).toISOString();
   if (!(await claimEventForAnalysis(deps.db, pick, nowIso, staleBefore))) return { skipped: 'claimed-elsewhere' };
   return remeasure ? { eventId: pick, refresh: true } : { eventId: pick };
 }

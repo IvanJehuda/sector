@@ -87,6 +87,14 @@ describe('claimAutoAnalysis', () => {
     expect(await claim()).toEqual({ eventId: fresh.id });
   });
 
+  it('picks up a re-analysis that was killed mid-run on a later day', async () => {
+    const hyp = await hypothesisReport();
+    await setEventStatus(db, hyp.id, 'analyzing'); // killed at the time limit: no catch ran
+    await db.execute({ sql: 'UPDATE events SET status_updated_at = ? WHERE id = ?', args: ['2026-10-02T01:00:00.000Z', hyp.id] });
+
+    expect(await claim()).toEqual({ eventId: hyp.id, refresh: true });
+  });
+
   it('keeps the retry for later when the guard blocks the run', async () => {
     const hyp = await hypothesisReport();
 

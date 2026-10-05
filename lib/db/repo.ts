@@ -71,11 +71,13 @@ export type DoneEvent = StoredEvent & { reportSymbols: string[] };
 /**
  * Finished events with the newest news first. Kept separate from the feed so new news cannot push them out.
  * Ordered by news date, so an older article analysed today ranks by its own date, not by when it was analysed.
+ * Any event with a stored report counts, whatever its status: a hypothesis report being re-analysed (or whose
+ * re-analysis was killed) stays listed.
  */
 export async function listDoneEvents(db: Db, limit = 6): Promise<DoneEvent[]> {
   const r = await db.execute({
     sql: `SELECT e.*, r.body AS report_body FROM events e JOIN reports r ON r.event_id = e.id
-          WHERE e.status = 'done' ORDER BY e.published_at DESC LIMIT ?`,
+          ORDER BY e.published_at DESC LIMIT ?`,
     args: [limit],
   });
   return r.rows.map((row) => ({
@@ -137,12 +139,17 @@ export async function listRetrospectiveReports(db: Db): Promise<Report[]> {
   return r.rows.map((row) => JSON.parse(String(row.body)) as Report);
 }
 
-/** Hypothesis reports of finished events: the ones a later trading session can turn into measured reports. */
-export async function listProspectiveReports(db: Db): Promise<{ eventId: string; publishedAt: string }[]> {
-  const r = await db.execute(
-    `SELECT e.id, e.published_at FROM reports r JOIN events e ON e.id = r.event_id
-     WHERE r.mode = 'prospective' AND e.status = 'done'`,
-  );
+/**
+ * Hypothesis reports a later trading session can turn into measured reports: finished events, plus
+ * re-analyses still marked 'analyzing' since before `staleBeforeIso` (killed at the time limit, never reset).
+ */
+export async function listProspectiveReports(db: Db, staleBeforeIso: string): Promise<{ eventId: string; publishedAt: string }[]> {
+  const r = await db.execute({
+    sql: `SELECT e.id, e.published_at FROM reports r JOIN events e ON e.id = r.event_id
+          WHERE r.mode = 'prospective'
+            AND (e.status = 'done' OR (e.status = 'analyzing' AND (e.status_updated_at IS NULL OR e.status_updated_at < ?)))`,
+    args: [staleBeforeIso],
+  });
   return r.rows.map((row) => ({ eventId: String(row.id), publishedAt: String(row.published_at) }));
 }
 

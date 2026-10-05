@@ -10,8 +10,8 @@ import { creditBudget } from '@/lib/sectors/from-env';
 export const dynamic = 'force-dynamic';
 /**
  * Upper bound for the after() analysis. Kept apart from the news poll so each gets its own budget.
- * A run killed at the limit stays 'analyzing': automatic runs never retry it, and a visitor can
- * re-claim it once its status goes stale.
+ * A run killed at the limit stays 'analyzing'. A first analysis can be re-claimed by a visitor once its
+ * status goes stale; a killed re-analysis keeps its old report listed and is retried by a later run.
  */
 export const maxDuration = 60;
 
