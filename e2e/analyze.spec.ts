@@ -17,6 +17,11 @@ test('pasted text produces a retrospective report with evidence and disclaimer',
   await expect(page.getByText('Retrospektif')).toBeVisible({ timeout: 30_000 });
   await expect(page.getByText('PT Bank Rakyat Indonesia (Persero) Tbk').first()).toBeVisible();
   await expect(page.locator('body')).not.toContainText(/kuota/i);
+  // The report carries no disclaimer blocks of its own; the site footer keeps the one-line notice.
+  const main = page.locator('main');
+  await expect(main).not.toContainText('BUKAN SARAN INVESTASI');
+  await expect(main).not.toContainText('Saham yang terkait belum tentu dipengaruhi berita ini.');
+  await expect(main).not.toContainText('Disusun AI dari isi berita');
 
   // The AI's guess sits beside what the market actually did, per sub-sector.
   const impact = page.locator('#dampak');

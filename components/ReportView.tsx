@@ -1,7 +1,7 @@
 import type { Report, StockFinding, StoredEvent } from '@/lib/domain';
 import { formatPct } from '@/lib/format';
 import { CONFIDENCE_LABEL, LINK_TYPE_LABEL, modeLabel } from '@/lib/ui/labels';
-import { SHORT_DISCLAIMER, describeVsMarket, foreignFlowText, formatDateId, tone, unusualLabel } from '@/lib/ui/present';
+import { describeVsMarket, foreignFlowText, formatDateId, tone, unusualLabel } from '@/lib/ui/present';
 import { ImpactTable } from './ImpactTable';
 
 const EVIDENCE_TAG = {
@@ -126,9 +126,6 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
             serupa sebelumnya. Ini bukan perkiraan harga.
           </p>
         )}
-        <p role="note" className="border border-amber/35 bg-amber/5 px-4 py-3 text-sm text-white/80">
-          {SHORT_DISCLAIMER} Saham yang terkait belum tentu dipengaruhi berita ini.
-        </p>
       </header>
 
       <div className="spectral-line" />
@@ -215,7 +212,6 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
                 </li>
               ))}
             </ol>
-            <span className="text-xs text-white/45">Disusun AI dari isi berita. Bisa keliru, cek berita aslinya.</span>
           </div>
           {report.market && (
             <div className="flex flex-col gap-2.5 border border-dashed border-white/20 p-4">
@@ -228,10 +224,6 @@ export function ReportView({ event, report }: { event: StoredEvent; report: Repo
               </p>
             </div>
           )}
-          <div className="flex flex-col gap-2.5 border border-warn/35 bg-surface p-4">
-            <span className="font-mono text-[11px] tracking-widest text-warn">BUKAN SARAN INVESTASI</span>
-            <p className="text-[13px] leading-relaxed text-white/75">{report.disclaimer}</p>
-          </div>
         </aside>
       </section>
 
