@@ -121,6 +121,44 @@ describe('analyzeEvent', () => {
     expect(report.analogs).toEqual([expect.objectContaining({ subSector: 'Banks', eventCount: 1 })]);
   });
 
+  it('refresh turns a hypothesis into a measured report once a session has closed', async () => {
+    const { event } = await insertEvent(db, baseEvent);
+    const early = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-06' });
+    const first = await analyzeEvent(event.id, { db, market: early, llm: fakeLlm(), ledger: memoryLedger() });
+    expect(first.mode).toBe('prospective');
+
+    const report = await analyzeEvent(event.id, { db, market, llm: fakeLlm(), ledger: memoryLedger() }, { refresh: true });
+
+    expect(report.mode).toBe('retrospective');
+    expect(report.market?.t0).toBe('2026-03-09');
+    expect(report.findings.some((f) => f.reaction !== null)).toBe(true);
+    expect((await getReport(db, event.id))?.mode).toBe('retrospective');
+    expect((await getEvent(db, event.id))?.status).toBe('done');
+  });
+
+  it('refresh never rewrites a measured report', async () => {
+    const { event } = await insertEvent(db, baseEvent);
+    const deps = { db, market, llm: fakeLlm(), ledger: memoryLedger() };
+    const first = await analyzeEvent(event.id, deps);
+    const spy = vi.spyOn(market, 'universe');
+
+    expect(await analyzeEvent(event.id, deps, { refresh: true })).toEqual(first);
+    expect(spy).not.toHaveBeenCalled();
+  });
+
+  it('a failed refresh keeps the hypothesis report listed', async () => {
+    const { event } = await insertEvent(db, baseEvent);
+    const early = createFakeMarketData({ shockDay: '2026-03-09', today: '2026-03-06' });
+    const first = await analyzeEvent(event.id, { db, market: early, llm: fakeLlm(), ledger: memoryLedger() });
+    const broken = createFakeLlm({ event_profile: { broken: true } });
+
+    await expect(analyzeEvent(event.id, { db, market, llm: broken, ledger: memoryLedger() }, { refresh: true })).rejects.toBeInstanceOf(
+      ProfileExtractionError,
+    );
+    expect((await getEvent(db, event.id))?.status).toBe('done');
+    expect(await getReport(db, event.id)).toEqual(first);
+  });
+
   it('marks the event failed with a user message when extraction fails', async () => {
     const { event } = await insertEvent(db, baseEvent);
     const llm = createFakeLlm({ event_profile: { broken: true } });

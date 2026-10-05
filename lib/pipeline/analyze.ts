@@ -91,11 +91,16 @@ function userMessage(err: unknown): string {
   return 'Terjadi kesalahan saat menganalisis event.';
 }
 
-export async function analyzeEvent(eventId: string, deps: PipelineDeps): Promise<Report> {
+/**
+ * Analyses an event and stores its report. A stored report is returned as is, except that `refresh`
+ * re-runs a hypothesis report: once a session has closed it becomes a measured report.
+ * Measured reports are never rewritten.
+ */
+export async function analyzeEvent(eventId: string, deps: PipelineDeps, options: { refresh?: boolean } = {}): Promise<Report> {
   const { db, market, llm, ledger } = deps;
   const now = deps.now ?? (() => new Date());
   const existing = await getReport(db, eventId);
-  if (existing) return existing;
+  if (existing && !(options.refresh && existing.mode === 'prospective')) return existing;
   const event = await getEvent(db, eventId);
   if (!event) throw new Error(`Event ${eventId} not found`);
   const creditsBefore = await ledger.total();
@@ -190,7 +195,9 @@ export async function analyzeEvent(eventId: string, deps: PipelineDeps): Promise
     await setEventStatus(db, eventId, 'done', null);
     return report;
   } catch (err) {
-    await setEventStatus(db, eventId, 'failed', userMessage(err));
+    // A failed refresh still has the old hypothesis report; keep it listed instead of marking the event failed.
+    if (existing) await setEventStatus(db, eventId, 'done', null);
+    else await setEventStatus(db, eventId, 'failed', userMessage(err));
     throw err;
   }
 }
