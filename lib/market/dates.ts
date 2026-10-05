@@ -9,6 +9,12 @@ export function addDays(date: string, n: number): string {
   return d.toISOString().slice(0, 10);
 }
 
+/** The first weekday on or after `day`: the earliest session that can close on a weekend article. */
+export function firstWeekdayOnOrAfter(day: string): string {
+  const weekday = new Date(`${day}T00:00:00Z`).getUTCDay();
+  return weekday === 6 ? addDays(day, 2) : weekday === 0 ? addDays(day, 1) : day;
+}
+
 /** First WIB calendar day whose trading session can react to the event. */
 export function eventCalendarDate(publishedAt: string): string {
   if (/^\d{4}-\d{2}-\d{2}$/.test(publishedAt)) return publishedAt;

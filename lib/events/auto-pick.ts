@@ -1,5 +1,5 @@
 import type { StoredEvent } from '@/lib/domain';
-import { addDays, eventCalendarDate } from '@/lib/market/dates';
+import { eventCalendarDate, firstWeekdayOnOrAfter } from '@/lib/market/dates';
 
 /** Sectors news tags that mark policy or regulation news, the app's core use case (README, "Tag berita"). */
 export const POLICY_TAG_SLUGS = [
@@ -30,12 +30,6 @@ function eventDay(publishedAt: string): string | null {
   } catch {
     return null;
   }
-}
-
-/** The first weekday on or after `day`: the earliest session that can close on a weekend article. */
-function firstWeekdayOnOrAfter(day: string): string {
-  const weekday = new Date(`${day}T00:00:00Z`).getUTCDay();
-  return weekday === 6 ? addDays(day, 2) : weekday === 0 ? addDays(day, 1) : day;
 }
 
 /**

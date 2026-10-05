@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { addDays, eventCalendarDate, firstTradingDayOnOrAfter, priceWindow } from '@/lib/market/dates';
+import { addDays, eventCalendarDate, firstTradingDayOnOrAfter, firstWeekdayOnOrAfter, priceWindow } from '@/lib/market/dates';
 
 describe('addDays', () => {
   it('crosses month and year boundaries', () => {
@@ -46,5 +46,13 @@ describe('firstTradingDayOnOrAfter', () => {
     expect(firstTradingDayOnOrAfter(['2026-03-13', '2026-03-16'], '2026-03-14')).toBe('2026-03-16');
     expect(firstTradingDayOnOrAfter(['2026-03-13'], '2026-03-13')).toBe('2026-03-13');
     expect(firstTradingDayOnOrAfter(['2026-03-13'], '2026-03-14')).toBeNull();
+  });
+});
+
+describe('firstWeekdayOnOrAfter', () => {
+  it('moves weekend days to Monday and keeps weekdays', () => {
+    expect(firstWeekdayOnOrAfter('2026-10-03')).toBe('2026-10-05'); // Saturday
+    expect(firstWeekdayOnOrAfter('2026-10-04')).toBe('2026-10-05'); // Sunday
+    expect(firstWeekdayOnOrAfter('2026-10-02')).toBe('2026-10-02'); // Friday
   });
 });
